@@ -130,13 +130,13 @@ namespace Api.Data.Migrations
                         column: x => x.BidaTableId,
                         principalTable: "BidaTable",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_BookingItem_Booking_BookingId",
                         column: x => x.BookingId,
                         principalTable: "Booking",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(

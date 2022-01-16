@@ -16,8 +16,8 @@ namespace Api.Entities
         public Guid Id { get; set; }
         public float price { get; set; }
         public Guid BookingId { get; set; }
-        public Booking Booking { get; set; }
+        public virtual Booking Booking { get; set; }
         public Guid BidaTableId { get; set; }
-        public BidaTable BidaTable { get; set; }
+        public virtual BidaTable BidaTable { get; set; }
     }
 }
