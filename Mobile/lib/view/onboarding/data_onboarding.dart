@@ -14,7 +14,7 @@ class Slides {
 
 List<Slides> dataOnboarding = [
   Slides(
-      title: "Nearby Billiards",
+      title: "Nearby Billiardsssssssss",
       description:
           "You don't have to go far to find a club billiards, we have provided all the club billiards that is near you",
       pathImage: AssetPath.slideOne),
