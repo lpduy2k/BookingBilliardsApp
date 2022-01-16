@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Api.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20220116081952_InitTable")]
+    [Migration("20220116084138_InitTable")]
     partial class InitTable
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
