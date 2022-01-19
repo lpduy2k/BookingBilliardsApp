@@ -34,7 +34,7 @@ namespace Api.Controllers
         public async Task<ActionResult> GetById(Guid id)
         {
             BidaClub response = await _service.GetById(id);
-            if(response == null)
+            if (response == null)
             {
                 return NotFound();
             }
@@ -64,7 +64,8 @@ namespace Api.Controllers
                 TimeClose = bidaClub.TimeClose,
                 TimeOpen = bidaClub.TimeOpen,
                 Address = bidaClub.Address,
-                PhoneNumber = bidaClub.PhoneNumber
+                PhoneNumber = bidaClub.PhoneNumber,
+                UserId = bidaClub.UserId
             };
             BidaClub response = await _service.Create(bida);
             return NoContent();
@@ -86,7 +87,8 @@ namespace Api.Controllers
                 TimeClose = updateBidaClub.TimeClose,
                 TimeOpen = updateBidaClub.TimeOpen,
                 Address = updateBidaClub.Address,
-                PhoneNumber = updateBidaClub.PhoneNumber
+                PhoneNumber = updateBidaClub.PhoneNumber,
+                UserId = updateBidaClub.UserId
             };
             bool check = await _service.UpdateBidaClub(bida);
             if (!check)

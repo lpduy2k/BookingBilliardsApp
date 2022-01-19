@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Api.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20220116084138_InitTable")]
-    partial class InitTable
+    [Migration("20220119162849_initdb")]
+    partial class initdb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -45,11 +45,11 @@ namespace Api.Data.Migrations
                     b.Property<string>("Status")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("TimeClose")
-                        .HasColumnType("datetime2");
+                    b.Property<TimeSpan>("TimeClose")
+                        .HasColumnType("time");
 
-                    b.Property<DateTime>("TimeOpen")
-                        .HasColumnType("datetime2");
+                    b.Property<TimeSpan>("TimeOpen")
+                        .HasColumnType("time");
 
                     b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");

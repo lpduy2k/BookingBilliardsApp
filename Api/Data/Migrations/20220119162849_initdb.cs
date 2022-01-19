@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Api.Data.Migrations
 {
-    public partial class InitTable : Migration
+    public partial class initdb : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -51,8 +51,8 @@ namespace Api.Data.Migrations
                     Address = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Image = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    TimeOpen = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    TimeClose = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    TimeOpen = table.Column<TimeSpan>(type: "time", nullable: false),
+                    TimeClose = table.Column<TimeSpan>(type: "time", nullable: false),
                     Quantity = table.Column<int>(type: "int", nullable: false),
                     Status = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)

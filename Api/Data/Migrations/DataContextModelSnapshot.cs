@@ -43,11 +43,11 @@ namespace Api.Data.Migrations
                     b.Property<string>("Status")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("TimeClose")
-                        .HasColumnType("datetime2");
+                    b.Property<TimeSpan>("TimeClose")
+                        .HasColumnType("time");
 
-                    b.Property<DateTime>("TimeOpen")
-                        .HasColumnType("datetime2");
+                    b.Property<TimeSpan>("TimeOpen")
+                        .HasColumnType("time");
 
                     b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
