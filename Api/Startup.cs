@@ -42,6 +42,8 @@ namespace Api
             services.AddTransient<BidaClubService, BidaClubService>();
             services.AddTransient<IRoleRepository<Role>, RoleRepository>();
             services.AddTransient<RoleService, RoleService>();
+            services.AddTransient<IUserRepository<User>, UserRepository>();
+            services.AddTransient<UserService, UserService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
