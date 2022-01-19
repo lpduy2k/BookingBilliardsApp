@@ -36,10 +36,12 @@ namespace Api
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Api", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Billiards App", Version = "v1" });
             });
             services.AddTransient<IBidaClubRepository<BidaClub>, BidaClubRepository>();
             services.AddTransient<BidaClubService, BidaClubService>();
+            services.AddTransient<IRoleRepository<Role>, RoleRepository>();
+            services.AddTransient<RoleService, RoleService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
