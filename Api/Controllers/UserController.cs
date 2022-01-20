@@ -32,5 +32,34 @@ namespace Api.Controllers
             await _service.Create(user);
             return NoContent();
         }
+        [HttpGet("{username}")]
+        public ActionResult GetByUserName(string username)
+        {
+            User response = _service.GetByUserName(username);
+            if (response == null)
+            {
+                return NotFound();
+            }
+            ResponseUserModal user = new ResponseUserModal
+            {
+                Username = response.Username,
+                FullName = response.FullName,
+                Image = response.Image,
+                Password = response.Password,
+                PhoneNumber = response.PhoneNumber
+            };
+            return Ok(user);
+        }
+        [Route("Login")]
+        [HttpPost]
+        public ActionResult Login(LoginModal loginModal)
+        {
+            var response = _service.Login(loginModal);
+            if (response == null)
+            {
+                return BadRequest(new { message = "User name or password not correct" });
+            }
+            return Ok(response);
+        }
     }
 }
