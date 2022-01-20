@@ -19,7 +19,7 @@ namespace Api.Services
         {
             return await _repo.Create(user);
         }
-        public UserLoginResponseModal Login(LoginModal loginModal)
+        public bool Login(LoginModal loginModal)
         {
             return _repo.Login(loginModal);
         }

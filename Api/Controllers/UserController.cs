@@ -57,11 +57,11 @@ namespace Api.Controllers
         public ActionResult Login(LoginModal loginModal)
         {
             var response = _service.Login(loginModal);
-            if (response == null)
+            if (!response)
             {
                 return BadRequest(new { message = "User name or password not correct" });
             }
-            return Ok(response);
+            return NoContent();
         }
     }
 }

@@ -35,23 +35,18 @@ namespace Api.Repositories
             return user;
         }
 
-        public UserLoginResponseModal Login(LoginModal loginModal)
+        public bool Login(LoginModal loginModal)
         {
             User user = _context.Users.FirstOrDefault(u => u.Username == loginModal.Username);
             if (user == null)
             {
-                return null;
+                return false;
             }
             if (user.Password == loginModal.Password)
             {
-
-                return new UserLoginResponseModal
-                {
-
-                    Username = user.Username
-                };
+                return true;
             }
-            return null;
+            return false;
         }
     }
 }
