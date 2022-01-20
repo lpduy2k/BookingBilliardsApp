@@ -17,8 +17,9 @@ namespace Api.Controllers
             _service = service;
         }
 
+        [Route("Register")]
         [HttpPost]
-        public async Task<ActionResult> Create(ResponseUserModal newUser)
+        public async Task<ActionResult> Register(ResponseUserModal newUser)
         {
             User user = new User
             {
@@ -46,7 +47,8 @@ namespace Api.Controllers
                 FullName = response.FullName,
                 Image = response.Image,
                 Password = response.Password,
-                PhoneNumber = response.PhoneNumber
+                PhoneNumber = response.PhoneNumber,
+                RoleId = response.RoleId
             };
             return Ok(user);
         }

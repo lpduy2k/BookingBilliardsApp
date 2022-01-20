@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Api.Modals
 {
-    public class UserLoginResponse
+    public class UserLoginResponseModal
     {
         public Guid Id { get; set; }
         public string Username { get; set; }

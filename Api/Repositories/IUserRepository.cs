@@ -10,7 +10,7 @@ namespace Api.Repositories
     public interface IUserRepository<T>
     {
         Task<User> Create(User user);
-        UserLoginResponse Login(LoginModal user);
+        UserLoginResponseModal Login(LoginModal user);
         User GetByUserName(string username);
     }
 
