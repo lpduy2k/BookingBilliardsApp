@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using Api.Data;
 using Api.Entities;
@@ -36,8 +38,10 @@ namespace Api
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
+                c.EnableAnnotations();
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Billiards App", Version = "v1" });
             });
+
             services.AddTransient<IBidaClubRepository<BidaClub>, BidaClubRepository>();
             services.AddTransient<BidaClubService, BidaClubService>();
             services.AddTransient<IRoleRepository<Role>, RoleRepository>();
