@@ -22,14 +22,14 @@ namespace Api.Repositories
             return bidaClub;
         }
 
-        public async Task<bool> DeleteBidaClub(BidaClub newBidaClub)
+        public async Task<bool> Delete(Guid id)
         {
-            BidaClub bida = await _context.BidaClubs.AsNoTracking().FirstOrDefaultAsync(x => x.Id == newBidaClub.Id);
+            BidaClub bida = await _context.BidaClubs.FirstOrDefaultAsync(x => x.Id == id);
             if (bida == null)
             {
                 return false;
             }
-            _context.BidaClubs.Update(newBidaClub);
+            _context.BidaClubs.Remove(bida);
             await _context.SaveChangesAsync();
             return true;
         }
@@ -41,18 +41,18 @@ namespace Api.Repositories
 
         public async Task<BidaClub> GetById(Guid id)
         {
-            BidaClub bida = await _context.BidaClubs.FindAsync(id);
-            if(bida == null)
+            BidaClub bida = await _context.BidaClubs.Where(x => x.Id == id).FirstOrDefaultAsync();
+            if (bida == null)
             {
                 return null;
             }
             return bida;
         }
 
-        public async Task<bool> UpdateBidaClub(BidaClub newBidaClub)
+        public async Task<bool> Update(BidaClub newBidaClub)
         {
             BidaClub bida = await _context.BidaClubs.AsNoTracking().FirstOrDefaultAsync(x => x.Id == newBidaClub.Id);
-            if(bida == null)
+            if (bida == null)
             {
                 return false;
             }

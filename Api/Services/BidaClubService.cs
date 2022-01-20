@@ -26,13 +26,13 @@ namespace Api.Services
         {
             return await _repo.GetById(id);
         }
-        public async Task<bool> UpdateBidaClub(BidaClub newBida)
+        public async Task<bool> Update(BidaClub newBida)
         {
-            return await _repo.UpdateBidaClub(newBida);
+            return await _repo.Update(newBida);
         }
-        public async Task<bool> DeleteBidaClub(BidaClub newBida)
+        public async Task<bool> Delete(Guid id)
         {
-            return await _repo.DeleteBidaClub(newBida);
+            return await _repo.Delete(id);
         }
 
     }

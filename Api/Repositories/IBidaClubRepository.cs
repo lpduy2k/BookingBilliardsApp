@@ -9,7 +9,7 @@ namespace Api.Repositories
         List<BidaClub> GetAll();
         Task<BidaClub> GetById(Guid id);
         Task<BidaClub> Create(BidaClub bidaClub);
-        Task<bool> UpdateBidaClub(BidaClub newBidaClub);
-        Task<bool> DeleteBidaClub(BidaClub newBidaClub);
+        Task<bool> Update(BidaClub newBidaClub);
+        Task<bool> Delete(Guid id);
     }
 }
