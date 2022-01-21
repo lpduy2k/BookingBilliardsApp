@@ -44,6 +44,8 @@ class WelcomePage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 ButtonDefault(
+                  height: 49,
+                  width: double.infinity,
                   content: 'Create Account',
                   color: AppColor.white,
                   backgroundBtn: AppColor.black,
@@ -53,6 +55,8 @@ class WelcomePage extends StatelessWidget {
                   padding: EdgeInsets.only(top: 10),
                 ),
                 ButtonDefault(
+                  height: 49,
+                  width: double.infinity,
                   content: 'Login',
                   color: AppColor.pink,
                   backgroundBtn: AppColor.black,
@@ -62,6 +66,8 @@ class WelcomePage extends StatelessWidget {
                   padding: EdgeInsets.only(top: 10),
                 ),
                 ButtonDefault(
+                  height: 49,
+                  width: double.infinity,
                   content: 'Forget Password',
                   color: AppColor.white,
                   backgroundBtn: AppColor.black,

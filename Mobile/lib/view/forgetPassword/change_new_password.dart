@@ -1,3 +1,5 @@
+import 'package:booking_billiards_app/configs/themes/app_color.dart';
+import 'package:booking_billiards_app/widgets/button/button.dart';
 import 'package:flutter/material.dart';
 
 class ChangeNewPassword extends StatelessWidget {
@@ -5,10 +7,11 @@ class ChangeNewPassword extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 20),
-        child: Body(),
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      color: AppColor.white,
+      child: const Scaffold(
+        body: Body(),
       ),
     );
   }
@@ -22,69 +25,53 @@ class Body extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      // width: double.infinity,
-      // height: MediaQuery.of(context).size.height,
       padding: const EdgeInsets.only(top: 100, bottom: 30),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: const [
-              Text(
+            children: [
+              const Text(
                 'Change New Password',
                 style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               Text(
                 'Enter a different password with the previous',
                 style: TextStyle(
                   fontSize: 14,
-                  color: Colors.grey,
+                  color: AppColor.grey,
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 30,
               ),
-              InputForm(
+              const InputForm(
                 label: 'New Password',
                 obscureText: true,
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
-              InputForm(
+              const InputForm(
                 label: 'Confirm Password',
                 obscureText: true,
               ),
             ],
           ),
-          SizedBox(
+          ButtonDefault(
+            backgroundBtn: AppColor.black,
+            color: AppColor.white,
+            content: 'Submit',
             height: 49,
             width: double.infinity,
-            child: TextButton(
-              style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all(Colors.black),
-                shape: MaterialStateProperty.all(
-                  RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(7.0),
-                  ),
-                ),
-              ),
-              onPressed: null,
-              child: const Text(
-                'Reset Password',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 14,
-                ),
-              ),
-            ),
+            voidCallBack: () {},
           ),
         ],
       ),
@@ -118,16 +105,18 @@ class InputForm extends StatelessWidget {
         ),
         TextField(
           obscureText: obscureText,
-          decoration: const InputDecoration(
-            contentPadding: EdgeInsets.symmetric(
+          decoration: InputDecoration(
+            contentPadding: const EdgeInsets.symmetric(
               vertical: 0,
               horizontal: 10,
             ),
             border: OutlineInputBorder(
-              borderRadius: BorderRadius.all(
+              borderRadius: const BorderRadius.all(
                 Radius.circular(7.0),
               ),
-              borderSide: BorderSide(color: Colors.grey),
+              borderSide: BorderSide(
+                color: AppColor.grey,
+              ),
             ),
             hintText: '*********',
           ),

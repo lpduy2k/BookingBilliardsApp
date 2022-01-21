@@ -1,4 +1,5 @@
 import 'package:booking_billiards_app/configs/themes/app_color.dart';
+import 'package:booking_billiards_app/configs/themes/app_text_style.dart';
 import 'package:booking_billiards_app/view/forgetPassword/change_new_password.dart';
 import 'package:flutter/material.dart';
 
@@ -7,11 +8,12 @@ class InputPinCode extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColor.white,
-      body: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 20),
-        child: const Body(),
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      color: AppColor.white,
+      child: Scaffold(
+        backgroundColor: AppColor.white,
+        body: const Body(),
       ),
     );
   }
@@ -66,16 +68,20 @@ class Body extends StatelessWidget {
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
-                  Text(
+                children: [
+                  const Text(
                     'Didn\'t receive code ?',
-                    style: TextStyle(fontSize: 14),
+                    style: TextStyle(
+                      fontSize: 14,
+                    ),
                   ),
                   TextButton(
                     onPressed: null,
                     child: Text(
                       'Resend',
-                      style: TextStyle(color: Colors.pink),
+                      style: TextStyle(
+                        color: AppColor.pink,
+                      ),
                     ),
                   ),
                 ],
@@ -87,7 +93,9 @@ class Body extends StatelessWidget {
             width: double.infinity,
             child: TextButton(
               style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all(Colors.black),
+                backgroundColor: MaterialStateProperty.all(
+                  AppColor.black,
+                ),
                 shape: MaterialStateProperty.all(
                   RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(7.0),
@@ -104,10 +112,10 @@ class Body extends StatelessWidget {
                   ),
                 );
               },
-              child: const Text(
+              child: Text(
                 'Submit',
                 style: TextStyle(
-                  color: Colors.white,
+                  color: AppColor.white,
                   fontSize: 14,
                 ),
               ),
@@ -133,6 +141,7 @@ class InputCode extends StatelessWidget {
         maxLength: 1,
         keyboardType: TextInputType.number,
         decoration: InputDecoration(
+          contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 10),
           counterText: '',
         ),
       ),
