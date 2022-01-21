@@ -12,6 +12,7 @@ namespace Api.Repositories
         Task<User> Create(User user);
         bool Login(LoginModal user);
         User GetByUserName(string username);
+        Task<bool> Update(User newUser);
     }
 
 }
