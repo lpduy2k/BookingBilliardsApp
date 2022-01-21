@@ -6,6 +6,7 @@ using Api.Entities;
 using Api.Modals;
 using Api.Services;
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace Api.Controllers
 {
@@ -19,6 +20,7 @@ namespace Api.Controllers
 
         [Route("Register")]
         [HttpPost]
+        [SwaggerOperation(Summary = "Register new user")]
         public async Task<ActionResult> Register(ResponseUserModal newUser)
         {
             User user = new User
@@ -34,6 +36,7 @@ namespace Api.Controllers
             return NoContent();
         }
         [HttpGet("{username}")]
+        [SwaggerOperation(Summary = "Get username")]
         public ActionResult GetByUserName(string username)
         {
             User response = _service.GetByUserName(username);
@@ -54,12 +57,39 @@ namespace Api.Controllers
         }
         [Route("Login")]
         [HttpPost]
+        [SwaggerOperation(Summary = "Login with username and password")]
         public ActionResult Login(LoginModal loginModal)
         {
             var response = _service.Login(loginModal);
             if (!response)
             {
                 return BadRequest(new { message = "User name or password not correct" });
+            }
+            return NoContent();
+        }
+        [HttpPut("{id}")]
+        [SwaggerOperation(Summary = "Update user (no password)")]
+        public async Task<ActionResult> Update(Guid id, UpdateUserModal updateUser)
+        {
+            if (id != updateUser.Id)
+            {
+                return BadRequest();
+            }
+            
+            User user = new User
+            {
+                Id = updateUser.Id,
+                Username = updateUser.Username,
+                FullName = updateUser.FullName,
+                Password = updateUser.Password,
+                PhoneNumber = updateUser.PhoneNumber,
+                Image = updateUser.Image,
+                RoleId = updateUser.RoleId
+            };
+            bool check = await _service.Update(user);
+            if (!check)
+            {
+                return BadRequest();
             }
             return NoContent();
         }
