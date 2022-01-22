@@ -6,6 +6,7 @@ using Api.Entities;
 using Api.Modals;
 using Api.Services;
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace Api.Controllers
 {
@@ -19,6 +20,7 @@ namespace Api.Controllers
 
         [Route("Register")]
         [HttpPost]
+        [SwaggerOperation(Summary = "Register new user")]
         public async Task<ActionResult> Register(ResponseUserModal newUser)
         {
             User user = new User
@@ -34,6 +36,7 @@ namespace Api.Controllers
             return NoContent();
         }
         [HttpGet("{username}")]
+        [SwaggerOperation(Summary = "Get information user by username")]
         public ActionResult GetByUserName(string username)
         {
             User response = _service.GetByUserName(username);
@@ -54,12 +57,24 @@ namespace Api.Controllers
         }
         [Route("Login")]
         [HttpPost]
+        [SwaggerOperation(Summary = "Login with username and password")]
         public ActionResult Login(LoginModal loginModal)
         {
             var response = _service.Login(loginModal);
             if (!response)
             {
                 return BadRequest(new { message = "User name or password not correct" });
+            }
+            return NoContent();
+        }
+        [HttpDelete("{id}")]
+        [SwaggerOperation(Summary = "Delete user by Id")]
+        public async Task<ActionResult> Delete(Guid id)
+        {
+            bool check = await _service.Delete(id);
+            if (!check)
+            {
+                return NotFound();
             }
             return NoContent();
         }
