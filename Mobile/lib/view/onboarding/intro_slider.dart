@@ -21,33 +21,35 @@ class _IntroSliderPageState extends State<IntroSliderPage> {
     // TODO: implement initState
     super.initState();
 
-    dataOnboarding.forEach((slide) => {
-          slides.add(
-            new Slide(
-              title: slide.title,
-              maxLineTitle: 2,
-              styleTitle: AppTextStyles.h2Black,
-              description: slide.description,
-              styleDescription: AppTextStyles.h4Grey,
-              pathImage: slide.pathImage,
-              backgroundColor: AppColor.white,
-            ),
-          )
-        });
+    for (var slide in dataOnboarding) {
+      {
+        slides.add(
+          Slide(
+            title: slide.title,
+            maxLineTitle: 2,
+            styleTitle: AppTextStyles.h2Black,
+            description: slide.description,
+            styleDescription: AppTextStyles.h4Grey,
+            pathImage: slide.pathImage,
+            backgroundColor: AppColor.white,
+          ),
+        );
+      }
+    }
   }
 
   void onDonePress() {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => WelcomePage()),
+      MaterialPageRoute(builder: (context) => const WelcomePage()),
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    return new IntroSlider(
+    return IntroSlider(
       // List slides
-      slides: this.slides,
+      slides: slides,
 
       // Skip button
       renderSkipBtn: Text(
@@ -63,7 +65,7 @@ class _IntroSliderPageState extends State<IntroSliderPage> {
       // Done button
       renderDoneBtn: renderDoneBtn(),
       doneButtonStyle: dotButtonStyle(),
-      onDonePress: this.onDonePress,
+      onDonePress: onDonePress,
 
       // Dot indicator
       colorDot: AppColor.lightGrey,
