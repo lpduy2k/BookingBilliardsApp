@@ -32,6 +32,15 @@ namespace Api.Repositories
             await _context.SaveChangesAsync();
             return true;
         }
+        public async Task<Role> GetById(Guid id)
+        {
+            Role role = await _context.Roles.Where(x => x.Id == id).FirstOrDefaultAsync();
+            if (role == null)
+            {
+                return null;
+            }
+            return role;
+        }
         public List<Role> GetAll()
         {
             return _context.Roles.ToList();
