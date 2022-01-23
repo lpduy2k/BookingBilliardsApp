@@ -1,5 +1,6 @@
 import 'package:booking_billiards_app/configs/themes/app_color.dart';
 import 'package:booking_billiards_app/configs/themes/app_text_style.dart';
+import 'package:booking_billiards_app/utils/window_size.dart';
 import 'package:booking_billiards_app/view/forgetPassword/change_new_password.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -9,8 +10,11 @@ class InputPinCode extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double windowWidth = MediaQuery.of(context).size.width;
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
+      padding: EdgeInsets.symmetric(
+        horizontal: windowWidth * windowSizeWidth(20),
+      ),
       color: AppColor.white,
       child: Scaffold(
         backgroundColor: AppColor.white,
@@ -29,8 +33,14 @@ class Body extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double windowWidth = MediaQuery.of(context).size.width;
+    double windowHeight = MediaQuery.of(context).size.height;
+
     return Container(
-      padding: const EdgeInsets.only(top: 200, bottom: 30),
+      padding: EdgeInsets.only(
+        top: windowHeight * windowSizeHeight(200),
+        bottom: windowHeight * windowSizeHeight(30),
+      ),
       width: double.infinity,
       height: MediaQuery.of(context).size.height,
       child: Column(
@@ -46,7 +56,9 @@ class Body extends StatelessWidget {
                 height: 30,
               ),
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 100),
+                padding: EdgeInsets.symmetric(
+                  horizontal: windowWidth * windowSizeWidth(50),
+                ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: const [
@@ -57,8 +69,8 @@ class Body extends StatelessWidget {
                   ],
                 ),
               ),
-              const SizedBox(
-                height: 30,
+              SizedBox(
+                height: windowHeight * windowSizeHeight(30),
               ),
               RichText(
                 text: TextSpan(
