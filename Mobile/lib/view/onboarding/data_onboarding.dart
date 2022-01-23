@@ -12,7 +12,7 @@ class Slides {
   });
 }
 
-List<Slides> dataOnboarding = [
+List<Slides> dataOnboarding = const [
   Slides(
       title: "Nearby Billiards",
       description:
@@ -27,7 +27,7 @@ List<Slides> dataOnboarding = [
 
 ButtonStyle dotButtonStyle() {
   return ButtonStyle(
-    shape: MaterialStateProperty.all<OutlinedBorder>(StadiumBorder()),
+    shape: MaterialStateProperty.all<OutlinedBorder>(const StadiumBorder()),
     overlayColor: MaterialStateProperty.all<Color>(AppColor.lightBlack),
   );
 }

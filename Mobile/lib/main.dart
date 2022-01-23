@@ -1,5 +1,5 @@
+import 'package:booking_billiards_app/configs/themes/app_color.dart';
 import 'package:booking_billiards_app/view/onboarding/onboarding.dart';
-import 'package:booking_billiards_app/view/rootPage/root_page.dart';
 import 'package:flutter/material.dart';
 
 void main() {

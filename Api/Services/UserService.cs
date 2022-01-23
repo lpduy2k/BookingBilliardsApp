@@ -31,7 +31,10 @@ namespace Api.Services
         {
             return await _repo.Delete(id);
         }
-
+        public async Task<bool> Update(User newUser)
+        {
+            return await _repo.Update(newUser);
+        }
     }
 
 }

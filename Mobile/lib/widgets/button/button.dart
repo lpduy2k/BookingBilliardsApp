@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 
 class ButtonDefault extends StatelessWidget {
-  const ButtonDefault(
-      {Key? key,
-      this.width = 256,
-      this.height = 49,
-      required this.content,
-      required this.color,
-      required this.backgroundBtn,
-      required this.voidCallBack})
-      : super(key: key);
-  final double? width;
-  final double? height;
+  const ButtonDefault({
+    Key? key,
+    required this.width,
+    required this.height,
+    required this.content,
+    required this.color,
+    required this.backgroundBtn,
+    required this.voidCallBack,
+  }) : super(key: key);
+  final double width;
+  final double height;
   final String content;
   final Color color;
   final Color backgroundBtn;
@@ -28,11 +28,13 @@ class ButtonDefault extends StatelessWidget {
           style: TextStyle(color: color, fontWeight: FontWeight.w700),
         ),
         style: ButtonStyle(
-            backgroundColor: MaterialStateProperty.all<Color>(backgroundBtn),
-            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                RoundedRectangleBorder(
+          backgroundColor: MaterialStateProperty.all<Color>(backgroundBtn),
+          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+            RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(12.0),
-            ))),
+            ),
+          ),
+        ),
       ),
     );
   }
