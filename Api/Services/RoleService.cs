@@ -26,5 +26,9 @@ namespace Api.Services
         {
             return _repo.GetAll();
         }
+        public async Task<bool> Delete(Guid id)
+        {
+            return await _repo.Delete(id);
+        }
     }
 }

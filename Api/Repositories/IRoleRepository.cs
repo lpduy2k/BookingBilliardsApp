@@ -11,5 +11,6 @@ namespace Api.Repositories
         Task<Role> Create(Role role);
         Task<bool> Update(Role newRole);
         List<Role> GetAll();
+        Task<bool> Delete(Guid id);
     }
 }

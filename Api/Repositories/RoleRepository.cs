@@ -36,5 +36,16 @@ namespace Api.Repositories
         {
             return _context.Roles.ToList();
         }
+        public async Task<bool> Delete(Guid id)
+        {
+            Role role = await _context.Roles.FirstOrDefaultAsync(x => x.Id == id);
+            if (role == null)
+            {
+                return false;
+            }
+            _context.Roles.Remove(role);
+            await _context.SaveChangesAsync();
+            return true;
+        }
     }
 }

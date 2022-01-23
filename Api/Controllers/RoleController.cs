@@ -57,6 +57,16 @@ namespace Api.Controllers
             
             return Ok(listRoles);
         }
-
+        [HttpDelete("{id}")]
+        [SwaggerOperation(Summary = "Delete role by Id")]
+        public async Task<ActionResult> Delete(Guid id)
+        {
+            bool check = await _service.Delete(id);
+            if (!check)
+            {
+                return NotFound();
+            }
+            return NoContent();
+        }
     }
 }
