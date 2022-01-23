@@ -1,6 +1,7 @@
 import 'package:booking_billiards_app/configs/themes/app_color.dart';
 import 'package:booking_billiards_app/configs/themes/app_text_style.dart';
 import 'package:booking_billiards_app/view/forgetPassword/change_new_password.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 class InputPinCode extends StatelessWidget {
@@ -13,7 +14,9 @@ class InputPinCode extends StatelessWidget {
       color: AppColor.white,
       child: Scaffold(
         backgroundColor: AppColor.white,
-        body: const Body(),
+        body: const SingleChildScrollView(
+          child: Body(),
+        ),
       ),
     );
   }
@@ -42,49 +45,32 @@ class Body extends StatelessWidget {
               const SizedBox(
                 height: 30,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
-                  InputCode(),
-                  Padding(
-                    padding: EdgeInsets.only(right: 20),
-                  ),
-                  InputCode(),
-                  Padding(
-                    padding: EdgeInsets.only(right: 20),
-                  ),
-                  InputCode(),
-                  Padding(
-                    padding: EdgeInsets.only(right: 20),
-                  ),
-                  InputCode(),
-                  Padding(
-                    padding: EdgeInsets.only(right: 20),
-                  ),
-                ],
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 100),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: const [
+                    InputCode(),
+                    InputCode(),
+                    InputCode(),
+                    InputCode(),
+                  ],
+                ),
               ),
               const SizedBox(
                 height: 30,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Text(
-                    'Didn\'t receive code ?',
-                    style: TextStyle(
-                      fontSize: 14,
-                    ),
-                  ),
-                  TextButton(
-                    onPressed: null,
-                    child: Text(
-                      'Resend',
-                      style: TextStyle(
-                        color: AppColor.pink,
-                      ),
-                    ),
-                  ),
-                ],
+              RichText(
+                text: TextSpan(
+                  text: 'Didn\'t receive code?',
+                  style: AppTextStyles.h4Grey,
+                  children: <TextSpan>[
+                    TextSpan(
+                        text: ' Resend',
+                        style: AppTextStyles.h4Pink,
+                        recognizer: TapGestureRecognizer()..onTap = () {}),
+                  ],
+                ),
               ),
             ],
           ),

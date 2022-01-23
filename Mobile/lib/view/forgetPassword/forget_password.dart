@@ -1,6 +1,9 @@
 import 'package:booking_billiards_app/configs/themes/app_color.dart';
+import 'package:booking_billiards_app/configs/themes/app_text_style.dart';
 import 'package:booking_billiards_app/view/forgetPassword/input_pin_code.dart';
+import 'package:booking_billiards_app/view/welcome/welcome.dart';
 import 'package:booking_billiards_app/widgets/button/button.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 class ForgetPassword extends StatelessWidget {
@@ -13,7 +16,9 @@ class ForgetPassword extends StatelessWidget {
       color: AppColor.white,
       child: Scaffold(
         backgroundColor: AppColor.white,
-        body: const Body(),
+        body: const SingleChildScrollView(
+          child: Body(),
+        ),
       ),
     );
   }
@@ -32,7 +37,6 @@ class Body extends StatelessWidget {
       height: size.height,
       padding: const EdgeInsets.only(top: 100, bottom: 30),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Column(
@@ -58,51 +62,74 @@ class Body extends StatelessWidget {
               const SizedBox(
                 height: 80,
               ),
-              const Text(
-                'Phone number',
-                style: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              const Padding(
-                padding: EdgeInsets.only(top: 10),
-              ),
-              TextField(
-                keyboardType: TextInputType.number,
-                decoration: InputDecoration(
-                  hintText: 'Eg: 0333xxx.xxx',
-                  hintStyle: TextStyle(
-                    fontSize: 12,
-                    color: AppColor.grey,
-                  ),
-                  contentPadding: const EdgeInsets.symmetric(
-                    vertical: 0,
-                    horizontal: 10,
-                  ),
-                  border: OutlineInputBorder(
-                    borderRadius: const BorderRadius.all(
-                      Radius.circular(7.0),
+              Column(
+                children: <Widget>[
+                  Container(
+                    alignment: Alignment.topLeft,
+                    padding: const EdgeInsets.only(
+                      left: 10,
+                      bottom: 5,
                     ),
-                    borderSide: BorderSide(
-                      color: AppColor.grey,
-                    ),
-                  ),
-                ),
-              ),
-              Row(
-                children: [
-                  const Text('Remember the password ?'),
-                  TextButton(
-                    onPressed: null,
                     child: Text(
-                      'Sign in',
-                      style: TextStyle(
-                        color: AppColor.pink,
+                      'Phone Number',
+                      style: AppTextStyles.h3Black,
+                    ),
+                  ),
+                  SizedBox(
+                    width: double.infinity,
+                    child: TextField(
+                      keyboardType: TextInputType.number,
+                      decoration: InputDecoration(
+                        contentPadding: const EdgeInsets.symmetric(
+                          vertical: 10,
+                          horizontal: 10,
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: AppColor.grey,
+                            width: 2,
+                          ),
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        border: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: AppColor.grey,
+                            width: 2,
+                          ),
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        hintText: 'Eg: 0333xxx.xxx',
+                        hintStyle: AppTextStyles.h4Grey,
                       ),
                     ),
                   ),
                 ],
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              Container(
+                padding: const EdgeInsets.only(left: 10),
+                child: RichText(
+                  text: TextSpan(
+                    text: 'Remember the password?',
+                    style: AppTextStyles.h4Grey,
+                    children: <TextSpan>[
+                      TextSpan(
+                          text: ' Sign in',
+                          style: AppTextStyles.h4Pink,
+                          recognizer: TapGestureRecognizer()
+                            ..onTap = () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const WelcomePage(),
+                                ),
+                              );
+                            })
+                    ],
+                  ),
+                ),
               ),
             ],
           ),

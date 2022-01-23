@@ -6,7 +6,6 @@ using Api.Entities;
 using Api.Modals;
 using Api.Services;
 using Microsoft.AspNetCore.Mvc;
-using Swashbuckle.AspNetCore.Annotations;
 
 namespace Api.Controllers
 {
@@ -20,7 +19,6 @@ namespace Api.Controllers
 
         [Route("Register")]
         [HttpPost]
-        [SwaggerOperation(Summary = "Register new user")]
         public async Task<ActionResult> Register(ResponseUserModal newUser)
         {
             User user = new User
@@ -59,7 +57,6 @@ namespace Api.Controllers
         }
         [Route("Login")]
         [HttpPost]
-        [SwaggerOperation(Summary = "Login with username and password")]
         public ActionResult Login(LoginModal loginModal)
         {
             var response = _service.Login(loginModal);
@@ -69,7 +66,6 @@ namespace Api.Controllers
             }
             return NoContent();
         }
-
         [HttpDelete("{id}")]
         [SwaggerOperation(Summary = "Delete user by Id")]
         public async Task<ActionResult> Delete(Guid id)

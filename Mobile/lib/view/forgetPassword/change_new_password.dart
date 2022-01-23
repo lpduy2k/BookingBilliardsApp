@@ -1,4 +1,5 @@
 import 'package:booking_billiards_app/configs/themes/app_color.dart';
+import 'package:booking_billiards_app/configs/themes/app_text_style.dart';
 import 'package:booking_billiards_app/widgets/button/button.dart';
 import 'package:flutter/material.dart';
 
@@ -10,8 +11,11 @@ class ChangeNewPassword extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       color: AppColor.white,
-      child: const Scaffold(
-        body: Body(),
+      child: Scaffold(
+        backgroundColor: AppColor.white,
+        body: const SingleChildScrollView(
+          child: Body(),
+        ),
       ),
     );
   }
@@ -24,7 +28,10 @@ class Body extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Container(
+      width: double.infinity,
+      height: size.height,
       padding: const EdgeInsets.only(top: 100, bottom: 30),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -92,33 +99,44 @@ class InputForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          label,
-          style: const TextStyle(
-            fontWeight: FontWeight.bold,
+      children: <Widget>[
+        Container(
+          alignment: Alignment.topLeft,
+          padding: const EdgeInsets.only(
+            left: 10,
+            bottom: 5,
+          ),
+          child: Text(
+            label,
+            style: AppTextStyles.h3Black,
           ),
         ),
-        const SizedBox(
-          height: 10,
-        ),
-        TextField(
-          obscureText: obscureText,
-          decoration: InputDecoration(
-            contentPadding: const EdgeInsets.symmetric(
-              vertical: 0,
-              horizontal: 10,
-            ),
-            border: OutlineInputBorder(
-              borderRadius: const BorderRadius.all(
-                Radius.circular(7.0),
+        SizedBox(
+          width: double.infinity,
+          child: TextField(
+            obscureText: obscureText,
+            decoration: InputDecoration(
+              contentPadding: const EdgeInsets.symmetric(
+                vertical: 10,
+                horizontal: 10,
               ),
-              borderSide: BorderSide(
-                color: AppColor.grey,
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(
+                  color: AppColor.grey,
+                  width: 2,
+                ),
+                borderRadius: BorderRadius.circular(12),
               ),
+              border: OutlineInputBorder(
+                borderSide: BorderSide(
+                  color: AppColor.grey,
+                  width: 2,
+                ),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              hintText: '••••••••••',
+              hintStyle: AppTextStyles.h4Grey,
             ),
-            hintText: '*********',
           ),
         ),
       ],

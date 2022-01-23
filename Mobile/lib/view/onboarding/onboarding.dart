@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:booking_billiards_app/configs/themes/app_color.dart';
 import 'package:booking_billiards_app/constants/assets_path.dart';
 import 'package:booking_billiards_app/view/onboarding/intro_slider.dart';
