@@ -49,6 +49,14 @@ namespace Api.Controllers
             }
             return NoContent();
         }
+        [HttpGet]
+        [SwaggerOperation(Summary = "Get all role")]
+        public ActionResult GetAll()
+        {
+            List<Role> listRoles = _service.GetAll();
+            
+            return Ok(listRoles);
+        }
 
     }
 }
