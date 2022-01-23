@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:booking_billiards_app/configs/themes/app_color.dart';
 import 'package:booking_billiards_app/constants/assets_path.dart';
 import 'package:booking_billiards_app/view/onboarding/intro_slider.dart';
@@ -17,10 +16,17 @@ class _OnboardingState extends State<Onboarding> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    Timer(Duration(seconds: 2), () {
-      Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (_) => IntroSliderPage()));
-    });
+    Timer(
+      const Duration(seconds: 2),
+      () {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (_) => const IntroSliderPage(),
+          ),
+        );
+      },
+    );
   }
 
   @override
@@ -34,11 +40,12 @@ class _OnboardingState extends State<Onboarding> {
         //alignment: Alignment.center,
         children: [
           Positioned(
-              top: size.height * 0.05,
-              child: Image.asset(AssetPath.logo)),
+            top: size.height * 0.05,
+            child: Image.asset(AssetPath.logo),
+          ),
           CircularProgressIndicator(
             color: AppColor.pink,
-          ),          
+          ),
         ],
       ),
     );
