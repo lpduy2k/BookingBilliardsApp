@@ -10,6 +10,7 @@ namespace Api.Repositories
     {
         Task<Role> Create(Role role);
         Task<bool> Update(Role newRole);
+        Task<Role> GetById(Guid id);
         List<Role> GetAll();
     }
 }
