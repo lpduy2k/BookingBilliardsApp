@@ -18,5 +18,9 @@ namespace Api.Services
         {
             return await _repo.Create(role);
         }
+        public async Task<bool> Update(Role newRole)
+        {
+            return await _repo.Update(newRole);
+        }
     }
 }

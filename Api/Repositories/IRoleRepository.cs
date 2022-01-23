@@ -9,5 +9,6 @@ namespace Api.Repositories
     public interface IRoleRepository<T>
     {
         Task<Role> Create(Role role);
+        Task<bool> Update(Role newRole);
     }
 }

@@ -81,7 +81,6 @@ namespace Api.Controllers
             }
             return NoContent();
         }
-
         [HttpPut("{id}")]
         [SwaggerOperation(Summary = "Update user")]
         public async Task<ActionResult> Update(Guid id, UpdateUserModal updateUser)
