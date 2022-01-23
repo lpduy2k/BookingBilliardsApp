@@ -22,5 +22,9 @@ namespace Api.Services
         {
             return await _repo.Update(newRole);
         }
+        public async Task<Role> GetById(Guid id)
+        {
+            return await _repo.GetById(id);
+        }
     }
 }

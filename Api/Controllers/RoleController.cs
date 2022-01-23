@@ -49,6 +49,16 @@ namespace Api.Controllers
             }
             return NoContent();
         }
-
+        [HttpGet("{id}")]
+        [SwaggerOperation(Summary = "Get role by Id")]
+        public async Task<ActionResult> GetById(Guid id)
+        {
+            Role role = await _service.GetById(id);
+            if (role == null)
+            {
+                return NotFound();
+            }
+            return Ok(role);
+        }
     }
 }
