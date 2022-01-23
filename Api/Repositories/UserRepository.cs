@@ -48,6 +48,13 @@ namespace Api.Repositories
             }
             return false;
         }
+        public async Task<bool> Delete(Guid id)
+        {
+            User user = await _context.Users.FindAsync(id);
+            _context.Users.Remove(user);
+            await _context.SaveChangesAsync();
+            return true;
+        }
         public async Task<bool> Update(User newUser)
         {
             User user = await _context.Users.AsNoTracking().FirstOrDefaultAsync(x => x.Id == newUser.Id);
@@ -59,6 +66,5 @@ namespace Api.Repositories
             await _context.SaveChangesAsync();
             return true;
         }
-
     }
 }

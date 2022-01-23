@@ -35,8 +35,9 @@ namespace Api.Controllers
             await _service.Create(user);
             return NoContent();
         }
+        
         [HttpGet("{username}")]
-        [SwaggerOperation(Summary = "Get username")]
+        [SwaggerOperation(Summary = "Get information user by username")]
         public ActionResult GetByUserName(string username)
         {
             User response = _service.GetByUserName(username);
@@ -67,8 +68,21 @@ namespace Api.Controllers
             }
             return NoContent();
         }
+        
+        [HttpDelete("{id}")]
+        [SwaggerOperation(Summary = "Delete user by Id")]
+        public async Task<ActionResult> Delete(Guid id)
+        {
+            bool check = await _service.Delete(id);
+            if (!check)
+            {
+                return NotFound();
+            }
+            return NoContent();
+        }
+        
         [HttpPut("{id}")]
-        [SwaggerOperation(Summary = "Update user (no password)")]
+        [SwaggerOperation(Summary = "Update user")]
         public async Task<ActionResult> Update(Guid id, UpdateUserModal updateUser)
         {
             if (id != updateUser.Id)
@@ -93,6 +107,5 @@ namespace Api.Controllers
             }
             return NoContent();
         }
-        
     }
 }

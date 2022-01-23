@@ -27,11 +27,14 @@ namespace Api.Services
         {
             return _repo.GetByUserName(username);
         }
+        public async Task<bool> Delete(Guid id)
+        {
+            return await _repo.Delete(id);
+        }
         public async Task<bool> Update(User newUser)
         {
             return await _repo.Update(newUser);
         }
-        
     }
 
 }
