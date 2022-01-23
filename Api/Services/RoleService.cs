@@ -26,5 +26,9 @@ namespace Api.Services
         {
             return await _repo.GetById(id);
         }
+        public List<Role> GetAll()
+        {
+            return _repo.GetAll();
+        }
     }
 }

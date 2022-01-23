@@ -41,5 +41,9 @@ namespace Api.Repositories
             }
             return role;
         }
+        public List<Role> GetAll()
+        {
+            return _context.Roles.ToList();
+        }
     }
 }
