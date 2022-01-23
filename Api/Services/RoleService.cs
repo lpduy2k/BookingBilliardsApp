@@ -22,5 +22,9 @@ namespace Api.Services
         {
             return await _repo.Update(newRole);
         }
+        public List<Role> GetAll()
+        {
+            return _repo.GetAll();
+        }
     }
 }

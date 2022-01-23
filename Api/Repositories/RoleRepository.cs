@@ -32,5 +32,9 @@ namespace Api.Repositories
             await _context.SaveChangesAsync();
             return true;
         }
+        public List<Role> GetAll()
+        {
+            return _context.Roles.ToList();
+        }
     }
 }
