@@ -1,4 +1,5 @@
 import 'package:booking_billiards_app/configs/themes/app_color.dart';
+import 'package:booking_billiards_app/utils/window_size.dart';
 import 'package:booking_billiards_app/configs/themes/app_text_style.dart';
 import 'package:booking_billiards_app/constants/assets_path.dart';
 import 'package:booking_billiards_app/view/forgetPassword/forget_password.dart';
@@ -36,13 +37,13 @@ class _WelcomePageState extends State<WelcomePage> {
         break;
       case 1:
         _backgroundColor = AppColor.lightBlack;
-        _registerYOffset = 184;
+        _registerYOffset = windowHeight - 474;
         _loginYOffset = windowHeight;
         break;
       case 2:
         _backgroundColor = AppColor.lightBlack;
         _registerYOffset = windowHeight;
-        _loginYOffset = 239;
+        _loginYOffset = windowHeight - 397;
         break;
     }
 
@@ -62,8 +63,8 @@ class _WelcomePageState extends State<WelcomePage> {
                   milliseconds: 1000,
                 ),
                 color: _backgroundColor,
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 20,
+                padding: EdgeInsets.symmetric(
+                  horizontal: windowWidth * windowSizeWidth(20),
                 ),
                 width: double.infinity,
                 height: windowHeight,
@@ -77,9 +78,9 @@ class _WelcomePageState extends State<WelcomePage> {
                         style: AppTextStyles.h2Black,
                         textAlign: TextAlign.center,
                       ),
-                      const Padding(
+                      Padding(
                         padding: EdgeInsets.only(
-                          top: 10,
+                          top: windowHeight * windowSizeHeight(10),
                         ),
                       ),
                       Text(
@@ -106,9 +107,9 @@ class _WelcomePageState extends State<WelcomePage> {
                                 }
                               });
                             }),
-                        const Padding(
+                        Padding(
                           padding: EdgeInsets.only(
-                            top: 10,
+                            top: windowHeight * windowSizeHeight(10),
                           ),
                         ),
                         ButtonDefault(
@@ -126,9 +127,9 @@ class _WelcomePageState extends State<WelcomePage> {
                                 }
                               });
                             }),
-                        const Padding(
+                        Padding(
                           padding: EdgeInsets.only(
-                            top: 10,
+                            top: windowHeight * windowSizeHeight(10),
                           ),
                         ),
                         RichText(
@@ -157,9 +158,9 @@ class _WelcomePageState extends State<WelcomePage> {
                             ],
                           ),
                         ),
-                        const Padding(
+                        Padding(
                           padding: EdgeInsets.only(
-                            bottom: 10,
+                            bottom: windowHeight * windowSizeHeight(10),
                           ),
                         ),
                       ],
@@ -217,6 +218,7 @@ class _WelcomePageState extends State<WelcomePage> {
                             ),
                           ),
                           SizedBox(
+                            height: 70,
                             width: double.infinity,
                             child: TextField(
                               keyboardType: TextInputType.number,
@@ -263,6 +265,7 @@ class _WelcomePageState extends State<WelcomePage> {
                             ),
                           ),
                           SizedBox(
+                            height: 70,
                             width: double.infinity,
                             child: TextField(
                               obscureText: true,
@@ -309,6 +312,7 @@ class _WelcomePageState extends State<WelcomePage> {
                             ),
                           ),
                           SizedBox(
+                            height: 70,
                             width: double.infinity,
                             child: TextField(
                               obscureText: true,
@@ -431,6 +435,7 @@ class _WelcomePageState extends State<WelcomePage> {
                             ),
                           ),
                           SizedBox(
+                            height: 70,
                             width: double.infinity,
                             child: TextField(
                               keyboardType: TextInputType.number,
@@ -477,6 +482,7 @@ class _WelcomePageState extends State<WelcomePage> {
                             ),
                           ),
                           SizedBox(
+                            height: 70,
                             width: double.infinity,
                             child: TextField(
                               obscureText: true,
