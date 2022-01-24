@@ -1,8 +1,6 @@
 import 'package:booking_billiards_app/configs/themes/app_color.dart';
 import 'package:booking_billiards_app/configs/themes/app_text_style.dart';
 import 'package:booking_billiards_app/utils/window_size.dart';
-import 'package:booking_billiards_app/view/forgetPassword/input_pin_code.dart';
-import 'package:booking_billiards_app/view/welcome/welcome.dart';
 import 'package:booking_billiards_app/widgets/button/button.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -126,17 +124,15 @@ class Body extends StatelessWidget {
                     style: AppTextStyles.h4Grey,
                     children: <TextSpan>[
                       TextSpan(
-                          text: ' Sign in',
-                          style: AppTextStyles.h4Pink,
-                          recognizer: TapGestureRecognizer()
-                            ..onTap = () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => const WelcomePage(),
-                                ),
-                              );
-                            })
+                        text: ' Sign in',
+                        style: AppTextStyles.h4Pink,
+                        recognizer: TapGestureRecognizer()
+                          ..onTap = () {
+                            Navigator.of(context).pushNamed(
+                              '/welcome',
+                            );
+                          },
+                      )
                     ],
                   ),
                 ),
@@ -149,11 +145,8 @@ class Body extends StatelessWidget {
             content: 'Submit',
             height: 49,
             width: double.infinity,
-            voidCallBack: () => Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const InputPinCode(),
-              ),
+            voidCallBack: () => Navigator.of(context).pushNamed(
+              '/inputPinCode',
             ),
           ),
         ],

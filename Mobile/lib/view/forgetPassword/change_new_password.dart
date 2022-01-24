@@ -1,7 +1,6 @@
 import 'package:booking_billiards_app/configs/themes/app_color.dart';
 import 'package:booking_billiards_app/configs/themes/app_text_style.dart';
 import 'package:booking_billiards_app/utils/window_size.dart';
-import 'package:booking_billiards_app/view/forgetPassword/success.dart';
 import 'package:booking_billiards_app/widgets/button/button.dart';
 import 'package:flutter/material.dart';
 
@@ -83,11 +82,8 @@ class Body extends StatelessWidget {
             content: 'Submit',
             height: 49,
             width: double.infinity,
-            voidCallBack: () => Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const Success(),
-              ),
+            voidCallBack: () => Navigator.of(context).pushNamed(
+              '/successForgetPassword',
             ),
           ),
         ],

@@ -1,7 +1,6 @@
 import 'package:booking_billiards_app/configs/themes/app_color.dart';
 import 'package:booking_billiards_app/configs/themes/app_text_style.dart';
 import 'package:booking_billiards_app/view/onboarding/data_onboarding.dart';
-import 'package:booking_billiards_app/view/welcome/welcome.dart';
 import 'package:flutter/material.dart';
 import 'package:intro_slider/intro_slider.dart';
 import 'package:intro_slider/slide_object.dart';
@@ -39,9 +38,8 @@ class _IntroSliderPageState extends State<IntroSliderPage> {
   }
 
   void onDonePress() {
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => const WelcomePage()),
+    Navigator.of(context).pushNamed(
+      '/welcome',
     );
   }
 

@@ -1,4 +1,4 @@
-import 'package:booking_billiards_app/view/onboarding/onboarding.dart';
+import 'package:booking_billiards_app/configs/routes/routes_generator.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -11,13 +11,11 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Parking App',
+      title: 'Booking Billiards App',
       initialRoute: "/",
-      routes: {
-        "/": (context) => const Onboarding(),
-      },
+      onGenerateRoute: RouteGenerator.generateRouter,
     );
   }
 }
