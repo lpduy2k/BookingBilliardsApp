@@ -1,7 +1,6 @@
 import 'package:booking_billiards_app/configs/themes/app_color.dart';
 import 'package:booking_billiards_app/configs/themes/app_text_style.dart';
 import 'package:booking_billiards_app/utils/window_size.dart';
-import 'package:booking_billiards_app/view/forgetPassword/change_new_password.dart';
 import 'package:booking_billiards_app/widgets/button/button.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -94,13 +93,8 @@ class Body extends StatelessWidget {
             color: AppColor.white,
             backgroundBtn: AppColor.black,
             voidCallBack: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) {
-                    return const ChangeNewPassword();
-                  },
-                ),
+              Navigator.of(context).pushNamed(
+                '/changeNewPassword',
               );
             },
           ),

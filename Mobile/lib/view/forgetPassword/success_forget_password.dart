@@ -6,8 +6,8 @@ import 'package:booking_billiards_app/view/welcome/welcome.dart';
 import 'package:booking_billiards_app/widgets/button/button.dart';
 import 'package:flutter/material.dart';
 
-class Success extends StatelessWidget {
-  const Success({Key? key}) : super(key: key);
+class SuccessForgetPassword extends StatelessWidget {
+  const SuccessForgetPassword({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -76,13 +76,8 @@ class Body extends StatelessWidget {
             color: AppColor.white,
             backgroundBtn: AppColor.black,
             voidCallBack: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) {
-                    return const WelcomePage();
-                  },
-                ),
+              Navigator.of(context).pushNamed(
+                '/welcome',
               );
             },
           ),
