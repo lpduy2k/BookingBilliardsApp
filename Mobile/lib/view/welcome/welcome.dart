@@ -36,7 +36,7 @@ class _WelcomePageState extends State<WelcomePage> {
         break;
       case 1:
         _backgroundColor = AppColor.lightBlack;
-        _registerYOffset = 184;
+        _registerYOffset = 400;
         _loginYOffset = windowHeight;
         break;
       case 2:

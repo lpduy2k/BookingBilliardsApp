@@ -6,6 +6,7 @@ using Api.Entities;
 using Api.Modals;
 using Api.Services;
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace Api.Controllers
 {
