@@ -26,6 +26,7 @@ class InputDefault extends StatelessWidget {
           ),
         ),
         SizedBox(
+          height: 70,
           width: double.infinity,
           child: TextField(
             decoration: InputDecoration(

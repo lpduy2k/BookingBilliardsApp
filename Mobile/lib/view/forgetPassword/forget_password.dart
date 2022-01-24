@@ -1,5 +1,6 @@
 import 'package:booking_billiards_app/configs/themes/app_color.dart';
 import 'package:booking_billiards_app/configs/themes/app_text_style.dart';
+import 'package:booking_billiards_app/utils/window_size.dart';
 import 'package:booking_billiards_app/view/forgetPassword/input_pin_code.dart';
 import 'package:booking_billiards_app/view/welcome/welcome.dart';
 import 'package:booking_billiards_app/widgets/button/button.dart';
@@ -11,8 +12,11 @@ class ForgetPassword extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double windowWidth = MediaQuery.of(context).size.width;
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
+      padding: EdgeInsets.symmetric(
+        horizontal: windowWidth * windowSizeWidth(20),
+      ),
       color: AppColor.white,
       child: Scaffold(
         backgroundColor: AppColor.white,
@@ -31,11 +35,14 @@ class Body extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    double windowHeight = MediaQuery.of(context).size.height;
     return Container(
       width: double.infinity,
-      height: size.height,
-      padding: const EdgeInsets.only(top: 100, bottom: 30),
+      height: windowHeight,
+      padding: EdgeInsets.only(
+        top: windowHeight * windowSizeHeight(100),
+        bottom: windowHeight * windowSizeHeight(30),
+      ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -49,8 +56,8 @@ class Body extends StatelessWidget {
                   fontSize: 20,
                 ),
               ),
-              const SizedBox(
-                height: 10,
+              SizedBox(
+                height: windowHeight * windowSizeHeight(10),
               ),
               Text(
                 'Enter your registered phone number below',
@@ -59,8 +66,8 @@ class Body extends StatelessWidget {
                   color: AppColor.grey,
                 ),
               ),
-              const SizedBox(
-                height: 80,
+              SizedBox(
+                height: windowHeight * windowSizeHeight(80),
               ),
               Column(
                 children: <Widget>[
@@ -76,6 +83,7 @@ class Body extends StatelessWidget {
                     ),
                   ),
                   SizedBox(
+                    height: 70,
                     width: double.infinity,
                     child: TextField(
                       keyboardType: TextInputType.number,
@@ -105,11 +113,13 @@ class Body extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(
-                height: 10,
+              SizedBox(
+                height: windowHeight * windowSizeHeight(10),
               ),
               Container(
-                padding: const EdgeInsets.only(left: 10),
+                padding: EdgeInsets.only(
+                  left: windowHeight * windowSizeHeight(10),
+                ),
                 child: RichText(
                   text: TextSpan(
                     text: 'Remember the password?',
