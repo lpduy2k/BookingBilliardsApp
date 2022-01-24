@@ -1,13 +1,13 @@
 import 'package:booking_billiards_app/configs/themes/app_color.dart';
 import 'package:booking_billiards_app/configs/themes/app_text_style.dart';
+import 'package:booking_billiards_app/constants/assets_path.dart';
 import 'package:booking_billiards_app/utils/window_size.dart';
-import 'package:booking_billiards_app/view/forgetPassword/change_new_password.dart';
+import 'package:booking_billiards_app/view/welcome/welcome.dart';
 import 'package:booking_billiards_app/widgets/button/button.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
-class InputPinCode extends StatelessWidget {
-  const InputPinCode({Key? key}) : super(key: key);
+class Success extends StatelessWidget {
+  const Success({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +31,6 @@ class Body extends StatelessWidget {
   const Body({
     Key? key,
   }) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     double windowWidth = MediaQuery.of(context).size.width;
@@ -49,12 +48,16 @@ class Body extends StatelessWidget {
         children: [
           Column(
             children: [
-              const Text(
-                'Enter verification code',
-                style: TextStyle(fontSize: 18),
+              Image.asset(AssetPath.success),
+              Text(
+                'Success',
+                style: AppTextStyles.h1Black,
+                textAlign: TextAlign.center,
               ),
-              const SizedBox(
-                height: 30,
+              Text(
+                'Congratulations your password has been changed',
+                textAlign: TextAlign.center,
+                style: AppTextStyles.h5Black,
               ),
               Container(
                 padding: EdgeInsets.symmetric(
@@ -62,27 +65,6 @@ class Body extends StatelessWidget {
                 ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: const [
-                    InputCode(),
-                    InputCode(),
-                    InputCode(),
-                    InputCode(),
-                  ],
-                ),
-              ),
-              SizedBox(
-                height: windowHeight * windowSizeHeight(30),
-              ),
-              RichText(
-                text: TextSpan(
-                  text: 'Didn\'t receive code?',
-                  style: AppTextStyles.h4Grey,
-                  children: <TextSpan>[
-                    TextSpan(
-                        text: ' Resend',
-                        style: AppTextStyles.h4Pink,
-                        recognizer: TapGestureRecognizer()..onTap = () {}),
-                  ],
                 ),
               ),
             ],
@@ -98,35 +80,13 @@ class Body extends StatelessWidget {
                 context,
                 MaterialPageRoute(
                   builder: (context) {
-                    return const ChangeNewPassword();
+                    return const WelcomePage();
                   },
                 ),
               );
             },
           ),
         ],
-      ),
-    );
-  }
-}
-
-class InputCode extends StatelessWidget {
-  const InputCode({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return const SizedBox(
-      width: 30,
-      child: TextField(
-        textAlign: TextAlign.center,
-        maxLength: 1,
-        keyboardType: TextInputType.number,
-        decoration: InputDecoration(
-          contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 10),
-          counterText: '',
-        ),
       ),
     );
   }
