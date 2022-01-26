@@ -2,6 +2,7 @@ import 'package:booking_billiards_app/configs/themes/app_color.dart';
 import 'package:booking_billiards_app/utils/window_size.dart';
 import 'package:booking_billiards_app/configs/themes/app_text_style.dart';
 import 'package:booking_billiards_app/constants/assets_path.dart';
+import 'package:booking_billiards_app/view/home/home.dart';
 import 'package:booking_billiards_app/widgets/button/button.dart';
 import 'package:flutter/material.dart';
 
@@ -536,12 +537,20 @@ class _WelcomePageState extends State<WelcomePage> {
                   Column(
                     children: <Widget>[
                       ButtonDefault(
-                          content: 'Login',
-                          height: 49,
-                          width: double.infinity,
-                          color: AppColor.white,
-                          backgroundBtn: AppColor.black,
-                          voidCallBack: () {}),
+                        content: 'Login',
+                        height: 49,
+                        width: double.infinity,
+                        color: AppColor.white,
+                        backgroundBtn: AppColor.black,
+                        voidCallBack: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => const Home(),
+                            ),
+                          );
+                        },
+                      ),
                       const SizedBox(
                         height: 10,
                       ),
