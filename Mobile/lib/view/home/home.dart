@@ -44,158 +44,173 @@ class Body extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        const SizedBox(
-          height: 30,
-        ),
-        const Header(),
-        const SizedBox(
-          height: 10,
-        ),
-        Container(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          height: 40,
-          child: TextField(
-            decoration: InputDecoration(
-              contentPadding: const EdgeInsets.symmetric(
-                vertical: 10,
-                horizontal: 10,
+        Padding(
+          padding: const EdgeInsets.only(top: 30),
+          child: Column(
+            children: <Widget>[
+              const Header(),
+              const SizedBox(
+                height: 10,
               ),
-              hintText: 'Search',
-              prefixIcon: const Padding(
-                padding: EdgeInsetsDirectional.only(start: 20, top: 10),
-                child: FaIcon(
-                  FontAwesomeIcons.search,
-                  size: 20,
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                height: 40,
+                child: TextField(
+                  decoration: InputDecoration(
+                    contentPadding: const EdgeInsets.symmetric(
+                      vertical: 10,
+                      horizontal: 10,
+                    ),
+                    hintText: 'Search',
+                    prefixIcon: const Padding(
+                      padding: EdgeInsetsDirectional.only(start: 20, top: 10),
+                      child: FaIcon(
+                        FontAwesomeIcons.search,
+                        size: 20,
+                      ),
+                    ),
+                    hintStyle: AppTextStyles.h5Black,
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide(color: AppColor.grey, width: 2),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                  ),
                 ),
               ),
-              hintStyle: AppTextStyles.h5Black,
-              border: OutlineInputBorder(
-                borderSide: BorderSide(color: AppColor.grey, width: 2),
-                borderRadius: BorderRadius.circular(12),
-              ),
-            ),
+            ],
           ),
         ),
-        const SizedBox(
-          height: 30,
+        Padding(
+          padding: const EdgeInsets.only(top: 20),
+          child: Column(
+            children: <Widget>[
+              CarouselSlider(
+                items: listImage
+                    .map(
+                      (e) => BuildImage(urlImage: e),
+                    )
+                    .toList(),
+                options: CarouselOptions(
+                  autoPlay: true,
+                  height: 100,
+                  autoPlayInterval: const Duration(seconds: 2),
+                ),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              Column(
+                children: <Widget>[
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: const [
+                          Text(
+                            'Today New Arivable',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          Text(
+                            'Best of the today billiards club list update',
+                            style: TextStyle(
+                              fontSize: 12,
+                            ),
+                          ),
+                        ],
+                      ),
+                      GestureDetector(
+                        onTap: () {},
+                        child: Row(
+                          children: const [
+                            Text('See All'),
+                            Icon(MdiIcons.menuRight)
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              SizedBox(
+                height: 220,
+                child: ListView(
+                  scrollDirection: Axis.horizontal,
+                  children: const [
+                    CardBida(),
+                    CardBida(),
+                    CardBida(),
+                    CardBida(),
+                    CardBida(),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
-        CarouselSlider(
-          items: listImage
-              .map(
-                (e) => BuildImage(urlImage: e),
+        Padding(
+          padding: const EdgeInsets.only(top: 20),
+          child: Column(
+            children: <Widget>[
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: const [
+                      Text(
+                        'Booking Billiard Club',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Text(
+                        'Check your city Near by Club',
+                        style: TextStyle(
+                          fontSize: 12,
+                        ),
+                      ),
+                    ],
+                  ),
+                  GestureDetector(
+                    onTap: () {},
+                    child: Row(
+                      children: const [
+                        Text('See All'),
+                        Icon(MdiIcons.menuRight)
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              SizedBox(
+                height: 120,
+                child: ListView(
+                  padding: EdgeInsets.zero,
+                  children: const [
+                    ListTileBida(),
+                    ListTileBida(),
+                    ListTileBida(),
+                    ListTileBida(),
+                    ListTileBida(),
+                  ],
+                ),
               )
-              .toList(),
-          options: CarouselOptions(
-            autoPlay: true,
-            height: 100,
-            autoPlayInterval: const Duration(seconds: 2),
-          ),
-        ),
-        const SizedBox(
-          height: 30,
-        ),
-        Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: const [
-                    Text(
-                      'Today New Arivable',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    Text(
-                      'Best of the today billiards club list update',
-                      style: TextStyle(
-                        fontSize: 12,
-                      ),
-                    ),
-                  ],
-                ),
-                GestureDetector(
-                  onTap: () {},
-                  child: Row(
-                    children: const [Text('See All'), Icon(MdiIcons.menuRight)],
-                  ),
-                ),
-              ],
-            ),
-          ],
-        ),
-        const SizedBox(
-          height: 10,
-        ),
-        SizedBox(
-          height: 220,
-          child: ListView(
-            scrollDirection: Axis.horizontal,
-            children: const [
-              CardBida(),
-              CardBida(),
-              CardBida(),
-              CardBida(),
-              CardBida(),
             ],
           ),
         ),
-        const SizedBox(
-          height: 30,
-        ),
-        Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: const [
-                    Text(
-                      'Booking Billiard Club',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    Text(
-                      'Check your city Near by Club',
-                      style: TextStyle(
-                        fontSize: 12,
-                      ),
-                    ),
-                  ],
-                ),
-                GestureDetector(
-                  onTap: () {},
-                  child: Row(
-                    children: const [Text('See All'), Icon(MdiIcons.menuRight)],
-                  ),
-                ),
-              ],
-            ),
-          ],
-        ),
-        const SizedBox(
-          height: 10,
-        ),
-        SizedBox(
-          height: 80,
-          child: ListView(
-            padding: EdgeInsets.zero,
-            children: const [
-              ListTileBida(),
-              ListTileBida(),
-              ListTileBida(),
-              ListTileBida(),
-              ListTileBida(),
-            ],
-          ),
-        )
       ],
     );
   }
@@ -254,42 +269,45 @@ class CardBida extends StatelessWidget {
         onTap: () => print('ok'),
         child: Card(
           elevation: 8,
-          child: Column(
-            children: [
-              Image.network(
-                'https://afamilycdn.com/150157425591193600/2021/7/7/iu-jestina1-1625588165978606449899.jpg',
-                height: 150,
-                fit: BoxFit.cover,
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              const Text(
-                '306 Billiard Club',
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              children: [
+                Image.network(
+                  'https://afamilycdn.com/150157425591193600/2021/7/7/iu-jestina1-1625588165978606449899.jpg',
+                  height: 150,
+                  fit: BoxFit.cover,
                 ),
-              ),
-              Row(
-                children: [
-                  FaIcon(
-                    FontAwesomeIcons.mapMarkerAlt,
-                    size: 15,
-                    color: AppColor.pink,
+                const SizedBox(
+                  height: 10,
+                ),
+                const Text(
+                  '306 Billiard Club',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
                   ),
-                  const Padding(
-                    padding: EdgeInsets.only(right: 3),
-                  ),
-                  const Text(
-                    '306 Ton Dan, Phuong 4, Quan 4',
-                    style: TextStyle(
-                      fontSize: 10,
+                ),
+                Row(
+                  children: <Widget>[
+                    FaIcon(
+                      FontAwesomeIcons.mapMarkerAlt,
+                      size: 15,
+                      color: AppColor.pink,
                     ),
-                  ),
-                ],
-              ),
-            ],
+                    const Padding(
+                      padding: EdgeInsets.only(right: 3),
+                    ),
+                    const Text(
+                      '306 Ton Dan, Phuong 4, Quan 4',
+                      style: TextStyle(
+                        fontSize: 10,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -317,7 +335,7 @@ class BuildImage extends StatelessWidget {
             Image.network(
               urlImage,
               fit: BoxFit.cover,
-            )
+            ),
           ],
         ),
       ),
