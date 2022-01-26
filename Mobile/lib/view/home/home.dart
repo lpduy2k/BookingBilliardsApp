@@ -23,7 +23,10 @@ class Home extends StatelessWidget {
       ),
       color: AppColor.white,
       child: Scaffold(
-        body: Body(listImage: listImage),
+        // resizeToAvoidBottomInset: false,
+        body: SingleChildScrollView(
+          child: Body(listImage: listImage),
+        ),
       ),
     );
   }
