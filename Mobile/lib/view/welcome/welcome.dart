@@ -541,7 +541,11 @@ class _WelcomePageState extends State<WelcomePage> {
                           width: double.infinity,
                           color: AppColor.white,
                           backgroundBtn: AppColor.black,
-                          voidCallBack: () {}),
+                          voidCallBack: () {
+                            Navigator.of(context).pushNamed(
+                              '/bottomNavBar',
+                            );
+                          }),
                       const SizedBox(
                         height: 10,
                       ),
