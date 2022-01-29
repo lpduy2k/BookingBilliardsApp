@@ -2,12 +2,11 @@ import 'package:booking_billiards_app/configs/themes/app_color.dart';
 import 'package:booking_billiards_app/configs/themes/app_text_style.dart';
 import 'package:booking_billiards_app/constants/assets_path.dart';
 import 'package:booking_billiards_app/utils/window_size.dart';
-import 'package:booking_billiards_app/view/welcome/welcome.dart';
 import 'package:booking_billiards_app/widgets/button/button.dart';
 import 'package:flutter/material.dart';
 
-class SuccessForgetPassword extends StatelessWidget {
-  const SuccessForgetPassword({Key? key}) : super(key: key);
+class SuccessPage extends StatelessWidget {
+  const SuccessPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -53,11 +52,6 @@ class Body extends StatelessWidget {
                 'Success',
                 style: AppTextStyles.h1Black,
                 textAlign: TextAlign.center,
-              ),
-              Text(
-                'Congratulations your password has been changed',
-                textAlign: TextAlign.center,
-                style: AppTextStyles.h5Black,
               ),
               Container(
                 padding: EdgeInsets.symmetric(
