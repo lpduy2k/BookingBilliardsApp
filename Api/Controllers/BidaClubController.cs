@@ -1,5 +1,5 @@
 ﻿using Api.Entities;
-using Api.Modals;
+using Api.Models;
 using Api.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -24,10 +24,10 @@ namespace Api.Controllers
         public ActionResult GetAll()
         {
             List<BidaClub> listBidaClub = _service.GetAll();
-            List<ResponseBidaClubModal> newFormatResponse = new List<ResponseBidaClubModal>();
+            List<ResponseBidaClubModel> newFormatResponse = new List<ResponseBidaClubModel>();
             foreach (var bidaClub in listBidaClub)
             {
-                ResponseBidaClubModal bida = new ResponseBidaClubModal
+                ResponseBidaClubModel bida = new ResponseBidaClubModel
                 {
                     Id = bidaClub.Id,
                     Name = bidaClub.Name,
@@ -53,7 +53,7 @@ namespace Api.Controllers
             {
                 return NotFound();
             }
-            ResponseBidaClubModal bida = new ResponseBidaClubModal
+            ResponseBidaClubModel bida = new ResponseBidaClubModel
             {
                 Id = response.Id,
                 Name = response.Name,
@@ -70,7 +70,7 @@ namespace Api.Controllers
         }
         [HttpPost]
         [SwaggerOperation(Summary = "Create new bida club")]
-        public async Task<ActionResult> Create(AddBidaClubModal newBidaClub)
+        public async Task<ActionResult> Create(AddBidaClubModel newBidaClub)
         {
             TimeSpan timeClose = TimeSpan.Parse(newBidaClub.TimeClose);
             TimeSpan timeOpen = TimeSpan.Parse(newBidaClub.TimeOpen);
@@ -91,7 +91,7 @@ namespace Api.Controllers
         }
         [HttpPut("{id}")]
         [SwaggerOperation(Summary = "Update bida club")]
-        public async Task<ActionResult> Update(Guid id, UpdateBidaClubModal updateBidaClub)
+        public async Task<ActionResult> Update(Guid id, UpdateBidaClubModel updateBidaClub)
         {
             if (id != updateBidaClub.Id)
             {

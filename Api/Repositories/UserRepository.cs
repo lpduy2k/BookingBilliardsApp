@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Api.Data;
 using Api.Entities;
-using Api.Modals;
+using Api.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace Api.Repositories
@@ -35,7 +35,7 @@ namespace Api.Repositories
             return user;
         }
 
-        public bool Login(LoginModal loginModal)
+        public bool Login(LoginModel loginModal)
         {
             User user = _context.Users.FirstOrDefault(u => u.Username == loginModal.Username);
             if (user == null)

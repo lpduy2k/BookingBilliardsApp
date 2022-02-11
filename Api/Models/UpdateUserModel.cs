@@ -1,7 +1,7 @@
 ﻿using System;
-namespace Api.Modals
+namespace Api.Models
 {
-    public class UpdateUserModal
+    public class UpdateUserModel
     {
         public Guid Id { get; set; }
         public string Username { get; set; }

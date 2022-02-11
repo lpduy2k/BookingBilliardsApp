@@ -1,7 +1,7 @@
 ﻿using System;
-namespace Api.Modals
+namespace Api.Models
 {
-    public class ResponseBidaTableModal
+    public class ResponseBidaTableModel
     {
         public Guid Id { get; set; }
         public string Name { get; set; }

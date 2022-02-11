@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Api.Modals
+namespace Api.Models
 {
-    public class ResponseUserModal
+    public class ResponseUserModel
     {
         public Guid Id { get; set; }
         public string Username { get; set; }

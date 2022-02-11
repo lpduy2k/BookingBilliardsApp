@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Api.Entities;
-using Api.Modals;
+using Api.Models;
 using Api.Services;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
@@ -18,13 +18,13 @@ namespace Api.Controllers
         }
         [HttpGet("{BidaClubId}")]
         [SwaggerOperation(Summary = "Get bida table by bida club id")]
-        public  ActionResult GetAllByBidaClubId(Guid BidaClubId)
+        public ActionResult GetAllByBidaClubId(Guid BidaClubId)
         {
-            List<BidaTable> response =  _service.GetAllByBidaClubId(BidaClubId);
-            List<ResponseBidaTableModal> newTable = new List<ResponseBidaTableModal>();
+            List<BidaTable> response = _service.GetAllByBidaClubId(BidaClubId);
+            List<ResponseBidaTableModel> newTable = new List<ResponseBidaTableModel>();
             foreach (var bidaTable in response)
             {
-                ResponseBidaTableModal table = new ResponseBidaTableModal
+                ResponseBidaTableModel table = new ResponseBidaTableModel
                 {
                     Id = bidaTable.Id,
                     Name = bidaTable.Name,
