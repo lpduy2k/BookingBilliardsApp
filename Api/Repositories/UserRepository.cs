@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Api.Data;
 using Api.Entities;
 using Api.Models;
+using BCrypt.Net;
 using Microsoft.EntityFrameworkCore;
 
 namespace Api.Repositories
@@ -21,6 +22,7 @@ namespace Api.Repositories
             // default user have role is 'User'
             var role = _context.Roles.FirstOrDefault(x => x.Name == "USER");
             user.RoleId = role.Id;
+            user.Password = BCrypt.Net.BCrypt.HashPassword(user.Password);
             await _context.Users.AddAsync(user);
             await _context.SaveChangesAsync();
             return user;
@@ -42,7 +44,8 @@ namespace Api.Repositories
             {
                 return false;
             }
-            if (user.Password == loginModal.Password)
+            bool isValidPassword = BCrypt.Net.BCrypt.Verify(loginModal.Password, user.Password);
+            if (isValidPassword)
             {
                 return true;
             }
