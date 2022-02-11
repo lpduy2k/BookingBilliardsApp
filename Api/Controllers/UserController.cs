@@ -20,7 +20,7 @@ namespace Api.Controllers
 
         [Route("Register")]
         [HttpPost]
-        public async Task<ActionResult> Register(ResponseUserModel newUser)
+        public async Task<ActionResult> Register(CreateUserModel newUser)
         {
             User user = new User
             {
@@ -32,7 +32,7 @@ namespace Api.Controllers
                 RoleId = newUser.RoleId
             };
             await _service.Create(user);
-            return NoContent();
+            return CreatedAtAction(nameof(GetByUserName), new { username = user.Username }, user);
         }
 
         [HttpGet("{username}")]
@@ -80,7 +80,7 @@ namespace Api.Controllers
         }
         [HttpPut("{id}")]
         [SwaggerOperation(Summary = "Update user")]
-        public async Task<ActionResult> Update(Guid id, UpdateUserModel updateUser)
+        public async Task<ActionResult> Update(Guid id, ResponseUserModel updateUser)
         {
             if (id != updateUser.Id)
             {
