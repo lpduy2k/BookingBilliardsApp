@@ -83,7 +83,7 @@ class Body extends StatelessWidget {
             height: 49,
             width: double.infinity,
             voidCallBack: () => Navigator.of(context).pushNamed(
-              '/successForgetPassword',
+              '/success',
             ),
           ),
         ],

@@ -1,5 +1,7 @@
 import 'package:booking_billiards_app/configs/routes/routes_generator.dart';
+import 'package:booking_billiards_app/providers/main_providers/main_providers.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   runApp(const MyApp());
@@ -11,11 +13,14 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Booking Billiards App',
-      initialRoute: "/",
-      onGenerateRoute: RouteGenerator.generateRouter,
+    return MultiProvider(
+      providers: MainProviders.providers,
+      child: const MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'Booking Billiards App',
+        initialRoute: "/",
+        onGenerateRoute: RouteGenerator.generateRouter,
+      ),
     );
   }
 }
