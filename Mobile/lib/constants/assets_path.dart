@@ -6,4 +6,5 @@ class AssetPath {
   static const String nextSlide = '$prePath/nextSlide.png';
   static const String google = '$prePath/google.png';
   static const String success = '$prePath/success.png';
+  static const String avatar = '$prePath/avatar.png';
 }
