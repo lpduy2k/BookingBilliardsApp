@@ -69,7 +69,7 @@ class Body extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: EdgeInsets.only(top: 20),
+            padding: EdgeInsets.only(top: 30),
           ),
           ListTile(
             leading: Icon(Icons.account_box_outlined),
@@ -84,6 +84,58 @@ class Body extends StatelessWidget {
               borderSide: BorderSide(color: AppColor.grey, width: 1),
               borderRadius: BorderRadius.circular(20),
             ),
+            iconColor: AppColor.black,
+          ),
+          Padding(
+            padding: EdgeInsets.only(top: 30),
+          ),
+          ListTile(
+            leading: Icon(Icons.language),
+            title: const Text(
+              'Language',
+              style: TextStyle(
+                fontSize: 16,
+              ),
+            ),
+            trailing: const Icon(Icons.navigate_next),
+            shape: OutlineInputBorder(
+              borderSide: BorderSide(color: AppColor.grey, width: 1),
+              borderRadius: BorderRadius.circular(20),
+            ),
+            iconColor: AppColor.black,
+          ),
+          Padding(
+            padding: EdgeInsets.only(top: 10),
+          ),
+          ListTile(
+            leading: Icon(Icons.textsms_outlined),
+            title: const Text(
+              'Booking History',
+              style: TextStyle(
+                fontSize: 16,
+              ),
+            ),
+            trailing: const Icon(Icons.navigate_next),
+            shape: OutlineInputBorder(
+              borderSide: BorderSide(color: AppColor.grey, width: 1),
+              borderRadius: BorderRadius.circular(20),
+            ),
+            iconColor: AppColor.black,
+          ),
+          Padding(
+            padding: EdgeInsets.only(top: 20),
+          ),
+          ButtonDefault(
+            width: 100,
+            height: 29,
+            content: 'Logout',
+            color: AppColor.white,
+            backgroundBtn: AppColor.black,
+            voidCallBack: () {
+              Navigator.of(context).pushNamed(
+                '',
+              );
+            },
           ),
         ],
       ),
