@@ -24,7 +24,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
   final screens = const [
     SuccessPage(), //nhap home , booking , account
     InputPinCode(),
-    accountPage(),
+    AccountPage(),
   ];
 
   @override

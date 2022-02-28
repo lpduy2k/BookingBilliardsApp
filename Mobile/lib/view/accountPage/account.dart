@@ -5,8 +5,8 @@ import '../../configs/themes/app_color.dart';
 import '../../utils/window_size.dart';
 import '../../widgets/button/button.dart';
 
-class accountPage extends StatelessWidget {
-  const accountPage({Key? key}) : super(key: key);
+class AccountPage extends StatelessWidget {
+  const AccountPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -36,15 +36,22 @@ class Body extends StatelessWidget {
     double windowHeight = MediaQuery.of(context).size.height;
 
     return Container(
-      padding: EdgeInsets.only(
-        top: windowHeight * windowSizeHeight(70),
-        bottom: windowHeight * windowSizeHeight(35),
-      ),
+      // padding: EdgeInsets.only(
+      //   top: windowHeight * windowSizeHeight(70),
+      //   bottom: windowHeight * windowSizeHeight(35),
+      // ),
+      padding: const EdgeInsets.symmetric(horizontal: 20),
       width: double.infinity,
-      height: MediaQuery.of(context).size.height - 58,
+      height: MediaQuery.of(context).size.height,
       child: Column(
         // mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
+          Padding(
+            padding: EdgeInsets.only(
+              top: windowHeight * windowSizeHeight(30),
+              bottom: windowHeight * windowSizeHeight(35),
+            ),
+          ),
           ListTile(
             leading: CircleAvatar(
               radius: 20,
@@ -61,16 +68,35 @@ class Body extends StatelessWidget {
                 fontWeight: FontWeight.bold,
               ),
             ),
+            subtitle: Row(
+              children: [
+                const Padding(
+                  padding: EdgeInsets.only(right: 3),
+                ),
+                const Text(
+                  'boychungtinh_chiyeuminhem@gmail.com',
+                  style: TextStyle(fontSize: 10),
+                ),
+              ],
+            ),
             trailing: const Icon(Icons.notifications_outlined),
             selectedColor: AppColor.white,
+            tileColor: AppColor.white,
             shape: OutlineInputBorder(
               borderSide: BorderSide(color: AppColor.grey, width: 1),
               borderRadius: BorderRadius.circular(20),
             ),
           ),
-          Padding(
-            padding: EdgeInsets.only(top: 30),
+          const Divider(
+            height: 40,
+            thickness: 2,
+            indent: 10,
+            endIndent: 10,
+            color: Colors.blueGrey,
           ),
+          // Padding(
+          //   padding: EdgeInsets.only(top: 30),
+          // ),
           ListTile(
             leading: Icon(Icons.account_box_outlined),
             title: const Text(
@@ -80,14 +106,22 @@ class Body extends StatelessWidget {
               ),
             ),
             trailing: const Icon(Icons.edit),
+            tileColor: AppColor.white,
             shape: OutlineInputBorder(
               borderSide: BorderSide(color: AppColor.grey, width: 1),
               borderRadius: BorderRadius.circular(20),
             ),
             iconColor: AppColor.black,
           ),
-          Padding(
-            padding: EdgeInsets.only(top: 30),
+          // Padding(
+          //   padding: EdgeInsets.only(top: 30),
+          // ),
+          const Divider(
+            height: 50,
+            thickness: 2,
+            indent: 10,
+            endIndent: 10,
+            color: Colors.blueGrey,
           ),
           ListTile(
             leading: Icon(Icons.language),
@@ -98,6 +132,7 @@ class Body extends StatelessWidget {
               ),
             ),
             trailing: const Icon(Icons.navigate_next),
+            tileColor: AppColor.white,
             shape: OutlineInputBorder(
               borderSide: BorderSide(color: AppColor.grey, width: 1),
               borderRadius: BorderRadius.circular(20),
@@ -121,6 +156,7 @@ class Body extends StatelessWidget {
               borderRadius: BorderRadius.circular(20),
             ),
             iconColor: AppColor.black,
+            tileColor: AppColor.white,
           ),
           Padding(
             padding: EdgeInsets.only(top: 20),
@@ -130,10 +166,10 @@ class Body extends StatelessWidget {
             height: 29,
             content: 'Logout',
             color: AppColor.white,
-            backgroundBtn: AppColor.black,
+            backgroundBtn: AppColor.red,
             voidCallBack: () {
               Navigator.of(context).pushNamed(
-                '',
+                '/welcome',
               );
             },
           ),
