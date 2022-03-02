@@ -89,7 +89,7 @@ class Body extends StatelessWidget {
           ButtonDefault(
             width: double.infinity,
             height: 49,
-            content: 'Sign In',
+            content: 'Confirm',
             color: AppColor.white,
             backgroundBtn: AppColor.black,
             voidCallBack: () {

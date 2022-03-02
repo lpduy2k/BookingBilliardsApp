@@ -1,8 +1,8 @@
 import 'package:booking_billiards_app/configs/themes/app_color.dart';
-
+import 'package:booking_billiards_app/view/accountPage/account.dart';
 import 'package:booking_billiards_app/view/forgetPassword/forget_password.dart';
 import 'package:booking_billiards_app/view/forgetPassword/input_pin_code.dart';
-import 'package:booking_billiards_app/view/forgetPassword/success_forget_password.dart';
+import 'package:booking_billiards_app/view/success/success.dart';
 
 import 'package:flutter/material.dart';
 
@@ -14,18 +14,11 @@ class BottomNavBar extends StatefulWidget {
 }
 
 class _BottomNavBarState extends State<BottomNavBar> {
-  // final ScrollController _controller = ScrollController();
-  // late final ScrollListener _model;
-
-  // BottomNavBar() {
-  //   _model = ScrollListener.initialise(_controller);
-  // }
-
   int currentIndex = 0;
   final screens = const [
-    SuccessForgetPassword(), //nhap home , booking , account
+    SuccessPage(), //nhap home , booking , account
     InputPinCode(),
-    ForgetPassword(),
+    AccountPage(),
   ];
 
   @override
