@@ -7,4 +7,5 @@ class AppColor {
   static final HexColor lightGrey = HexColor("#E6E6E6");
   static final HexColor white = HexColor("#FFFFFF");
   static final HexColor pink = HexColor("#E53170");
+  static final HexColor red = HexColor("#b23b3b");
 }
