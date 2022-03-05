@@ -1,10 +1,14 @@
 import 'package:booking_billiards_app/configs/themes/app_color.dart';
+import 'package:booking_billiards_app/providers/sign_in_provider.dart';
+import 'package:booking_billiards_app/providers/sign_up_provider.dart';
 import 'package:booking_billiards_app/utils/window_size.dart';
 import 'package:booking_billiards_app/configs/themes/app_text_style.dart';
 import 'package:booking_billiards_app/constants/assets_path.dart';
 import 'package:booking_billiards_app/view/home/home.dart';
 import 'package:booking_billiards_app/widgets/button/button.dart';
+import 'package:booking_billiards_app/widgets/input/input.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class WelcomePage extends StatefulWidget {
   const WelcomePage({Key? key}) : super(key: key);
@@ -47,6 +51,10 @@ class _WelcomePageState extends State<WelcomePage> {
         break;
     }
 
+    SignInProvider signInProvider = Provider.of<SignInProvider>(context);
+
+    SignUpProvider signUpProvider = Provider.of<SignUpProvider>(context);
+
     return Scaffold(
       body: SingleChildScrollView(
         child: Stack(
@@ -55,6 +63,15 @@ class _WelcomePageState extends State<WelcomePage> {
               onTap: () {
                 setState(() {
                   _pageState = 0;
+                  if (signInProvider.phone.error != null) {
+                    signInProvider.clearPhoneController();
+                  }
+                  if (signUpProvider.phone.error != null) {
+                    signUpProvider.clearPhoneController();
+                  }
+                  signInProvider.clearPasswordController();
+                  signUpProvider.clearPasswordController();
+                  signUpProvider.clearConfirmController();
                 });
               },
               child: AnimatedContainer(
@@ -204,143 +221,116 @@ class _WelcomePageState extends State<WelcomePage> {
                           style: AppTextStyles.h3Pink,
                         ),
                       ),
-                      Column(
-                        children: <Widget>[
-                          Container(
-                            alignment: Alignment.topLeft,
-                            padding: const EdgeInsets.only(
-                              left: 10,
-                              bottom: 5,
-                            ),
-                            child: Text(
-                              'Phone Number',
-                              style: AppTextStyles.h3Black,
-                            ),
-                          ),
-                          SizedBox(
-                            height: 70,
-                            width: double.infinity,
-                            child: TextField(
-                              keyboardType: TextInputType.number,
-                              decoration: InputDecoration(
-                                contentPadding: const EdgeInsets.symmetric(
-                                  vertical: 10,
-                                  horizontal: 10,
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: AppColor.grey,
-                                    width: 2,
-                                  ),
-                                  borderRadius: BorderRadius.circular(12),
-                                ),
-                                border: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: AppColor.grey,
-                                    width: 2,
-                                  ),
-                                  borderRadius: BorderRadius.circular(12),
-                                ),
-                                hintText: 'Eg: 0333xxx.xxx',
-                                hintStyle: AppTextStyles.h4Grey,
-                              ),
-                            ),
-                          ),
-                        ],
+                      InputDefault(
+                        title: 'Phone Number',
+                        suffixIcon: signUpProvider.textPhone.isNotEmpty
+                            ? IconButton(
+                                onPressed: () =>
+                                    signUpProvider.clearPhoneController(),
+                                icon: const Icon(Icons.clear_rounded),
+                                color: AppColor.pink,
+                              )
+                            : null,
+                        hintText: 'Eg: 0333xxx.xxx',
+                        errorText: signUpProvider.phone.error,
+                        autofocus: false,
+                        obscureText: false,
+                        keyboardType: TextInputType.phone,
+                        textInputAction: TextInputAction.next,
+                        controller: signUpProvider.phoneController,
+                        onChanged: (String value) {
+                          signUpProvider.checkPhone(value);
+                        },
+                        focusNode: signUpProvider.phoneFocus,
+                        onEditingComplete: () {
+                          signUpProvider.changeFocus(context, 'phone');
+                        },
                       ),
                       const SizedBox(
                         height: 5,
                       ),
-                      Column(
-                        children: <Widget>[
-                          Container(
-                            alignment: Alignment.topLeft,
-                            padding: const EdgeInsets.only(
-                              left: 10,
-                              bottom: 5,
-                            ),
-                            child: Text(
-                              'Password',
-                              style: AppTextStyles.h3Black,
-                            ),
-                          ),
-                          SizedBox(
-                            height: 70,
-                            width: double.infinity,
-                            child: TextField(
-                              obscureText: true,
-                              decoration: InputDecoration(
-                                contentPadding: const EdgeInsets.symmetric(
-                                  vertical: 10,
-                                  horizontal: 10,
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: AppColor.grey,
-                                    width: 2,
+                      InputDefault(
+                        title: 'Password',
+                        suffixIcon: signUpProvider.textPassword.isNotEmpty
+                            ? Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                mainAxisSize: MainAxisSize.min,
+                                children: <Widget>[
+                                  IconButton(
+                                    onPressed: () => signUpProvider
+                                        .clearPasswordController(),
+                                    icon: const Icon(Icons.clear_rounded),
+                                    color: AppColor.pink,
                                   ),
-                                  borderRadius: BorderRadius.circular(12),
-                                ),
-                                border: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: AppColor.grey,
-                                    width: 2,
+                                  IconButton(
+                                    onPressed: () =>
+                                        signUpProvider.changePasswordVariable(),
+                                    icon: signUpProvider.isPasswordVariable
+                                        ? const Icon(Icons.visibility)
+                                        : const Icon(Icons.visibility_off),
+                                    color: AppColor.pink,
                                   ),
-                                  borderRadius: BorderRadius.circular(12),
-                                ),
-                                hintText: '••••••••••',
-                                hintStyle: AppTextStyles.h4Grey,
-                              ),
-                            ),
-                          ),
-                        ],
+                                ],
+                              )
+                            : null,
+                        hintText: '••••••••••',
+                        errorText: signUpProvider.password.error,
+                        autofocus: false,
+                        obscureText: signUpProvider.isPasswordVariable,
+                        keyboardType: TextInputType.text,
+                        textInputAction: TextInputAction.next,
+                        controller: signUpProvider.passwordController,
+                        onChanged: (String value) {
+                          signUpProvider.checkPassword(value);
+                        },
+                        focusNode: signUpProvider.passwordFocus,
+                        onEditingComplete: () {
+                          signUpProvider.changeFocus(context, 'password');
+                        },
                       ),
                       const SizedBox(
                         height: 5,
                       ),
-                      Column(
-                        children: <Widget>[
-                          Container(
-                            alignment: Alignment.topLeft,
-                            padding: const EdgeInsets.only(
-                              left: 10,
-                              bottom: 5,
-                            ),
-                            child: Text(
-                              'Confirm Password',
-                              style: AppTextStyles.h3Black,
-                            ),
-                          ),
-                          SizedBox(
-                            height: 70,
-                            width: double.infinity,
-                            child: TextField(
-                              obscureText: true,
-                              decoration: InputDecoration(
-                                contentPadding: const EdgeInsets.symmetric(
-                                  vertical: 10,
-                                  horizontal: 10,
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: AppColor.grey,
-                                    width: 2,
+                      InputDefault(
+                        title: 'Confirm Password',
+                        suffixIcon: signUpProvider.textConfirm.isNotEmpty
+                            ? Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                mainAxisSize: MainAxisSize.min,
+                                children: <Widget>[
+                                  IconButton(
+                                    onPressed: () =>
+                                        signUpProvider.clearConfirmController(),
+                                    icon: const Icon(Icons.clear_rounded),
+                                    color: AppColor.pink,
                                   ),
-                                  borderRadius: BorderRadius.circular(12),
-                                ),
-                                border: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: AppColor.grey,
-                                    width: 2,
+                                  IconButton(
+                                    onPressed: () =>
+                                        signUpProvider.changeConfirmVariable(),
+                                    icon: signUpProvider.isConfirmVariable
+                                        ? const Icon(Icons.visibility)
+                                        : const Icon(Icons.visibility_off),
+                                    color: AppColor.pink,
                                   ),
-                                  borderRadius: BorderRadius.circular(12),
-                                ),
-                                hintText: '••••••••••',
-                                hintStyle: AppTextStyles.h4Grey,
-                              ),
-                            ),
-                          ),
-                        ],
+                                ],
+                              )
+                            : null,
+                        hintText: '••••••••••',
+                        errorText: signUpProvider.confirm.error,
+                        autofocus: false,
+                        obscureText: signUpProvider.isConfirmVariable,
+                        keyboardType: TextInputType.text,
+                        textInputAction: TextInputAction.done,
+                        controller: signUpProvider.confirmController,
+                        onChanged: (String value) {
+                          signUpProvider.checkConfirm(value);
+                        },
+                        focusNode: signUpProvider.confirmFocus,
+                        onEditingComplete: () {
+                          signUpProvider.changeFocus(context, 'confirm');
+                        },
                       ),
                       const SizedBox(
                         height: 15,
@@ -350,12 +340,15 @@ class _WelcomePageState extends State<WelcomePage> {
                   Column(
                     children: <Widget>[
                       ButtonDefault(
-                          content: 'Registration',
-                          height: 49,
-                          width: double.infinity,
-                          color: AppColor.white,
-                          backgroundBtn: AppColor.black,
-                          voidCallBack: () {}),
+                        content: 'Registration',
+                        height: 49,
+                        width: double.infinity,
+                        color: AppColor.white,
+                        backgroundBtn: AppColor.black,
+                        voidCallBack: () {
+                          signUpProvider.submitData(context);
+                        },
+                      ),
                       const SizedBox(
                         height: 10,
                       ),
@@ -421,96 +414,73 @@ class _WelcomePageState extends State<WelcomePage> {
                           style: AppTextStyles.h3Pink,
                         ),
                       ),
-                      Column(
-                        children: <Widget>[
-                          Container(
-                            alignment: Alignment.topLeft,
-                            padding: const EdgeInsets.only(
-                              left: 10,
-                              bottom: 5,
-                            ),
-                            child: Text(
-                              'Phone Number',
-                              style: AppTextStyles.h3Black,
-                            ),
-                          ),
-                          SizedBox(
-                            height: 70,
-                            width: double.infinity,
-                            child: TextField(
-                              keyboardType: TextInputType.number,
-                              decoration: InputDecoration(
-                                contentPadding: const EdgeInsets.symmetric(
-                                  vertical: 10,
-                                  horizontal: 10,
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: AppColor.grey,
-                                    width: 2,
-                                  ),
-                                  borderRadius: BorderRadius.circular(12),
-                                ),
-                                border: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: AppColor.grey,
-                                    width: 2,
-                                  ),
-                                  borderRadius: BorderRadius.circular(12),
-                                ),
-                                hintText: 'Eg: 0333xxx.xxx',
-                                hintStyle: AppTextStyles.h4Grey,
-                              ),
-                            ),
-                          ),
-                        ],
+                      InputDefault(
+                        title: 'Phone Number',
+                        suffixIcon: signInProvider.textPhone.isNotEmpty
+                            ? IconButton(
+                                onPressed: () =>
+                                    signInProvider.clearPhoneController(),
+                                icon: const Icon(Icons.clear_rounded),
+                                color: AppColor.pink,
+                              )
+                            : null,
+                        hintText: 'Eg: 0333xxx.xxx',
+                        errorText: signInProvider.phone.error,
+                        autofocus: true,
+                        obscureText: false,
+                        keyboardType: TextInputType.phone,
+                        textInputAction: TextInputAction.next,
+                        controller: signInProvider.phoneController,
+                        onChanged: (String value) {
+                          signInProvider.checkPhone(value);
+                        },
+                        focusNode: signInProvider.phoneFocus,
+                        onEditingComplete: () {
+                          signInProvider.changeFocus(context, 'phone');
+                        },
                       ),
                       const SizedBox(
                         height: 5,
                       ),
-                      Column(
-                        children: <Widget>[
-                          Container(
-                            alignment: Alignment.topLeft,
-                            padding: const EdgeInsets.only(
-                              left: 10,
-                              bottom: 5,
-                            ),
-                            child: Text(
-                              'Password',
-                              style: AppTextStyles.h3Black,
-                            ),
-                          ),
-                          SizedBox(
-                            height: 70,
-                            width: double.infinity,
-                            child: TextField(
-                              obscureText: true,
-                              decoration: InputDecoration(
-                                contentPadding: const EdgeInsets.symmetric(
-                                  vertical: 10,
-                                  horizontal: 10,
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: AppColor.grey,
-                                    width: 2,
+                      InputDefault(
+                        title: 'Password',
+                        suffixIcon: signInProvider.textPassword.isNotEmpty
+                            ? Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                mainAxisSize: MainAxisSize.min,
+                                children: <Widget>[
+                                  IconButton(
+                                    onPressed: () => signInProvider
+                                        .clearPasswordController(),
+                                    icon: const Icon(Icons.clear_rounded),
+                                    color: AppColor.pink,
                                   ),
-                                  borderRadius: BorderRadius.circular(12),
-                                ),
-                                border: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: AppColor.grey,
-                                    width: 2,
+                                  IconButton(
+                                    onPressed: () =>
+                                        signInProvider.changePasswordVariable(),
+                                    icon: signInProvider.isPasswordVariable
+                                        ? const Icon(Icons.visibility)
+                                        : const Icon(Icons.visibility_off),
+                                    color: AppColor.pink,
                                   ),
-                                  borderRadius: BorderRadius.circular(12),
-                                ),
-                                hintText: '••••••••••',
-                                hintStyle: AppTextStyles.h4Grey,
-                              ),
-                            ),
-                          ),
-                        ],
+                                ],
+                              )
+                            : null,
+                        hintText: '••••••••••',
+                        errorText: signInProvider.password.error,
+                        autofocus: false,
+                        obscureText: signInProvider.isPasswordVariable,
+                        keyboardType: TextInputType.text,
+                        textInputAction: TextInputAction.done,
+                        controller: signInProvider.passwordController,
+                        onChanged: (String value) {
+                          signInProvider.checkPassword(value);
+                        },
+                        focusNode: signInProvider.passwordFocus,
+                        onEditingComplete: () {
+                          signInProvider.changeFocus(context, 'password');
+                        },
                       ),
                       const SizedBox(
                         height: 5,
@@ -543,12 +513,7 @@ class _WelcomePageState extends State<WelcomePage> {
                         color: AppColor.white,
                         backgroundBtn: AppColor.black,
                         voidCallBack: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (_) => const Home(),
-                            ),
-                          );
+                          signInProvider.submitData(context);
                         },
                       ),
                       const SizedBox(

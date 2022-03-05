@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Api.Entities;
-using Api.Modals;
+using Api.Models;
 using Api.Services;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
@@ -20,7 +20,7 @@ namespace Api.Controllers
 
         [HttpPost]
         [SwaggerOperation(Summary = "Register new role")]
-        public async Task<ActionResult> Create(ResponseRoleModal newRole)
+        public async Task<ActionResult> Create(ResponseRoleModel newRole)
         {
             Role role = new Role
             {
@@ -65,7 +65,7 @@ namespace Api.Controllers
         public ActionResult GetAll()
         {
             List<Role> listRoles = _service.GetAll();
-            
+
             return Ok(listRoles);
         }
         [HttpDelete("{id}")]
