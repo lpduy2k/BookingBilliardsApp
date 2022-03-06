@@ -1,6 +1,7 @@
 import 'package:booking_billiards_app/configs/themes/app_color.dart';
 import 'package:booking_billiards_app/model/response/get_bida_club_res.dart';
 import 'package:booking_billiards_app/view/accountPage/account.dart';
+import 'package:booking_billiards_app/view/detailsClub/detailsClub.dart';
 import 'package:booking_billiards_app/view/forgetPassword/input_pin_code.dart';
 import 'package:booking_billiards_app/view/home/home.dart';
 
@@ -23,7 +24,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
   void initState() {
     screens = [
       Home(listBidaClub: widget.listBidaClub), //nhap home , booking , account
-      InputPinCode(),
+      DetailsClub(),
       AccountPage(),
     ];
   }
