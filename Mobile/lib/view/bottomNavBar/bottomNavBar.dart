@@ -1,25 +1,34 @@
 import 'package:booking_billiards_app/configs/themes/app_color.dart';
+import 'package:booking_billiards_app/model/response/get_bida_club_res.dart';
 import 'package:booking_billiards_app/view/accountPage/account.dart';
-import 'package:booking_billiards_app/view/forgetPassword/forget_password.dart';
 import 'package:booking_billiards_app/view/forgetPassword/input_pin_code.dart';
-import 'package:booking_billiards_app/view/success/success.dart';
+import 'package:booking_billiards_app/view/home/home.dart';
 
 import 'package:flutter/material.dart';
 
 class BottomNavBar extends StatefulWidget {
-  const BottomNavBar({Key? key}) : super(key: key);
+  final List<GetBidaClubRes> listBidaClub;
+  const BottomNavBar({
+    Key? key,
+    required this.listBidaClub,
+  }) : super(key: key);
 
   @override
   _BottomNavBarState createState() => _BottomNavBarState();
 }
 
 class _BottomNavBarState extends State<BottomNavBar> {
+  var screens = [];
+  @override
+  void initState() {
+    screens = [
+      Home(listBidaClub: widget.listBidaClub), //nhap home , booking , account
+      InputPinCode(),
+      AccountPage(),
+    ];
+  }
+
   int currentIndex = 0;
-  final screens = const [
-    SuccessPage(), //nhap home , booking , account
-    InputPinCode(),
-    AccountPage(),
-  ];
 
   @override
   Widget build(BuildContext context) {

@@ -1,3 +1,8 @@
+import 'dart:developer';
+
+import 'package:booking_billiards_app/repository/impl/bida_club_rep_impl.dart';
+import 'package:booking_billiards_app/view/bottomNavBar/bottomNavBar.dart';
+import 'package:booking_billiards_app/view_model/url_api/url_api.dart';
 import 'package:flutter/material.dart';
 
 class ValidationItem {
@@ -99,9 +104,15 @@ class SignInProvider with ChangeNotifier {
       checkPassword(_password.value ?? "");
       notifyListeners();
     } else if (!submitValid && isValid) {
-      Navigator.of(context).pushNamed('/success');
-      clearPhoneController();
-      clearPasswordController();
+      BidaClubRepImpl().getBidaClub(UrlApi.bidaClubPath).then((value) async {
+        Navigator.push(context, MaterialPageRoute(builder: (context) {
+          return BottomNavBar(listBidaClub: value);
+        }));
+        clearPhoneController();
+        clearPasswordController();
+      }).onError((error, stackTrace) {
+        log(error.toString());
+      });
     }
   }
 }
