@@ -1,5 +1,5 @@
 import 'package:booking_billiards_app/configs/routes/routes_generator.dart';
-import 'package:booking_billiards_app/providers/main_providers/main_providers.dart';
+import 'package:booking_billiards_app/view_model/providers/main_providers/main_providers.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

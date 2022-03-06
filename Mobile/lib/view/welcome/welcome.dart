@@ -1,9 +1,10 @@
 import 'package:booking_billiards_app/configs/themes/app_color.dart';
-import 'package:booking_billiards_app/providers/sign_in_provider.dart';
-import 'package:booking_billiards_app/providers/sign_up_provider.dart';
+
 import 'package:booking_billiards_app/utils/window_size.dart';
 import 'package:booking_billiards_app/configs/themes/app_text_style.dart';
 import 'package:booking_billiards_app/constants/assets_path.dart';
+import 'package:booking_billiards_app/view_model/providers/sign_in_provider.dart';
+import 'package:booking_billiards_app/view_model/providers/sign_up_provider.dart';
 import 'package:booking_billiards_app/widgets/button/button.dart';
 import 'package:booking_billiards_app/widgets/input/input.dart';
 import 'package:flutter/material.dart';
