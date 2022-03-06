@@ -269,7 +269,7 @@ class Body extends StatelessWidget {
                 height: 10,
               ),
               SizedBox(
-                height: windowHeight * windowSizeHeight(100),
+                height: windowHeight * windowSizeHeight(300),
                 child: ListView(
                   padding: EdgeInsets.zero,
                   children: [
