@@ -1,5 +1,6 @@
 import 'package:booking_billiards_app/configs/themes/app_color.dart';
 import 'package:booking_billiards_app/configs/themes/app_text_style.dart';
+import 'package:booking_billiards_app/model/response/get_bida_club_res.dart';
 import 'package:booking_billiards_app/utils/window_size.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
@@ -7,7 +8,11 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class Home extends StatelessWidget {
-  const Home({Key? key}) : super(key: key);
+  final List<GetBidaClubRes> listBidaClub;
+  const Home({
+    Key? key,
+    required this.listBidaClub,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +30,10 @@ class Home extends StatelessWidget {
       child: Scaffold(
         // resizeToAvoidBottomInset: false,
         body: SingleChildScrollView(
-          child: Body(listImage: listImage),
+          child: Body(
+            listImage: listImage,
+            listBidaClub: listBidaClub,
+          ),
         ),
       ),
     );
@@ -36,12 +44,16 @@ class Body extends StatelessWidget {
   const Body({
     Key? key,
     required this.listImage,
+    required this.listBidaClub,
   }) : super(key: key);
 
   final List<String> listImage;
+  final List<GetBidaClubRes> listBidaClub;
 
   @override
   Widget build(BuildContext context) {
+    double windowWidth = MediaQuery.of(context).size.width;
+    double windowHeight = MediaQuery.of(context).size.height;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -127,9 +139,15 @@ class Body extends StatelessWidget {
                       GestureDetector(
                         onTap: () {},
                         child: Row(
-                          children: const [
-                            Text('See All'),
-                            Icon(MdiIcons.menuRight)
+                          children: [
+                            Text(
+                              'See All',
+                              style: TextStyle(color: AppColor.pink),
+                            ),
+                            Icon(
+                              MdiIcons.menuRight,
+                              color: AppColor.pink,
+                            )
                           ],
                         ),
                       ),
@@ -141,15 +159,66 @@ class Body extends StatelessWidget {
                 height: 10,
               ),
               SizedBox(
-                height: 220,
+                height: windowHeight * windowSizeHeight(200),
                 child: ListView(
                   scrollDirection: Axis.horizontal,
-                  children: const [
-                    CardBida(),
-                    CardBida(),
-                    CardBida(),
-                    CardBida(),
-                    CardBida(),
+                  children: [
+                    for (var list in listBidaClub)
+                      SizedBox(
+                        child: GestureDetector(
+                          onTap: () => print('ok'),
+                          child: Card(
+                            elevation: 8,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Column(
+                                children: [
+                                  Image.network(
+                                    list.image!,
+                                    height:
+                                        windowHeight * windowSizeHeight(125),
+                                    width: windowWidth * windowSizeWidth(150),
+                                    fit: BoxFit.cover,
+                                  ),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  Text(
+                                    list.name!.length < 22
+                                        ? list.name!
+                                        : list.name!.substring(0, 20) + "...",
+                                    style: const TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  Row(
+                                    children: <Widget>[
+                                      FaIcon(
+                                        FontAwesomeIcons.mapMarkerAlt,
+                                        size: 15,
+                                        color: AppColor.pink,
+                                      ),
+                                      const Padding(
+                                        padding: EdgeInsets.only(right: 3),
+                                      ),
+                                      Text(
+                                        list.address!.length < 28
+                                            ? list.address!
+                                            : list.address!.substring(0, 26) +
+                                                "...",
+                                        style: const TextStyle(
+                                          fontSize: 10,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      )
                   ],
                 ),
               ),
@@ -165,8 +234,8 @@ class Body extends StatelessWidget {
                 children: [
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: const [
-                      Text(
+                    children: [
+                      const Text(
                         'Booking Billiard Club',
                         style: TextStyle(
                           fontSize: 16,
@@ -174,19 +243,23 @@ class Body extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        'Check your city Near by Club',
-                        style: TextStyle(
-                          fontSize: 12,
-                        ),
+                        '  Check your city Near by Club',
+                        style: TextStyle(fontSize: 12, color: AppColor.pink),
                       ),
                     ],
                   ),
                   GestureDetector(
                     onTap: () {},
                     child: Row(
-                      children: const [
-                        Text('See All'),
-                        Icon(MdiIcons.menuRight)
+                      children: [
+                        Text(
+                          'See All',
+                          style: TextStyle(color: AppColor.pink),
+                        ),
+                        Icon(
+                          MdiIcons.menuRight,
+                          color: AppColor.pink,
+                        )
                       ],
                     ),
                   ),
@@ -196,15 +269,52 @@ class Body extends StatelessWidget {
                 height: 10,
               ),
               SizedBox(
-                height: 120,
+                height: windowHeight * windowSizeHeight(100),
                 child: ListView(
                   padding: EdgeInsets.zero,
-                  children: const [
-                    ListTileBida(),
-                    ListTileBida(),
-                    ListTileBida(),
-                    ListTileBida(),
-                    ListTileBida(),
+                  children: [
+                    for (var list in listBidaClub.reversed)
+                      GestureDetector(
+                        onTap: () {
+                          print('ok');
+                        },
+                        child: Card(
+                          elevation: 8,
+                          child: ListTile(
+                            leading: Image.network(
+                              list.image!,
+                              width: windowWidth * windowSizeWidth(60),
+                            ),
+                            title: Text(
+                              list.name!.length < 28
+                                  ? list.name!
+                                  : list.name!.substring(0, 26) + "...",
+                              style: const TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            subtitle: Row(
+                              children: [
+                                FaIcon(
+                                  FontAwesomeIcons.mapMarkerAlt,
+                                  size: 15,
+                                  color: AppColor.pink,
+                                ),
+                                const Padding(
+                                  padding: EdgeInsets.only(right: 3),
+                                ),
+                                Text(
+                                  list.address!.length < 33
+                                      ? list.address!
+                                      : list.address!.substring(0, 31) + "...",
+                                  style: const TextStyle(fontSize: 10),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      )
                   ],
                 ),
               )
@@ -212,105 +322,6 @@ class Body extends StatelessWidget {
           ),
         ),
       ],
-    );
-  }
-}
-
-class ListTileBida extends StatelessWidget {
-  const ListTileBida({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      elevation: 8,
-      child: ListTile(
-        leading: Image.network(
-          'https://afamilycdn.com/150157425591193600/2021/7/7/iu-jestina1-1625588165978606449899.jpg',
-        ),
-        title: const Text(
-          'F81 Billiard Club',
-          style: TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        subtitle: Row(
-          children: [
-            FaIcon(
-              FontAwesomeIcons.mapMarkerAlt,
-              size: 15,
-              color: AppColor.pink,
-            ),
-            const Padding(
-              padding: EdgeInsets.only(right: 3),
-            ),
-            const Text(
-              '56 Quang Trung, F11, Gò Vấp',
-              style: TextStyle(fontSize: 10),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class CardBida extends StatelessWidget {
-  const CardBida({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      child: GestureDetector(
-        onTap: () => print('ok'),
-        child: Card(
-          elevation: 8,
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              children: [
-                Image.network(
-                  'https://afamilycdn.com/150157425591193600/2021/7/7/iu-jestina1-1625588165978606449899.jpg',
-                  height: 150,
-                  fit: BoxFit.cover,
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                const Text(
-                  '306 Billiard Club',
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                Row(
-                  children: <Widget>[
-                    FaIcon(
-                      FontAwesomeIcons.mapMarkerAlt,
-                      size: 15,
-                      color: AppColor.pink,
-                    ),
-                    const Padding(
-                      padding: EdgeInsets.only(right: 3),
-                    ),
-                    const Text(
-                      '306 Ton Dan, Phuong 4, Quan 4',
-                      style: TextStyle(
-                        fontSize: 10,
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
     );
   }
 }

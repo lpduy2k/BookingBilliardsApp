@@ -8,4 +8,6 @@ class AppColor {
   static final HexColor white = HexColor("#FFFFFF");
   static final HexColor pink = HexColor("#E53170");
   static final HexColor red = HexColor("#b23b3b");
+  static final HexColor greenToast = HexColor("#1D741B");
+  static final HexColor redToast = HexColor("#ff0000");
 }
