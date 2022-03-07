@@ -49,6 +49,8 @@ namespace Api
             services.AddTransient<RoleService, RoleService>();
             services.AddTransient<IUserRepository<User>, UserRepository>();
             services.AddTransient<UserService, UserService>();
+            services.AddTransient<IBookingItemRepository<BookingItem>, BookingItemRepository>();
+            services.AddTransient<BookingItemService, BookingItemService>();
             services.AddTransient<IBookingRepository<Booking>, BookingRepository>();
             services.AddTransient<BookingService, BookingService>();
         }
