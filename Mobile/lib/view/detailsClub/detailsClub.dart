@@ -51,7 +51,12 @@ class Body extends StatelessWidget {
             ),
           ),
           ListTile(
-            leading: Icon(Icons.arrow_back),
+            leading: IconButton(
+              icon: Icon(Icons.arrow_back),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
             title: const Text(
               'Billiards details',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
@@ -241,7 +246,7 @@ class Body extends StatelessWidget {
                               backgroundBtn: AppColor.black,
                               voidCallBack: () {
                                 Navigator.of(context).pushNamed(
-                                  '/welcome',
+                                  '/confirmBooking',
                                 );
                               },
                             ),

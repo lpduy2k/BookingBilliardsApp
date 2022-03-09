@@ -1,10 +1,5 @@
+import 'package:booking_billiards_app/configs/base/base_validation.dart';
 import 'package:flutter/material.dart';
-
-class ValidationItem {
-  final String? value;
-  final String? error;
-  ValidationItem(this.value, this.error);
-}
 
 class SignUpProvider with ChangeNotifier {
   ValidationItem _phone = ValidationItem(null, null);

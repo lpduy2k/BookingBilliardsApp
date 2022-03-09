@@ -1,33 +1,30 @@
 import 'dart:developer';
 
 import 'package:booking_billiards_app/configs/base/base_validation.dart';
-import 'package:booking_billiards_app/repository/impl/bida_club_rep_impl.dart';
-import 'package:booking_billiards_app/view/bottomNavBar/bottomNavBar.dart';
-import 'package:booking_billiards_app/view_model/url_api/url_api.dart';
 import 'package:flutter/material.dart';
 
-class SignInProvider with ChangeNotifier {
+class ProfilePageProvider with ChangeNotifier {
   ValidationItem _phone = ValidationItem(null, null);
-  ValidationItem _password = ValidationItem(null, null);
+  ValidationItem _fullname = ValidationItem(null, null);
 
   //Getters
   ValidationItem get phone => _phone;
-  ValidationItem get password => _password;
+  ValidationItem get fullname => _fullname;
 
   final _phoneTextEditController = TextEditingController();
-  final _passwordTextEditController = TextEditingController();
+  final _fullnameTextEditController = TextEditingController();
 
   TextEditingController get phoneController => _phoneTextEditController;
-  TextEditingController get passwordController => _passwordTextEditController;
+  TextEditingController get fullnameController => _fullnameTextEditController;
 
   String get textPhone => phoneController.text;
-  String get textPassword => passwordController.text;
+  String get textFullname => fullnameController.text;
 
   final _phoneFocus = FocusNode();
-  final _passwordFocus = FocusNode();
+  final _fullnameFocus = FocusNode();
 
   FocusNode get phoneFocus => _phoneFocus;
-  FocusNode get passwordFocus => _passwordFocus;
+  FocusNode get fullnameFocus => _fullnameFocus;
 
   bool isPasswordVariable = true;
   bool submitValid = false;
@@ -38,13 +35,13 @@ class SignInProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  void clearPasswordController() {
-    passwordController.clear();
-    _password = ValidationItem(null, null);
+  void clearFullnameController() {
+    fullnameController.clear();
+    _fullname = ValidationItem(null, null);
     notifyListeners();
   }
 
-  void changePasswordVariable() {
+  void changeFullnameVariable() {
     isPasswordVariable = !isPasswordVariable;
     notifyListeners();
   }
@@ -59,11 +56,9 @@ class SignInProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  void checkPassword(String value) {
-    if (value.length < 8) {
-      _password = ValidationItem(null, "Password must 8 character");
-    } else {
-      _password = ValidationItem(value, null);
+  void checkFullname(String value) {
+    if (value.isEmpty) {
+      _fullname = ValidationItem(null, "Fullname must have character");
     }
     notifyListeners();
   }
@@ -71,18 +66,18 @@ class SignInProvider with ChangeNotifier {
   void changeFocus(BuildContext context, String field) {
     var newFocus = _phoneFocus;
     if (_phone.value != null && field.contains("phone")) {
-      newFocus = _passwordFocus;
+      newFocus = _fullnameFocus;
       FocusScope.of(context).requestFocus(newFocus);
       return;
     }
-    if (_password.value != null && field.contains('password')) {
+    if (_fullname.value != null && field.contains('fullname')) {
       FocusScope.of(context).unfocus();
       submitData(context);
     }
   }
 
   bool get isValid {
-    if (_phone.value != null && _password.value != null) {
+    if (_phone.value != null && _fullname.value != null) {
       return true;
     }
     return false;
@@ -90,24 +85,16 @@ class SignInProvider with ChangeNotifier {
 
   void submitData(BuildContext context) {
     submitValid = _phone.error != null ||
-        _password.error != null ||
+        _fullname.error != null ||
         _phone.value == null ||
-        _password.value == null;
+        _fullname.value == null;
 
     if (submitValid) {
       checkPhone(_phone.value ?? "");
-      checkPassword(_password.value ?? "");
+      checkFullname(_fullname.value ?? "");
       notifyListeners();
     } else if (!submitValid && isValid) {
-      BidaClubRepImpl().getBidaClub(UrlApi.bidaClubPath).then((value) async {
-        Navigator.push(context, MaterialPageRoute(builder: (context) {
-          return BottomNavBar(listBidaClub: value);
-        }));
-        clearPhoneController();
-        clearPasswordController();
-      }).onError((error, stackTrace) {
-        log(error.toString());
-      });
+      log('done');
     }
   }
 }
