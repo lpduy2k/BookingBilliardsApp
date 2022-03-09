@@ -7,15 +7,18 @@ using Api.Entities;
 using Api.Models;
 using BCrypt.Net;
 using Microsoft.EntityFrameworkCore;
+using quiz_app_dotnet_api.Helper;
 
 namespace Api.Repositories
 {
     public class UserRepository : IUserRepository<User>
     {
         private readonly DataContext _context;
-        public UserRepository(DataContext context)
+        private readonly IJwtHelper _jwtHelper;
+        public UserRepository(DataContext context, IJwtHelper jwtHelper)
         {
             _context = context;
+            _jwtHelper = jwtHelper;
         }
         public async Task<User> Create(User user)
         {
@@ -37,19 +40,20 @@ namespace Api.Repositories
             return user;
         }
 
-        public bool Login(LoginModel loginModal)
+        public string Login(LoginModel loginModal)
         {
             User user = _context.Users.FirstOrDefault(u => u.Username == loginModal.Username);
             if (user == null)
             {
-                return false;
+                return null;
             }
             bool isValidPassword = BCrypt.Net.BCrypt.Verify(loginModal.Password, user.Password);
             if (isValidPassword)
             {
-                return true;
+                Role role = _context.Roles.FirstOrDefault(u => u.Id == user.RoleId);
+                return _jwtHelper.generateJwtToken(user, role);
             }
-            return false;
+            return null;
         }
         public async Task<bool> Delete(Guid id)
         {

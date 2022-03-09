@@ -18,6 +18,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using quiz_app_dotnet_api.Helper;
 
 namespace Api
 {
@@ -53,6 +54,7 @@ namespace Api
             services.AddTransient<BookingItemService, BookingItemService>();
             services.AddTransient<IBookingRepository<Booking>, BookingRepository>();
             services.AddTransient<BookingService, BookingService>();
+            services.AddTransient<IJwtHelper, JwtHelper>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
