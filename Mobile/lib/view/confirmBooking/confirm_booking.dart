@@ -52,7 +52,12 @@ class Body extends StatelessWidget {
             ),
           ),
           ListTile(
-            leading: Icon(Icons.arrow_back),
+            leading: IconButton(
+              icon: Icon(Icons.arrow_back),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
             title: const Text(
               'Information Booking',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),

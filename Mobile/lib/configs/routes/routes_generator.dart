@@ -1,3 +1,4 @@
+import 'package:booking_billiards_app/view/confirmBooking/confirm_booking.dart';
 import 'package:booking_billiards_app/view/forgetPassword/change_new_password.dart';
 import 'package:booking_billiards_app/view/forgetPassword/forget_password.dart';
 import 'package:booking_billiards_app/view/forgetPassword/input_pin_code.dart';
@@ -32,6 +33,10 @@ class RouteGenerator {
       case '/success':
         return MaterialPageRoute(
           builder: (_) => const SuccessPage(),
+        );
+      case '/confirmBooking':
+        return MaterialPageRoute(
+          builder: (_) => const ConfirmBooking(),
         );
       default:
         return _errorRouter();

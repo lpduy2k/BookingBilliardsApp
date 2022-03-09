@@ -71,7 +71,7 @@ class Body extends StatelessWidget {
             backgroundBtn: AppColor.black,
             voidCallBack: () {
               Navigator.of(context).pushNamed(
-                '/bottomNavBar',
+                '/welcome',
               );
             },
           ),

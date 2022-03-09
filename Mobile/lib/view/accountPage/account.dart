@@ -1,4 +1,5 @@
 import 'package:booking_billiards_app/configs/themes/app_text_style.dart';
+import 'package:booking_billiards_app/view/profilePage/profilePage.dart';
 import 'package:flutter/material.dart';
 
 import '../../configs/themes/app_color.dart';
@@ -105,7 +106,16 @@ class Body extends StatelessWidget {
                 fontSize: 16,
               ),
             ),
-            trailing: const Icon(Icons.edit),
+            // trailing: const Icon(Icons.edit),
+            trailing: IconButton(
+              icon: Icon(Icons.edit),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const ProfilePage()),
+                );
+              },
+            ),
             tileColor: AppColor.white,
             shape: OutlineInputBorder(
               borderSide: BorderSide(color: AppColor.grey, width: 1),
