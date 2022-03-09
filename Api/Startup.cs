@@ -46,6 +46,8 @@ namespace Api
 
             services.AddTransient<IBidaClubRepository<BidaClub>, BidaClubRepository>();
             services.AddTransient<BidaClubService, BidaClubService>();
+            services.AddTransient<IBidaTableRepository<BidaTable>, BidaTableRepository>();
+            services.AddTransient<BidaTableService, BidaTableService>();
             services.AddTransient<IRoleRepository<Role>, RoleRepository>();
             services.AddTransient<RoleService, RoleService>();
             services.AddTransient<IUserRepository<User>, UserRepository>();
