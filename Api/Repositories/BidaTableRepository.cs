@@ -55,6 +55,7 @@ namespace Api.Repositories
             }
             return bidaTables;
         }
+
         public async Task<bool> Delete(Guid id)
         {
             BidaTable bidaTable = await _context.BidaTables.FirstOrDefaultAsync(x => x.Id == id);
@@ -66,9 +67,18 @@ namespace Api.Repositories
             await _context.SaveChangesAsync();
             return true;
         }
-        public List<BidaTable> GetAllByBidaClubId(Guid id)
+        public async Task<List<BidaTable>> GetAllByBidaClubId(Guid clubId, int pageNumber, int pageSize)
         {
-            return _context.BidaTables.ToList();
+            if (pageNumber == 0 && pageSize == 0)
+            {
+                return await _context.BidaTables.Where(x => x.BidaClubId.Equals(clubId)).ToListAsync();
+            }
+            List<BidaTable> bidaTables = await _context.BidaTables.Where(x => x.BidaClubId.Equals(clubId)).ToPagedList(pageNumber, pageSize).ToListAsync();
+            if (bidaTables == null)
+            {
+                return null;
+            }
+            return bidaTables;
         }
     }
 }

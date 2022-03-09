@@ -70,12 +70,22 @@ namespace Api.Controllers
             return Ok(bidaTable);
         }
         [HttpGet]
-        [SwaggerOperation(Summary = "Get list bida table")]
-        public List<BidaTable> GetList(int pageNumber, int pageSize)
+        [SwaggerOperation(Summary = "Get list bida table by club id")]
+        public async Task<List<BidaTable>> GetList(Guid clubId, int pageNumber, int pageSize)
         {
-            List<BidaTable> listBidaTables = _service.GetList(pageNumber, pageSize);
+            if (clubId == Guid.Empty) {
+                List<BidaTable> listBidaTables =  _service.GetList(pageNumber, pageSize);
 
             return listBidaTables;
+            }
+            else {
+                List<BidaTable> listBidaTables = await _service.GetAllByBidaClubId(clubId, pageNumber, pageSize);
+                if (listBidaTables == null)
+                {
+                    return null;
+                }
+                return listBidaTables;
+            }
         }
         [HttpDelete("{id}")]
         [SwaggerOperation(Summary = "Delete bida table by Id")]
@@ -89,28 +99,5 @@ namespace Api.Controllers
             return NoContent();
         }
 
-        //[HttpGet("{BidaClubId}")]
-        //[SwaggerOperation(Summary = "Get bida table by bida club id")]
-        //public ActionResult GetAllByBidaClubId(Guid BidaClubId)
-        //{
-        //    List<BidaTable> response = _service.GetAllByBidaClubId(BidaClubId);
-        //    List<ResponseBidaTableModel> newTable = new List<ResponseBidaTableModel>();
-        //    foreach (var bidaTable in response)
-        //    {
-        //        ResponseBidaTableModel table = new ResponseBidaTableModel
-        //        {
-        //            Id = bidaTable.Id,
-        //            Name = bidaTable.Name,
-        //            Type = bidaTable.Type,
-        //            Image = bidaTable.Image,
-        //            Price = bidaTable.Price,
-        //            Status = bidaTable.Status,
-        //            BidaClubId = bidaTable.BidaClubId
-        //        };
-        //        newTable.Add(table);
-
-        //    }
-        //    return Ok(newTable);
-        //}
     }
 }

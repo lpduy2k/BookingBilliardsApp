@@ -6,7 +6,7 @@ namespace Api.Repositories
 {
     public interface IBidaTableRepository<BidaTable>
     {
-        List<BidaTable> GetAllByBidaClubId(Guid BidaClubId);
+        Task<List<BidaTable>> GetAllByBidaClubId(Guid BidaClubId, int pageNumber, int pageSize);
         Task<BidaTable> Create(BidaTable booking);
         Task<bool> Update(BidaTable newBooking);
         Task<BidaTable> GetById(Guid id);

@@ -33,9 +33,9 @@ namespace Api.Services
         {
             return await _repo.Delete(id);
         }
-        public List<BidaTable> GetAllByBidaClubId(Guid BidaClubId)
+        public Task<List<BidaTable>> GetAllByBidaClubId(Guid BidaClubId, int pageNumber, int pageSize)
         {
-            return _repo.GetAllByBidaClubId(BidaClubId);
+            return _repo.GetAllByBidaClubId(BidaClubId, pageSize, pageNumber);
         }
     }
 }
