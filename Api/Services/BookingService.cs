@@ -33,5 +33,10 @@ namespace Api.Services
         {
             return await _repo.Delete(id);
         }
+        public async Task<List<Booking>> GetAllBookingByUserId(Guid userId, int pageNumber, int pageSize)
+        {
+            return await _repo.GetAllBookingByUserId(userId, pageNumber, pageSize);
+        }
+        
     }
 }
