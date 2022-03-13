@@ -2,6 +2,7 @@ import 'package:booking_billiards_app/view/bottomNavBar/bottomNavBar.dart';
 import 'package:booking_billiards_app/view/forgetPassword/change_new_password.dart';
 import 'package:booking_billiards_app/view/forgetPassword/forget_password.dart';
 import 'package:booking_billiards_app/view/forgetPassword/input_pin_code.dart';
+import 'package:booking_billiards_app/view/homePage/home.dart';
 import 'package:booking_billiards_app/view/success/success.dart';
 import 'package:booking_billiards_app/view/onboarding/onboarding.dart';
 import 'package:booking_billiards_app/view/welcome/welcome.dart';
@@ -37,6 +38,10 @@ class RouteGenerator {
       case '/bottomNavBar':
         return MaterialPageRoute(
           builder: (_) => const BottomNavBar(),
+        );
+      case '/home':
+        return MaterialPageRoute(
+          builder: (_) => const Home(),
         );
       default:
         return _errorRouter();

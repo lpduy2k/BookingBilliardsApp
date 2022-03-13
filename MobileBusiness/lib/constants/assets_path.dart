@@ -7,4 +7,8 @@ class AssetPath {
   static const String google = '$prePath/google.png';
   static const String success = '$prePath/success1.gif';
   static const String avatar = '$prePath/avatar.png';
+  static const String club = '$prePath/club.png';
+  static const String profile = '$prePath/profile.png';
+  static const String order = '$prePath/order.png';
+  static const String table = '$prePath/table.png';
 }
