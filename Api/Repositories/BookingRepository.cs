@@ -42,18 +42,51 @@ namespace Api.Repositories
             }
             return booking;
         }
-        public List<Booking> GetList(int pageNumber, int pageSize)
+        //public List<Booking> GetList(int pageNumber, int pageSize)
+        //{
+        //    if (pageNumber == 0 && pageSize == 0)
+        //    {
+        //        return _context.Bookings.ToList();
+        //    }
+        //    List<Booking> booking = _context.Bookings.ToPagedList(pageNumber, pageSize).ToList();
+        //    if (booking == null)
+        //    {
+        //        return null;
+        //    }
+        //    return booking;
+        //}
+        public dynamic GetList(Guid userId, int pageNumber, int pageSize)
         {
-            if (pageNumber == 0 && pageSize == 0)
+            if (pageNumber == 0 && pageSize == 0 && userId == Guid.Empty)
             {
                 return _context.Bookings.ToList();
             }
-            List<Booking> booking = _context.Bookings.ToPagedList(pageNumber, pageSize).ToList();
-            if (booking == null)
+            else if (pageNumber == 0 && pageSize == 0)
             {
-                return null;
+                var bookingList = from booking in _context.Bookings
+                             join bookingItem in _context.BookingItems on booking.Id equals bookingItem.BookingId
+                             join bidaTable in _context.BidaTables on bookingItem.BidaTableId equals bidaTable.Id
+                             join bidaClub in _context.BidaClubs on bidaTable.BidaClubId equals bidaClub.Id
+                             where booking.UserId == userId
+                             select new { TimeBooking = booking.TimeBooking, TotalPrice = booking.TotalPrice, BidaTableName = bidaTable.Name, BidaClubName = bidaClub.Name};
+
+                return bookingList.ToList();
             }
-            return booking;
+            else if (userId == Guid.Empty)
+            {
+                return _context.Bookings.ToPagedList(pageNumber, pageSize).ToList();
+            }
+            else
+            {
+                var bookingList = from booking in _context.Bookings
+                                  join bookingItem in _context.BookingItems on booking.Id equals bookingItem.BookingId
+                                  join bidaTable in _context.BidaTables on bookingItem.BidaTableId equals bidaTable.Id
+                                  join bidaClub in _context.BidaClubs on bidaTable.BidaClubId equals bidaClub.Id
+                                  where booking.UserId == userId
+                                  select new { TimeBooking = booking.TimeBooking, TotalPrice = booking.TotalPrice, BidaTableName = bidaTable.Name, BidaClubName = bidaClub.Name };
+                return bookingList.ToPagedList(pageNumber, pageSize).ToList();
+            }
+            
         }
         public async Task<bool> Delete(Guid id)
         {

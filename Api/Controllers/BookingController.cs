@@ -68,11 +68,11 @@ namespace Api.Controllers
         }
         [HttpGet]
         [SwaggerOperation(Summary = "Get list booking")]
-        public List<Booking> GetList(int pageNumber, int pageSize)
+        public ActionResult GetList(Guid userId, int pageNumber, int pageSize)
         {
-            List<Booking> listBookings = _service.GetList(pageNumber, pageSize);
+            var listBookings = _service.GetList(userId, pageNumber, pageSize);
 
-            return listBookings;
+            return Ok(listBookings);
         }
         [HttpDelete("{id}")]
         [SwaggerOperation(Summary = "Delete booking by Id")]
