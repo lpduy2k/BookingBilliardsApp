@@ -14,6 +14,12 @@ class AppTextStyles {
     color: AppColor.black,
   );
 
+  static final h1Green = TextStyle(
+    fontWeight: FontWeight.w700,
+    fontSize: 32,
+    color: AppColor.green,
+  );
+
   static final h2White = TextStyle(
     fontWeight: FontWeight.w600,
     fontSize: 24,
@@ -26,10 +32,22 @@ class AppTextStyles {
     color: AppColor.black,
   );
 
+  static final h2Green = TextStyle(
+    fontWeight: FontWeight.w700,
+    fontSize: 24,
+    color: AppColor.green,
+  );
+
   static final h3White = TextStyle(
     fontWeight: FontWeight.w500,
     fontSize: 18,
     color: AppColor.white,
+  );
+
+  static final h3Green = TextStyle(
+    fontWeight: FontWeight.w700,
+    fontSize: 18,
+    color: AppColor.green,
   );
 
   static final h3Black = TextStyle(
@@ -48,6 +66,12 @@ class AppTextStyles {
     fontWeight: FontWeight.w400,
     fontSize: 16,
     color: AppColor.white,
+  );
+
+  static final h4Green = TextStyle(
+    fontWeight: FontWeight.w700,
+    fontSize: 16,
+    color: AppColor.green,
   );
 
   static final h4Black = TextStyle(
@@ -74,6 +98,12 @@ class AppTextStyles {
     color: AppColor.white,
   );
 
+  static final h5Green = TextStyle(
+    fontWeight: FontWeight.w700,
+    fontSize: 13,
+    color: AppColor.green,
+  );
+
   static final h5Black = TextStyle(
     fontWeight: FontWeight.w300,
     fontSize: 13,
@@ -90,5 +120,11 @@ class AppTextStyles {
     fontWeight: FontWeight.w300,
     fontSize: 10,
     color: AppColor.pink,
+  );
+
+  static final h6Green = TextStyle(
+    fontWeight: FontWeight.w700,
+    fontSize: 10,
+    color: AppColor.green,
   );
 }

@@ -100,8 +100,8 @@ class _WelcomePageState extends State<WelcomePage> {
                         ),
                       ),
                       Text(
-                        'Before Enjoying Foodmedia Services Please Register First',
-                        style: AppTextStyles.h4Grey,
+                        'Billiard Merchant',
+                        style: AppTextStyles.h2Black,
                         textAlign: TextAlign.center,
                       ),
                     ]),
@@ -113,7 +113,7 @@ class _WelcomePageState extends State<WelcomePage> {
                             height: 49,
                             width: double.infinity,
                             color: AppColor.white,
-                            backgroundBtn: AppColor.black,
+                            backgroundBtn: AppColor.green,
                             voidCallBack: () {
                               setState(() {
                                 if (_pageState != 0) {
@@ -132,8 +132,8 @@ class _WelcomePageState extends State<WelcomePage> {
                             content: 'Login',
                             height: 49,
                             width: double.infinity,
-                            color: AppColor.pink,
-                            backgroundBtn: AppColor.black,
+                            color: AppColor.green,
+                            backgroundBtn: AppColor.lightGreen,
                             voidCallBack: () {
                               setState(() {
                                 if (_pageState != 0) {
@@ -157,7 +157,7 @@ class _WelcomePageState extends State<WelcomePage> {
                             children: <TextSpan>[
                               TextSpan(
                                 text: ' The Terms And Conditions',
-                                style: AppTextStyles.h6Pink,
+                                style: AppTextStyles.h6Green,
                                 children: <TextSpan>[
                                   TextSpan(
                                     text: ' And',
@@ -165,7 +165,7 @@ class _WelcomePageState extends State<WelcomePage> {
                                     children: <TextSpan>[
                                       TextSpan(
                                         text: ' Privacy Policy.',
-                                        style: AppTextStyles.h6Pink,
+                                        style: AppTextStyles.h6Green,
                                       )
                                     ],
                                   )
@@ -208,7 +208,7 @@ class _WelcomePageState extends State<WelcomePage> {
                           border: Border(
                             bottom: BorderSide(
                               width: 2,
-                              color: AppColor.pink,
+                              color: AppColor.green,
                             ),
                           ),
                         ),
@@ -217,7 +217,7 @@ class _WelcomePageState extends State<WelcomePage> {
                         ),
                         child: Text(
                           'Create Account',
-                          style: AppTextStyles.h3Pink,
+                          style: AppTextStyles.h3Green,
                         ),
                       ),
                       InputDefault(
@@ -227,7 +227,7 @@ class _WelcomePageState extends State<WelcomePage> {
                                 onPressed: () =>
                                     signUpProvider.clearPhoneController(),
                                 icon: const Icon(Icons.clear_rounded),
-                                color: AppColor.pink,
+                                color: AppColor.green,
                               )
                             : null,
                         hintText: 'Eg: 0333xxx.xxx',
@@ -260,7 +260,7 @@ class _WelcomePageState extends State<WelcomePage> {
                                     onPressed: () => signUpProvider
                                         .clearPasswordController(),
                                     icon: const Icon(Icons.clear_rounded),
-                                    color: AppColor.pink,
+                                    color: AppColor.green,
                                   ),
                                   IconButton(
                                     onPressed: () =>
@@ -268,7 +268,7 @@ class _WelcomePageState extends State<WelcomePage> {
                                     icon: signUpProvider.isPasswordVariable
                                         ? const Icon(Icons.visibility)
                                         : const Icon(Icons.visibility_off),
-                                    color: AppColor.pink,
+                                    color: AppColor.green,
                                   ),
                                 ],
                               )
@@ -303,7 +303,7 @@ class _WelcomePageState extends State<WelcomePage> {
                                     onPressed: () =>
                                         signUpProvider.clearConfirmController(),
                                     icon: const Icon(Icons.clear_rounded),
-                                    color: AppColor.pink,
+                                    color: AppColor.green,
                                   ),
                                   IconButton(
                                     onPressed: () =>
@@ -311,7 +311,7 @@ class _WelcomePageState extends State<WelcomePage> {
                                     icon: signUpProvider.isConfirmVariable
                                         ? const Icon(Icons.visibility)
                                         : const Icon(Icons.visibility_off),
-                                    color: AppColor.pink,
+                                    color: AppColor.green,
                                   ),
                                 ],
                               )
@@ -343,7 +343,7 @@ class _WelcomePageState extends State<WelcomePage> {
                         height: 49,
                         width: double.infinity,
                         color: AppColor.white,
-                        backgroundBtn: AppColor.black,
+                        backgroundBtn: AppColor.green,
                         voidCallBack: () {
                           signUpProvider.submitData(context);
                         },
@@ -403,14 +403,14 @@ class _WelcomePageState extends State<WelcomePage> {
                           border: Border(
                             bottom: BorderSide(
                               width: 2,
-                              color: AppColor.pink,
+                              color: AppColor.green,
                             ),
                           ),
                         ),
                         margin: const EdgeInsets.only(bottom: 10),
                         child: Text(
                           'Login',
-                          style: AppTextStyles.h3Pink,
+                          style: AppTextStyles.h2White,
                         ),
                       ),
                       InputDefault(
@@ -420,7 +420,7 @@ class _WelcomePageState extends State<WelcomePage> {
                                 onPressed: () =>
                                     signInProvider.clearPhoneController(),
                                 icon: const Icon(Icons.clear_rounded),
-                                color: AppColor.pink,
+                                color: AppColor.green,
                               )
                             : null,
                         hintText: 'Eg: 0333xxx.xxx',
@@ -453,7 +453,7 @@ class _WelcomePageState extends State<WelcomePage> {
                                     onPressed: () => signInProvider
                                         .clearPasswordController(),
                                     icon: const Icon(Icons.clear_rounded),
-                                    color: AppColor.pink,
+                                    color: AppColor.green,
                                   ),
                                   IconButton(
                                     onPressed: () =>
@@ -461,7 +461,7 @@ class _WelcomePageState extends State<WelcomePage> {
                                     icon: signInProvider.isPasswordVariable
                                         ? const Icon(Icons.visibility)
                                         : const Icon(Icons.visibility_off),
-                                    color: AppColor.pink,
+                                    color: AppColor.green,
                                   ),
                                 ],
                               )
@@ -494,7 +494,7 @@ class _WelcomePageState extends State<WelcomePage> {
                           },
                           child: Text(
                             'Forget Password?',
-                            style: AppTextStyles.h4Pink,
+                            style: AppTextStyles.h4Green,
                           ),
                         ),
                       ),
@@ -510,7 +510,7 @@ class _WelcomePageState extends State<WelcomePage> {
                         height: 49,
                         width: double.infinity,
                         color: AppColor.white,
-                        backgroundBtn: AppColor.black,
+                        backgroundBtn: AppColor.green,
                         voidCallBack: () {
                           signInProvider.submitData(context);
                         },
