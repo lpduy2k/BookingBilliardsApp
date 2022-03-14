@@ -67,24 +67,12 @@ namespace Api.Controllers
             return Ok(booking);
         }
         [HttpGet]
-        [SwaggerOperation(Summary = "Get list booking by user id and paging")]
-        public async Task<List<Booking>> GetList(Guid userId, int pageNumber, int pageSize)
+        [SwaggerOperation(Summary = "Get list booking")]
+        public ActionResult GetList(Guid userId, int pageNumber, int pageSize)
         {
-            if (userId == Guid.Empty)
-            {
-                List<Booking> listBookings = _service.GetList(userId, pageNumber, pageSize);
+            var listBookings = _service.GetList(userId, pageNumber, pageSize);
 
-                return listBookings;
-            }
-            else
-            {
-                List<Booking> listBookings = await _service.GetAllBookingByUserId(userId, pageNumber, pageSize);
-                if (listBookings == null)
-                {
-                    return null;
-                }
-                return listBookings;
-            }
+            return Ok(listBookings);
         }
         [HttpDelete("{id}")]
         [SwaggerOperation(Summary = "Delete booking by Id")]

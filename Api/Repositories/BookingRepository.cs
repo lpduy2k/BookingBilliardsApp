@@ -64,11 +64,11 @@ namespace Api.Repositories
             else if (pageNumber == 0 && pageSize == 0)
             {
                 var bookingList = from booking in _context.Bookings
-                             join bookingItem in _context.BookingItems on booking.Id equals bookingItem.BookingId
-                             join bidaTable in _context.BidaTables on bookingItem.BidaTableId equals bidaTable.Id
-                             join bidaClub in _context.BidaClubs on bidaTable.BidaClubId equals bidaClub.Id
-                             where booking.UserId == userId
-                             select new { TimeBooking = booking.TimeBooking, TotalPrice = booking.TotalPrice, BidaTableName = bidaTable.Name, BidaClubName = bidaClub.Name};
+                                  join bookingItem in _context.BookingItems on booking.Id equals bookingItem.BookingId
+                                  join bidaTable in _context.BidaTables on bookingItem.BidaTableId equals bidaTable.Id
+                                  join bidaClub in _context.BidaClubs on bidaTable.BidaClubId equals bidaClub.Id
+                                  where booking.UserId == userId
+                                  select new { TimeBooking = booking.TimeBooking, TotalPrice = booking.TotalPrice, BidaTableName = bidaTable.Name, BidaClubName = bidaClub.Name };
 
                 return bookingList.ToList();
             }
@@ -86,21 +86,9 @@ namespace Api.Repositories
                                   select new { TimeBooking = booking.TimeBooking, TotalPrice = booking.TotalPrice, BidaTableName = bidaTable.Name, BidaClubName = bidaClub.Name };
                 return bookingList.ToPagedList(pageNumber, pageSize).ToList();
             }
-            
+
         }
-        public async Task<List<Booking>> GetAllBookingByUserId(Guid userId, int pageNumber, int pageSize)
-        {
-            if (pageNumber == 0 && pageSize == 0)
-            {
-                return await _context.Bookings.Where(x => x.UserId.Equals(userId)).ToListAsync();
-            }
-            List<Booking> booking = await _context.Bookings.Where(x => x.UserId.Equals(userId)).ToPagedList(pageNumber, pageSize).ToListAsync();
-            if (booking == null)
-            {
-                return null;
-            }
-            return booking;
-        }
+
         public async Task<bool> Delete(Guid id)
         {
             Booking booking = await _context.Bookings.FirstOrDefaultAsync(x => x.Id == id);
