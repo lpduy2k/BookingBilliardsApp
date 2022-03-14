@@ -1,7 +1,10 @@
 import 'package:booking_billiards_app/configs/themes/app_color.dart';
 import 'package:booking_billiards_app/configs/themes/app_text_style.dart';
 import 'package:booking_billiards_app/model/response/get_bida_club_res.dart';
+import 'package:booking_billiards_app/repository/impl/bida_club_rep_impl.dart';
 import 'package:booking_billiards_app/utils/window_size.dart';
+import 'package:booking_billiards_app/view/detailsClub/detailsClub.dart';
+import 'package:booking_billiards_app/view_model/url_api/url_api.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -28,7 +31,6 @@ class Home extends StatelessWidget {
       ),
       color: AppColor.white,
       child: Scaffold(
-        // resizeToAvoidBottomInset: false,
         body: SingleChildScrollView(
           child: Body(
             listImage: listImage,
@@ -166,7 +168,17 @@ class Body extends StatelessWidget {
                     for (var list in listBidaClub)
                       SizedBox(
                         child: GestureDetector(
-                          onTap: () => print('ok'),
+                          onTap: () {
+                            BidaClubRepImpl()
+                                .getBidaClubDetail(
+                                    UrlApi.bidaClubPath + "/${list.id}")
+                                .then((value) async {
+                              Navigator.push(context,
+                                  MaterialPageRoute(builder: (context) {
+                                return DetailsClub(bidaClubDetail: value,);
+                              }));
+                            });
+                          },
                           child: Card(
                             elevation: 8,
                             child: Padding(
@@ -269,7 +281,7 @@ class Body extends StatelessWidget {
                 height: 10,
               ),
               SizedBox(
-                height: windowHeight * windowSizeHeight(300),
+                height: windowHeight * windowSizeHeight(200),
                 child: ListView(
                   padding: EdgeInsets.zero,
                   children: [

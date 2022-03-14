@@ -10,8 +10,8 @@ namespace Api.Repositories
         Task<Booking> Create(Booking booking);
         Task<bool> Update(Booking newBooking);
         Task<Booking> GetById(Guid id);
-        List<Booking> GetList(int pageNumber, int pageSize);
         Task<List<Booking>> GetAllBookingByUserId(Guid userId, int pageNumber, int pageSize);
+        dynamic GetList(Guid userId,int pageNumber, int pageSize);
         Task<bool> Delete(Guid id);
     }
 }
