@@ -1,10 +1,15 @@
 import 'package:booking_billiards_app/configs/themes/app_color.dart';
+import 'package:booking_billiards_app/model/response/get_bida_club_detail_res.dart';
 import 'package:booking_billiards_app/utils/window_size.dart';
 import 'package:booking_billiards_app/widgets/button/button.dart';
 import 'package:flutter/material.dart';
 
 class DetailsClub extends StatelessWidget {
-  const DetailsClub({Key? key}) : super(key: key);
+  final GetBidaClubDetailRes bidaClubDetail;
+  const DetailsClub({
+    Key? key,
+    required this.bidaClubDetail,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -16,8 +21,10 @@ class DetailsClub extends StatelessWidget {
       color: AppColor.white,
       child: Scaffold(
         backgroundColor: AppColor.lightGrey,
-        body: const SingleChildScrollView(
-          child: Body(),
+        body: SingleChildScrollView(
+          child: Body(
+            bidaClubDetail: bidaClubDetail,
+          ),
         ),
       ),
     );
@@ -25,8 +32,10 @@ class DetailsClub extends StatelessWidget {
 }
 
 class Body extends StatelessWidget {
+  final GetBidaClubDetailRes bidaClubDetail;
   const Body({
     Key? key,
+    required this.bidaClubDetail,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -34,15 +43,10 @@ class Body extends StatelessWidget {
     double windowHeight = MediaQuery.of(context).size.height;
 
     return Container(
-      // padding: EdgeInsets.only(
-      //   top: windowHeight * windowSizeHeight(70),
-      //   bottom: windowHeight * windowSizeHeight(35),
-      // ),
       padding: const EdgeInsets.symmetric(horizontal: 20),
       width: double.infinity,
       height: MediaQuery.of(context).size.height,
       child: Column(
-        // mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Padding(
             padding: EdgeInsets.only(
@@ -62,11 +66,9 @@ class Body extends StatelessWidget {
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               textAlign: TextAlign.center,
             ),
-
-            // tileColor: AppColor.white,
             iconColor: AppColor.black,
           ),
-          Padding(
+          const Padding(
             padding: EdgeInsets.only(top: 10),
           ),
           Column(
@@ -79,8 +81,8 @@ class Body extends StatelessWidget {
                     children: [
                       Row(
                         children: [
-                          const Text('F81 Billiard Club',
-                              style: TextStyle(
+                          Text(bidaClubDetail.name!,
+                              style: const TextStyle(
                                   fontSize: 18, fontWeight: FontWeight.bold),
                               textAlign: TextAlign.right),
                         ],
@@ -95,7 +97,7 @@ class Body extends StatelessWidget {
                           const Padding(
                             padding: EdgeInsets.only(right: 5),
                           ),
-                          const Text('1 Quang Trung, Go Vap'),
+                          Text(bidaClubDetail.address!),
                         ],
                       ),
                     ],
@@ -119,16 +121,16 @@ class Body extends StatelessWidget {
               ),
             ],
           ),
-          Padding(
+          const Padding(
             padding: EdgeInsets.only(top: 10),
           ),
           ClipRRect(
             borderRadius: BorderRadius.circular(8.0),
             child: Image.network(
-              'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTCR-s1OFav5Qn1MIUjAp3VE1FFIgohqJuauA&usqp=CAU',
+              bidaClubDetail.image!,
             ),
           ),
-          Padding(
+          const Padding(
             padding: EdgeInsets.only(top: 10),
           ),
           Column(
@@ -153,8 +155,11 @@ class Body extends StatelessWidget {
                       ),
                       Row(
                         children: [
-                          const Text('10:00 PM - 12:00 PM',
-                              style: TextStyle(
+                          Text(
+                              bidaClubDetail.timeOpen! +
+                                  ' - ' +
+                                  bidaClubDetail.timeClose!,
+                              style: const TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold,
                               ),
