@@ -1,4 +1,5 @@
 import 'package:booking_billiards_app/configs/themes/app_text_style.dart';
+import 'package:booking_billiards_app/view/accountPage/profilePage.dart';
 import 'package:flutter/material.dart';
 
 import '../../configs/themes/app_color.dart';
@@ -48,9 +49,22 @@ class Body extends StatelessWidget {
         children: [
           Padding(
             padding: EdgeInsets.only(
-              top: windowHeight * windowSizeHeight(30),
+              top: windowHeight * windowSizeHeight(1),
               bottom: windowHeight * windowSizeHeight(35),
             ),
+          ),
+
+          ListTile(
+            // leading: Icon(Icons.arrow_back),
+            leading: IconButton(
+              icon: Icon(Icons.arrow_back),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
+
+            // tileColor: AppColor.white,
+            iconColor: AppColor.black,
           ),
           ListTile(
             leading: CircleAvatar(
@@ -105,7 +119,15 @@ class Body extends StatelessWidget {
                 fontSize: 16,
               ),
             ),
-            trailing: const Icon(Icons.edit),
+            trailing: IconButton(
+              icon: Icon(Icons.edit),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const ProfilePage()),
+                );
+              },
+            ),
             tileColor: AppColor.green,
             shape: OutlineInputBorder(
               borderSide: BorderSide(color: AppColor.grey, width: 1),
