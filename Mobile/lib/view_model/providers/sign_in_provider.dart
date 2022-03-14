@@ -107,16 +107,6 @@ class SignInProvider with ChangeNotifier {
     } else if (!submitValid && isValid) {
       Loading(context);
 
-      BidaClubRepImpl().getBidaClub(UrlApi.bidaClubPath).then((value) async {
-        Navigator.push(context, MaterialPageRoute(builder: (context) {
-          return BottomNavBar(listBidaClub: value);
-        }));
-        clearPhoneController();
-        clearPasswordController();
-      }).onError((error, stackTrace) {
-        log(error.toString());
-      });
-
       AuthRepImpl()
           .postSignIn(
             UrlApi.userPath,
@@ -125,28 +115,38 @@ class SignInProvider with ChangeNotifier {
               password: _password.value.toString(),
             ),
           )
-          .then((value) async => {
-                await secureStorage.writeSecureData(
-                  "token",
-                  value.token.toString(),
-                ),
-                showToastSuccess("Login successfully"),
-                BidaClubRepImpl().getBidaClub(UrlApi.bidaClubPath).then(
-                  (value) async {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) {
-                          return BottomNavBar(listBidaClub: value);
-                        },
-                      ),
-                    );
-                  },
-                ),
-                clearPhoneController(),
-                clearPasswordController(),
-              })
-          .onError((error, stackTrace) => {log(error.toString())});
+          .then(
+            (value) async => {
+              if (value.token != null)
+                {
+                  print('error'),
+                  await secureStorage.writeSecureData(
+                    "token",
+                    value.token.toString(),
+                  ),
+                  BidaClubRepImpl().getBidaClub(UrlApi.bidaClubPath).then(
+                    (value) async {
+                      await Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) {
+                            return BottomNavBar(listBidaClub: value);
+                          },
+                        ),
+                      );
+                    },
+                  ),
+                  clearPhoneController(),
+                  clearPasswordController(),
+                  showToastSuccess("Login successfully"),
+                }
+              else
+                {
+                  Navigator.pop(context),
+                  notifyListeners(),
+                }
+            },
+          );
     }
   }
 }
