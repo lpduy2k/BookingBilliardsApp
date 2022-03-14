@@ -158,6 +158,9 @@ class GridDashboard extends StatelessWidget {
                 ),
               ),
               onTap: () {
+                Navigator.of(context).pushNamed(
+                  '/history',
+                );
                 print("Click event on Container");
               },
             ),

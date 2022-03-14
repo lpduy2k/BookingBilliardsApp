@@ -57,17 +57,14 @@ class Body extends StatelessWidget {
                 Navigator.pop(context);
               },
             ),
-            title: const Text(
-              'Billiards Club',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
-              textAlign: TextAlign.center,
+          ),
+          const Text(
+            'Billiards Club',
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
             ),
-
-            // tileColor: AppColor.white,
-            iconColor: AppColor.black,
+            textAlign: TextAlign.center,
           ),
           Padding(
             padding: EdgeInsets.only(top: 10),
@@ -213,7 +210,7 @@ class Body extends StatelessWidget {
                     padding: EdgeInsets.only(right: 5),
                   ),
                   const Text(
-                    'Number of Table :',
+                    'Number of Tables :',
                     style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
@@ -244,7 +241,7 @@ class Body extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                   ),
                   textAlign: TextAlign.right),
-              Text('Active',
+              Text(' Active',
                   style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
