@@ -70,10 +70,11 @@ namespace Api.Controllers
         [SwaggerOperation(Summary = "Get list booking by user id and paging")]
         public async Task<List<Booking>> GetList(Guid userId, int pageNumber, int pageSize)
         {
-            if(userId == Guid.Empty) { 
-            List<Booking> listBookings = _service.GetList(pageNumber, pageSize);
+            if (userId == Guid.Empty)
+            {
+                List<Booking> listBookings = _service.GetList(userId, pageNumber, pageSize);
 
-            return listBookings;
+                return listBookings;
             }
             else
             {
