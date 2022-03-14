@@ -112,7 +112,7 @@ class _EditClubProfileState extends State<EditClubProfile> {
                   width: size.width - (40 + size.width * 0.555),
                   child: const TextField(
                     decoration: InputDecoration(
-                      labelText: 'Open time',
+                      labelText: 'Opening time',
                     ),
                   ),
                 ),
@@ -121,7 +121,7 @@ class _EditClubProfileState extends State<EditClubProfile> {
                   width: size.width - (10 + size.width * 0.555),
                   child: const TextField(
                     decoration: InputDecoration(
-                      labelText: 'Close time',
+                      labelText: 'Closing time',
                     ),
                   ),
                 ),
