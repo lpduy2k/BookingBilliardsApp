@@ -17,7 +17,7 @@ class AccountPage extends StatelessWidget {
       ),
       color: AppColor.white,
       child: Scaffold(
-        backgroundColor: AppColor.lightGrey,
+        backgroundColor: AppColor.lightGreen,
         body: const SingleChildScrollView(
           child: Body(),
         ),
@@ -69,11 +69,11 @@ class Body extends StatelessWidget {
               ),
             ),
             subtitle: Row(
-              children: [
-                const Padding(
+              children: const [
+                Padding(
                   padding: EdgeInsets.only(right: 3),
                 ),
-                const Text(
+                Text(
                   'boychungtinh_chiyeuminhem@gmail.com',
                   style: TextStyle(fontSize: 10),
                 ),
@@ -81,7 +81,7 @@ class Body extends StatelessWidget {
             ),
             trailing: const Icon(Icons.notifications_outlined),
             selectedColor: AppColor.white,
-            tileColor: AppColor.white,
+            tileColor: AppColor.green,
             shape: OutlineInputBorder(
               borderSide: BorderSide(color: AppColor.grey, width: 1),
               borderRadius: BorderRadius.circular(20),
@@ -106,7 +106,7 @@ class Body extends StatelessWidget {
               ),
             ),
             trailing: const Icon(Icons.edit),
-            tileColor: AppColor.white,
+            tileColor: AppColor.green,
             shape: OutlineInputBorder(
               borderSide: BorderSide(color: AppColor.grey, width: 1),
               borderRadius: BorderRadius.circular(20),
@@ -132,7 +132,7 @@ class Body extends StatelessWidget {
               ),
             ),
             trailing: const Icon(Icons.navigate_next),
-            tileColor: AppColor.white,
+            tileColor: AppColor.green,
             shape: OutlineInputBorder(
               borderSide: BorderSide(color: AppColor.grey, width: 1),
               borderRadius: BorderRadius.circular(20),
@@ -156,7 +156,7 @@ class Body extends StatelessWidget {
               borderRadius: BorderRadius.circular(20),
             ),
             iconColor: AppColor.black,
-            tileColor: AppColor.white,
+            tileColor: AppColor.green,
           ),
           Padding(
             padding: EdgeInsets.only(top: 20),
