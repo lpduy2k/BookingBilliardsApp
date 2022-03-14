@@ -175,7 +175,9 @@ class Body extends StatelessWidget {
                                 .then((value) async {
                               Navigator.push(context,
                                   MaterialPageRoute(builder: (context) {
-                                return DetailsClub(bidaClubDetail: value,);
+                                return DetailsClub(
+                                  bidaClubDetail: value,
+                                );
                               }));
                             });
                           },
@@ -288,7 +290,17 @@ class Body extends StatelessWidget {
                     for (var list in listBidaClub.reversed)
                       GestureDetector(
                         onTap: () {
-                          print('ok');
+                          BidaClubRepImpl()
+                              .getBidaClubDetail(
+                                  UrlApi.bidaClubPath + "/${list.id}")
+                              .then((value) async {
+                            Navigator.push(context,
+                                MaterialPageRoute(builder: (context) {
+                              return DetailsClub(
+                                bidaClubDetail: value,
+                              );
+                            }));
+                          });
                         },
                         child: Card(
                           elevation: 8,
