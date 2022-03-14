@@ -80,142 +80,168 @@ class GridDashboard extends StatelessWidget {
           crossAxisSpacing: 18,
           mainAxisSpacing: 18,
           children: <Widget>[
-            Container(
-              decoration: BoxDecoration(
-                  color: AppColor.green,
-                  borderRadius: BorderRadius.circular(10)),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Image.asset(
-                    AssetPath.club,
-                    width: 100,
-                  ),
-                  SizedBox(
-                    height: 14,
-                  ),
-                  const Text(
-                    'Billiard Club',
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600),
-                  ),
-                  SizedBox(
-                    height: 8,
-                  ),
-                  const Text(
-                    'Info Your Club',
-                    style: TextStyle(
-                        color: Colors.white38,
-                        fontSize: 10,
-                        fontWeight: FontWeight.w600),
-                  ),
-                ],
+            InkWell(
+              child: Container(
+                decoration: BoxDecoration(
+                    color: AppColor.green,
+                    borderRadius: BorderRadius.circular(10)),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Image.asset(
+                      AssetPath.club,
+                      width: 100,
+                    ),
+                    SizedBox(
+                      height: 14,
+                    ),
+                    const Text(
+                      'Billiard Club',
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600),
+                    ),
+                    SizedBox(
+                      height: 8,
+                    ),
+                    const Text(
+                      'Info Your Club',
+                      style: TextStyle(
+                          color: Colors.white38,
+                          fontSize: 10,
+                          fontWeight: FontWeight.w600),
+                    ),
+                  ],
+                ),
               ),
+              onTap: () {
+                Navigator.of(context).pushNamed(
+                  '/clubprofile',
+                );
+                print("click");
+              },
             ),
-            Container(
-              decoration: BoxDecoration(
-                  color: AppColor.green,
-                  borderRadius: BorderRadius.circular(10)),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Image.asset(
-                    AssetPath.order,
-                    width: 80,
-                  ),
-                  SizedBox(
-                    height: 14,
-                  ),
-                  const Text(
-                    'Order',
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600),
-                  ),
-                  SizedBox(
-                    height: 8,
-                  ),
-                  const Text(
-                    'Club Order',
-                    style: TextStyle(
-                        color: Colors.white38,
-                        fontSize: 10,
-                        fontWeight: FontWeight.w600),
-                  ),
-                ],
+            InkWell(
+              child: Container(
+                decoration: BoxDecoration(
+                    color: AppColor.lightBlue,
+                    borderRadius: BorderRadius.circular(10)),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Image.asset(
+                      AssetPath.order,
+                      width: 80,
+                    ),
+                    const SizedBox(
+                      height: 14,
+                    ),
+                    const Text(
+                      'Order',
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600),
+                    ),
+                    const SizedBox(
+                      height: 8,
+                    ),
+                    const Text(
+                      'Club Order',
+                      style: TextStyle(
+                          color: Colors.white38,
+                          fontSize: 10,
+                          fontWeight: FontWeight.w600),
+                    ),
+                  ],
+                ),
               ),
+              onTap: () {
+                print("Click event on Container");
+              },
             ),
-            Container(
-              decoration: BoxDecoration(
-                  color: AppColor.green,
-                  borderRadius: BorderRadius.circular(10)),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Image.asset(
-                    AssetPath.table,
-                    width: 120,
-                  ),
-                  SizedBox(
-                    height: 14,
-                  ),
-                  const Text(
-                    'Table',
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600),
-                  ),
-                  SizedBox(
-                    height: 8,
-                  ),
-                  const Text(
-                    'See all table',
-                    style: TextStyle(
-                        color: Colors.white38,
-                        fontSize: 10,
-                        fontWeight: FontWeight.w600),
-                  ),
-                ],
+            InkWell(
+              child: Container(
+                decoration: BoxDecoration(
+                    color: AppColor.lightBlue,
+                    borderRadius: BorderRadius.circular(10)),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Image.asset(
+                      AssetPath.table,
+                      width: 120,
+                    ),
+                    SizedBox(
+                      height: 14,
+                    ),
+                    const Text(
+                      'Table',
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600),
+                    ),
+                    SizedBox(
+                      height: 8,
+                    ),
+                    const Text(
+                      'See all table',
+                      style: TextStyle(
+                          color: Colors.white38,
+                          fontSize: 10,
+                          fontWeight: FontWeight.w600),
+                    ),
+                  ],
+                ),
               ),
+              onTap: () {
+                print("Click event on Container");
+              },
             ),
-            Container(
-              decoration: BoxDecoration(
-                  color: AppColor.green,
-                  borderRadius: BorderRadius.circular(10)),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Image.asset(
-                    AssetPath.profile,
-                    width: 120,
-                  ),
-                  SizedBox(
-                    height: 14,
-                  ),
-                  const Text(
-                    'Account',
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600),
-                  ),
-                  SizedBox(
-                    height: 8,
-                  ),
-                  const Text(
-                    'Check your profile',
-                    style: TextStyle(
-                        color: Colors.white38,
-                        fontSize: 10,
-                        fontWeight: FontWeight.w600),
-                  ),
-                ],
+            InkWell(
+              child: Container(
+                decoration: BoxDecoration(
+                    color: AppColor.green,
+                    borderRadius: BorderRadius.circular(10)),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Image.asset(
+                      AssetPath.profile,
+                      width: 120,
+                    ),
+                    SizedBox(
+                      height: 14,
+                    ),
+                    const Text(
+                      'Account',
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600),
+                    ),
+                    SizedBox(
+                      height: 8,
+                    ),
+                    const Text(
+                      'Check your profile',
+                      style: TextStyle(
+                          color: Colors.white38,
+                          fontSize: 10,
+                          fontWeight: FontWeight.w600),
+                    ),
+                  ],
+                ),
               ),
-            )
+              onTap: () {
+                Navigator.of(context).pushNamed(
+                  '/account',
+                );
+                print("Click event on Container");
+              },
+            ),
           ]),
     );
   }
