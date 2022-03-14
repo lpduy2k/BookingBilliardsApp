@@ -1,3 +1,4 @@
+import 'package:booking_billiards_app/providers/profile_page_provider.dart';
 import 'package:booking_billiards_app/providers/sign_in_provider.dart';
 import 'package:booking_billiards_app/providers/sign_up_provider.dart';
 import 'package:provider/provider.dart';
@@ -10,6 +11,9 @@ class MainProviders {
     ),
     ChangeNotifierProvider<SignUpProvider>(
       create: (context) => SignUpProvider(),
+    ),
+    ChangeNotifierProvider<ProfilePageProvider>(
+      create: (context) => ProfilePageProvider(),
     )
   ];
 }

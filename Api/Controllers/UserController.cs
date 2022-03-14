@@ -61,11 +61,11 @@ namespace Api.Controllers
         public ActionResult Login(LoginModel loginModal)
         {
             var response = _service.Login(loginModal);
-            if (!response)
+            if (response == null)
             {
                 return BadRequest(new { message = "User name or password not correct" });
             }
-            return NoContent();
+            return Ok(new { token = response });
         }
         [HttpDelete("{id}")]
         [SwaggerOperation(Summary = "Delete user by Id")]

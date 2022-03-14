@@ -1,16 +1,11 @@
 import 'dart:developer';
 
+import 'package:booking_billiards_app/configs/base/base_validation.dart';
 import 'package:booking_billiards_app/repository/impl/bida_club_rep_impl.dart';
 import 'package:booking_billiards_app/view/bottomNavBar/bottomNavBar.dart';
 import 'package:booking_billiards_app/view_model/url_api/url_api.dart';
 import 'package:booking_billiards_app/widgets/loader/loader.dart';
 import 'package:flutter/material.dart';
-
-class ValidationItem {
-  final String? value;
-  final String? error;
-  ValidationItem(this.value, this.error);
-}
 
 class SignInProvider with ChangeNotifier {
   ValidationItem _phone = ValidationItem(null, null);
