@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:booking_billiards_app/repository/impl/bida_club_rep_impl.dart';
 import 'package:booking_billiards_app/view/bottomNavBar/bottomNavBar.dart';
 import 'package:booking_billiards_app/view_model/url_api/url_api.dart';
+import 'package:booking_billiards_app/widgets/loader/loader.dart';
 import 'package:flutter/material.dart';
 
 class ValidationItem {
@@ -104,6 +105,7 @@ class SignInProvider with ChangeNotifier {
       checkPassword(_password.value ?? "");
       notifyListeners();
     } else if (!submitValid && isValid) {
+      Loading(context);
       BidaClubRepImpl().getBidaClub(UrlApi.bidaClubPath).then((value) async {
         Navigator.push(context, MaterialPageRoute(builder: (context) {
           return BottomNavBar(listBidaClub: value);
