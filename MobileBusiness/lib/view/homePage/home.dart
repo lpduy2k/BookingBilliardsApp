@@ -1,5 +1,9 @@
 import 'package:booking_billiards_app/configs/themes/app_color.dart';
 import 'package:booking_billiards_app/constants/assets_path.dart';
+import 'package:booking_billiards_app/view/accountPage/account.dart';
+import 'package:booking_billiards_app/view/clubProfile/club_profile.dart';
+import 'package:booking_billiards_app/view/historyPage/history.dart';
+import 'package:booking_billiards_app/view/table/tablelist.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatefulWidget {
@@ -116,8 +120,9 @@ class GridDashboard extends StatelessWidget {
                 ),
               ),
               onTap: () {
-                Navigator.of(context).pushNamed(
-                  '/clubprofile',
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const ClubProfile()),
                 );
                 print("click");
               },
@@ -158,8 +163,9 @@ class GridDashboard extends StatelessWidget {
                 ),
               ),
               onTap: () {
-                Navigator.of(context).pushNamed(
-                  '/history',
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const HistoryPage()),
                 );
                 print("Click event on Container");
               },
@@ -200,6 +206,11 @@ class GridDashboard extends StatelessWidget {
                 ),
               ),
               onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const TableListPage()),
+                );
                 print("Click event on Container");
               },
             ),
@@ -239,8 +250,9 @@ class GridDashboard extends StatelessWidget {
                 ),
               ),
               onTap: () {
-                Navigator.of(context).pushNamed(
-                  '/account',
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const AccountPage()),
                 );
                 print("Click event on Container");
               },

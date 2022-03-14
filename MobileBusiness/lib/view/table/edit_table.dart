@@ -1,23 +1,19 @@
 import 'package:booking_billiards_app/configs/themes/app_color.dart';
-import 'package:booking_billiards_app/providers/profile_page_provider.dart';
-import 'package:booking_billiards_app/utils/window_size.dart';
 import 'package:booking_billiards_app/widgets/button/button.dart';
-import 'package:booking_billiards_app/widgets/input/input.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
-class EditClubProfile extends StatefulWidget {
-  const EditClubProfile({Key? key}) : super(key: key);
+class EditTablePage extends StatefulWidget {
+  const EditTablePage({Key? key}) : super(key: key);
 
   @override
-  State<EditClubProfile> createState() => _EditClubProfileState();
+  State<EditTablePage> createState() => _EditTablePageState();
 }
 
-class _EditClubProfileState extends State<EditClubProfile> {
+class _EditTablePageState extends State<EditTablePage> {
   List<DropdownMenuItem<String>> get dropdownItems {
     List<DropdownMenuItem<String>> menuItems = [
-      DropdownMenuItem(child: Text("Active"), value: "Active"),
-      DropdownMenuItem(child: Text("Inactive"), value: "Inactive"),
+      DropdownMenuItem(child: Text("Ready"), value: "Active"),
+      DropdownMenuItem(child: Text("Occupied"), value: "Inactive"),
     ];
 
     return menuItems;
@@ -31,6 +27,7 @@ class _EditClubProfileState extends State<EditClubProfile> {
     double sizeHeightInput = size.height * 0.12;
 
     return Scaffold(
+      backgroundColor: AppColor.lightGreen,
       body: SingleChildScrollView(
           child: Container(
         margin:
@@ -56,7 +53,7 @@ class _EditClubProfileState extends State<EditClubProfile> {
                 ClipRRect(
                   borderRadius: BorderRadius.circular(8.0),
                   child: Image.network(
-                    'https://media-cdn.tripadvisor.com/media/photo-s/0d/c9/5b/eb/billiard-club-ripska.jpg',
+                    'https://media.istockphoto.com/photos/3d-rendering-of-an-isolated-billiard-table-in-a-top-view-with-a-full-picture-id945650288?k=20&m=945650288&s=170667a&w=0&h=p0tphNgA9OnGaOGYpwDYKE2MPV5SjmIkgupkmD6TOpE=',
                   ),
                 ),
                 Positioned(
@@ -83,7 +80,7 @@ class _EditClubProfileState extends State<EditClubProfile> {
               height: sizeHeightInput,
               child: const TextField(
                 decoration: InputDecoration(
-                  labelText: 'Club Name',
+                  labelText: 'Table Name',
                 ),
               ),
             ),
@@ -91,69 +88,9 @@ class _EditClubProfileState extends State<EditClubProfile> {
               height: sizeHeightInput,
               child: const TextField(
                 decoration: InputDecoration(
-                  labelText: 'Address',
+                  labelText: 'Price',
                 ),
               ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                SizedBox(
-                  height: size.height * 0.12,
-                  width: size.width - (40 + size.width * 0.555),
-                  child: const TextField(
-                    decoration: InputDecoration(
-                      labelText: 'Opening time',
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  height: size.height * 0.12,
-                  width: size.width - (10 + size.width * 0.555),
-                  child: const TextField(
-                    decoration: InputDecoration(
-                      labelText: 'Closing time',
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            Column(
-              children: [
-                Container(
-                  alignment: Alignment.topLeft,
-                  child: Text(
-                    'Phone number',
-                    style: TextStyle(fontSize: 12, color: Colors.grey[700]),
-                  ),
-                ),
-                Row(
-                  children: [
-                    SizedBox(
-                        height: size.height * 0.105,
-                        width: size.width * 0.1,
-                        child: Column(
-                          children: const [
-                            SizedBox(
-                              height: 13.5,
-                            ),
-                            Text(
-                              '+84 ',
-                              style: TextStyle(fontSize: 15),
-                            ),
-                          ],
-                        )),
-                    SizedBox(
-                      height: size.height * 0.105,
-                      width: size.width - (40 + size.width * 0.1),
-                      child: TextField(
-                        keyboardType: TextInputType.number,
-                        decoration: InputDecoration(),
-                      ),
-                    ),
-                  ],
-                ),
-              ],
             ),
             Column(
               children: [
@@ -184,17 +121,33 @@ class _EditClubProfileState extends State<EditClubProfile> {
                 ),
               ],
             ),
-            Container(
-              margin: EdgeInsets.fromLTRB(0, size.height * 0.07, 0, 0),
-              child: ButtonDefault(
-                width: 100,
-                height: 29,
-                content: 'Update',
-                color: AppColor.white,
-                backgroundBtn: AppColor.green,
-                voidCallBack: () {},
-              ),
-            )
+            Row(
+              children: [
+                Container(
+                  margin: EdgeInsets.fromLTRB(0, size.height * 0.07, 0, 0),
+                  child: ButtonDefault(
+                    width: 100,
+                    height: 29,
+                    content: 'Update',
+                    color: AppColor.white,
+                    backgroundBtn: AppColor.green,
+                    voidCallBack: () {},
+                  ),
+                ),
+                Container(
+                  padding: EdgeInsets.only(left: 155),
+                  margin: EdgeInsets.fromLTRB(0, size.height * 0.07, 0, 0),
+                  child: ButtonDefault(
+                    width: 100,
+                    height: 29,
+                    content: 'Delete',
+                    color: AppColor.white,
+                    backgroundBtn: AppColor.red,
+                    voidCallBack: () {},
+                  ),
+                )
+              ],
+            ),
           ],
         ),
       )),
