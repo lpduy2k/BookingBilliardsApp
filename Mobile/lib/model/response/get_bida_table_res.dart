@@ -52,6 +52,9 @@ class GetBidaTableRes {
       List<GetBidaTableRes>.from(
           json.decode(str).map((x) => GetBidaTableRes.fromJson(x)));
 
+  static GetBidaTableRes getBidaTableDetailResFromJson(String str) =>
+      GetBidaTableRes.fromJson(json.decode(str));
+
   String getBidaTableResToJson(List<GetBidaTableRes> data) =>
       json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 }

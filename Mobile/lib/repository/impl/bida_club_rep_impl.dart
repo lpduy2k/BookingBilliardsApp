@@ -31,4 +31,22 @@ class BidaClubRepImpl implements BidaClubRepo {
     }
     return result;
   }
+
+  @override
+  Future<List<GetBidaClubRes>> searchBidaClub(String url, String query) async {
+    Response response = await Dio().get(url);
+
+    if (response.statusCode == 200) {
+      return GetBidaClubRes.getBidaClubResFromJson(jsonEncode(response.data))
+          .where((bidaClub) {
+        final nameLower = bidaClub.name?.toLowerCase();
+        final addressLower = bidaClub.address?.toLowerCase();
+        final searchLower = query.toLowerCase();
+        return nameLower!.contains(searchLower) ||
+            addressLower!.contains(searchLower);
+      }).toList();
+    } else {
+      throw Exception();
+    }
+  }
 }

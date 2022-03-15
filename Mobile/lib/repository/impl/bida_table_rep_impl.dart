@@ -18,4 +18,17 @@ class BidaTableRepImpl implements BidaTableRepo {
     }
     return result;
   }
+
+  @override
+  Future<GetBidaTableRes> getBidaTableDetail(String url) async {
+    var result = GetBidaTableRes();
+    try {
+      Response response = await Dio().get(url);
+      result =
+          GetBidaTableRes.getBidaTableDetailResFromJson(jsonEncode(response.data));
+    } on DioError catch (e) {
+      showToastFail(e.response?.data["message"]);
+    }
+    return result;
+  }
 }

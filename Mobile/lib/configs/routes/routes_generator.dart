@@ -2,6 +2,7 @@ import 'package:booking_billiards_app/view/confirmBooking/confirm_booking.dart';
 import 'package:booking_billiards_app/view/forgetPassword/change_new_password.dart';
 import 'package:booking_billiards_app/view/forgetPassword/forget_password.dart';
 import 'package:booking_billiards_app/view/forgetPassword/input_pin_code.dart';
+import 'package:booking_billiards_app/view/search/search_bida_club.dart';
 import 'package:booking_billiards_app/view/success/success.dart';
 import 'package:booking_billiards_app/view/onboarding/onboarding.dart';
 import 'package:booking_billiards_app/view/welcome/welcome.dart';
@@ -37,6 +38,10 @@ class RouteGenerator {
       case '/confirmBooking':
         return MaterialPageRoute(
           builder: (_) => const ConfirmBooking(),
+        );
+      case '/searchBidaClub':
+        return MaterialPageRoute(
+          builder: (_) => const SearchBidaClub(),
         );
       default:
         return _errorRouter();
