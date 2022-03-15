@@ -67,7 +67,7 @@ class Body extends StatelessWidget {
     required this.listBidaTable,
   }) : super(key: key);
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) {    
     double windowHeight = MediaQuery.of(context).size.height;
 
     return Container(
