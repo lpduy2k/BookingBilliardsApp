@@ -8,4 +8,5 @@ class AssetPath {
   static const String success = '$prePath/success.png';
   static const String avatar = '$prePath/avatar.png';
   static const String vip = '$prePath/icon_vip.png';
+  static const String defaultAvatar = '$prePath/default_avatar.png';
 }
