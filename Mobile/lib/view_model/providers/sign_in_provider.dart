@@ -1,9 +1,11 @@
 import 'package:booking_billiards_app/configs/base/base_validation.dart';
 import 'package:booking_billiards_app/configs/toast/toast.dart';
 import 'package:booking_billiards_app/model/request/sign_in_req.dart';
+import 'package:booking_billiards_app/model/response/get_list_history_res.dart';
 import 'package:booking_billiards_app/model/response/get_user_res.dart';
 import 'package:booking_billiards_app/repository/impl/auth_rep_impl.dart';
 import 'package:booking_billiards_app/repository/impl/bida_club_rep_impl.dart';
+import 'package:booking_billiards_app/repository/impl/booking_rep_impl.dart';
 import 'package:booking_billiards_app/repository/impl/user_rep_impl.dart';
 import 'package:booking_billiards_app/view/bottomNavBar/bottomNavBar.dart';
 import 'package:booking_billiards_app/view_model/service/service_storage.dart';
@@ -14,6 +16,7 @@ import 'package:jwt_decode/jwt_decode.dart';
 
 class SignInProvider with ChangeNotifier {
   GetUserRes? user;
+  List<GetListHistoryRes>? listHistory;
   final SecureStorage secureStorage = SecureStorage();
   ValidationItem _phone = ValidationItem(null, null);
   ValidationItem _password = ValidationItem(null, null);
@@ -143,6 +146,10 @@ class SignInProvider with ChangeNotifier {
                           .then((value) async {
                         user = value;
                       });
+                      print(payload['Id'].toString());
+                      await BookingRepImpl().getListHistoryBooking(UrlApi.bookingPath + "?userId=${payload['Id'].toString()}").then((value) async {
+                        listHistory = value;
+                      });
                       await Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -150,7 +157,8 @@ class SignInProvider with ChangeNotifier {
                             return BottomNavBar(
                                 currentIndex: 0,
                                 listBidaClub: value,
-                                user: user);
+                                user: user,
+                                listHistory: listHistory!);
                           },
                         ),
                       );

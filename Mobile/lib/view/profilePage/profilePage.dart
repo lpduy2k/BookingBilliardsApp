@@ -96,15 +96,15 @@ class _BodyState extends State<Body> {
                         .then((value) async {
                       user = value;
                     });
-                    await Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) {
-                          return BottomNavBar(
-                              currentIndex: 2, listBidaClub: value, user: user);
-                        },
-                      ),
-                    );
+                    // await Navigator.push(
+                    //   context,
+                    //   MaterialPageRoute(
+                    //     builder: (context) {
+                    //       return BottomNavBar(
+                    //           currentIndex: 2, listBidaClub: value, user: user);
+                    //     },
+                    //   ),
+                    // );
                   },
                 );
               },
