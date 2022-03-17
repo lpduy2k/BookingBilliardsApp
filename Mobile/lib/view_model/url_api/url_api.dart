@@ -4,4 +4,5 @@ class UrlApi {
   static const String bidaClubPath = '$serverPath/bidaclub';
   static const String bidaTablePath = '$serverPath/bidatable';
   static const String userPath = '$serverPath/user';
+  static const String imagePath = '$serverPath/upload';
 }

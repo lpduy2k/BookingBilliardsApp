@@ -23,17 +23,10 @@ class _EditClubProfileState extends State<EditClubProfile> {
     return menuItems;
   }
 
-  TextEditingController timeinput = TextEditingController();
-  //text editing controller for text field
-
-  @override
-  void initState() {
-    timeinput.text = ""; //set the initial value of text field
-    super.initState();
-  }
-
   String selectedValue = "Active";
 
+  TimeOfDay time1 = const TimeOfDay(hour: 10, minute: 20);
+  TimeOfDay time2 = const TimeOfDay(hour: 10, minute: 20);
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -107,23 +100,67 @@ class _EditClubProfileState extends State<EditClubProfile> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                SizedBox(
-                  height: size.height * 0.12,
-                  width: size.width - (40 + size.width * 0.555),
-                  child: const TextField(
-                    decoration: InputDecoration(
-                      labelText: 'Opening time',
+                Row(
+                  children: [
+                    const Text(
+                      'Opening time: ',
+                      style: TextStyle(
+                        fontSize: 16,
+                      ),
                     ),
-                  ),
+                    SizedBox(
+                      child: Text(
+                        '${time1.hour.toString().padLeft(2, '0')}:${time1.minute.toString().padLeft(2, '0')}',
+                        style: const TextStyle(fontSize: 13),
+                      ),
+                    ),
+                    IconButton(
+                      icon: const Icon(
+                        Icons.timer_sharp,
+                        color: Colors.black87,
+                      ),
+                      onPressed: () async {
+                        TimeOfDay? newTime = await showTimePicker(
+                            context: context, initialTime: time1);
+                        if (newTime != null) {
+                          setState(() {
+                            time1 = newTime;
+                          });
+                        }
+                      },
+                    ),
+                  ],
                 ),
-                SizedBox(
-                  height: size.height * 0.12,
-                  width: size.width - (10 + size.width * 0.555),
-                  child: const TextField(
-                    decoration: InputDecoration(
-                      labelText: 'Closing time',
+                Row(
+                  children: [
+                    const Text(
+                      'Closing time: ',
+                      style: TextStyle(
+                        fontSize: 16,
+                      ),
                     ),
-                  ),
+                    SizedBox(
+                      child: Text(
+                        '${time2.hour.toString().padLeft(2, '0')}:${time2.minute.toString().padLeft(2, '0')}',
+                        style: const TextStyle(fontSize: 13),
+                      ),
+                    ),
+                    IconButton(
+                      icon: const Icon(
+                        Icons.timer_sharp,
+                        color: Colors.black87,
+                      ),
+                      onPressed: () async {
+                        TimeOfDay? newTime = await showTimePicker(
+                            context: context, initialTime: time2);
+                        if (newTime != null) {
+                          setState(() {
+                            time2 = newTime;
+                          });
+                        }
+                      },
+                    ),
+                  ],
                 ),
               ],
             ),

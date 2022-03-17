@@ -1,23 +1,11 @@
-import 'dart:developer';
-import 'dart:io';
-import 'dart:async';
-
 import 'package:booking_billiards_app/configs/themes/app_color.dart';
-import 'package:booking_billiards_app/constants/assets_path.dart';
-import 'package:booking_billiards_app/model/response/get_user_res.dart';
-import 'package:booking_billiards_app/repository/impl/user_rep_impl.dart';
+import 'package:booking_billiards_app/providers/profile_page_provider.dart';
 import 'package:booking_billiards_app/utils/window_size.dart';
-import 'package:booking_billiards_app/view_model/providers/profile_page_provider.dart';
-import 'package:booking_billiards_app/view_model/url_api/url_api.dart';
+
 import 'package:booking_billiards_app/widgets/button/button.dart';
 import 'package:booking_billiards_app/widgets/input/input.dart';
-import 'package:booking_billiards_app/widgets/upload_image/upload_image.dart';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
-
-import '../../repository/impl/bida_club_rep_impl.dart';
-import '../bottomNavBar/bottomNavBar.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -40,43 +28,28 @@ class ProfilePage extends StatelessWidget {
   }
 }
 
-class Body extends StatefulWidget {
+class Body extends StatelessWidget {
   const Body({
     Key? key,
   }) : super(key: key);
-
-  @override
-  State<Body> createState() => _BodyState();
-}
-
-class _BodyState extends State<Body> {
-  GetUserRes? user;
-
   @override
   Widget build(BuildContext context) {
+    double windowWidth = MediaQuery.of(context).size.width;
+    double windowHeight = MediaQuery.of(context).size.height;
+
     ProfilePageProvider profilePageProvider =
         Provider.of<ProfilePageProvider>(context);
 
-    Future pickImage(ImageSource source) async {
-      try {
-        final image = await ImagePicker().pickImage(source: source);
-        if (image == null) return;
-        final imageTemporary = File(image.path);
-        setState(() {
-          profilePageProvider.image = imageTemporary;
-        });
-      } catch (e) {
-        log("Failed to pick image: $e");
-      }
-    }
-
-    double windowHeight = MediaQuery.of(context).size.height;
-
     return Container(
+      // padding: EdgeInsets.only(
+      //   top: windowHeight * windowSizeHeight(70),
+      //   bottom: windowHeight * windowSizeHeight(35),
+      // ),
       padding: const EdgeInsets.symmetric(horizontal: 20),
       width: double.infinity,
       height: MediaQuery.of(context).size.height,
       child: Column(
+        // mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Padding(
             padding: EdgeInsets.only(
@@ -85,33 +58,18 @@ class _BodyState extends State<Body> {
             ),
           ),
           ListTile(
+            // leading: Icon(Icons.arrow_back),
             leading: IconButton(
-              icon: const Icon(Icons.arrow_back),
-              onPressed: () async {
-                BidaClubRepImpl().getBidaClub(UrlApi.bidaClubPath).then(
-                  (value) async {
-                    await UserRepImpl()
-                        .getUser(UrlApi.userPath +
-                            "/${profilePageProvider.username}")
-                        .then((value) async {
-                      user = value;
-                    });
-                    await Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) {
-                          return BottomNavBar(
-                              currentIndex: 2, listBidaClub: value, user: user);
-                        },
-                      ),
-                    );
-                  },
-                );
+              icon: Icon(Icons.arrow_back),
+              onPressed: () {
+                Navigator.pop(context);
               },
             ),
+
+            // tileColor: AppColor.white,
             iconColor: AppColor.black,
           ),
-          const Text(
+          Text(
             'Edit Profile',
             style: TextStyle(
               fontSize: 18,
@@ -119,39 +77,68 @@ class _BodyState extends State<Body> {
             ),
             textAlign: TextAlign.center,
           ),
-          const Padding(
+          Padding(
             padding: EdgeInsets.only(top: 20),
           ),
-          UploadImage(
-              widget: ClipRRect(
-                  borderRadius: BorderRadius.circular(100 / 2),
-                  child: profilePageProvider.image != null
-                      ? Image.file(
-                          profilePageProvider.image!,
-                          fit: BoxFit.cover,
-                          width: 100,
-                          height: 100,
-                        )
-                      : (profilePageProvider.avatarSto != "null"
-                          ? Image.network(
-                              profilePageProvider.avatarSto!,
-                              fit: BoxFit.cover,
-                              width: 100,
-                              height: 100,
-                            )
-                          : const Image(
-                              image: AssetImage(AssetPath.defaultAvatar),
-                              fit: BoxFit.cover,
-                              width: 100,
-                              height: 100,
-                            ))),
-              pickImage: pickImage,
-              removeImage: () {
-                setState(() {
-                  profilePageProvider.image = null;
-                  profilePageProvider.avatarSto = "null";
-                });
-              }),
+          Stack(
+            children: [
+              CircleAvatar(
+                radius: 75,
+                child: ClipOval(
+                  child: Image.network(
+                    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTCR-s1OFav5Qn1MIUjAp3VE1FFIgohqJuauA&usqp=CAU',
+                  ),
+                ),
+              ),
+              Positioned(
+                bottom: 0,
+                right: 0,
+                child: InkWell(
+                  onTap: () {
+                    showModalBottomSheet(
+                        context: context,
+                        builder: ((builder) => bottomSheet(context)));
+                  },
+                  child: const CircleAvatar(
+                    backgroundColor: Colors.white,
+                    child: Icon(
+                      Icons.camera_alt,
+                      size: 20,
+                    ),
+                  ),
+                ),
+              )
+            ],
+          ),
+          // const Padding(
+          //   padding: EdgeInsets.only(top: 10),
+          // ),
+          // const Padding(
+          //     padding: EdgeInsets.only(top: 12.0),
+          //     child: Text(
+          //       "Full Name",
+          //       style: TextStyle(color: Colors.grey),
+          //     )),
+          // const TextField(
+          //   decoration: InputDecoration(
+          //     hintText: "Update FullName",
+          //   ),
+          // ),
+          // const Padding(
+          //   padding: EdgeInsets.only(top: 10),
+          // ),
+          // const Padding(
+          //     padding: EdgeInsets.only(top: 12.0),
+          //     child: Text(
+          //       "Phone Number",
+          //       style: TextStyle(color: Colors.grey),
+          //     )),
+          // const TextField(
+          //   decoration: InputDecoration(
+          //     hintText: "Update phone Number",
+          //   ),
+          // ),
+
           Column(
             children: <Widget>[
               InputDefault(
@@ -185,17 +172,31 @@ class _BodyState extends State<Body> {
               InputDefault(
                 title: 'Full Name',
                 suffixIcon: profilePageProvider.textFullname.isNotEmpty
-                    ? IconButton(
-                        onPressed: () =>
-                            profilePageProvider.clearFullnameController(),
-                        icon: const Icon(Icons.clear_rounded),
-                        color: AppColor.pink,
+                    ? Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        mainAxisSize: MainAxisSize.min,
+                        children: <Widget>[
+                          IconButton(
+                            onPressed: () =>
+                                profilePageProvider.clearFullnameController(),
+                            icon: const Icon(Icons.clear_rounded),
+                            color: AppColor.pink,
+                          ),
+                          IconButton(
+                            onPressed: () =>
+                                profilePageProvider.changeFullnameVariable(),
+                            icon: profilePageProvider.isPasswordVariable
+                                ? const Icon(Icons.visibility)
+                                : const Icon(Icons.visibility_off),
+                            color: AppColor.pink,
+                          ),
+                        ],
                       )
                     : null,
                 hintText: 'Update FullName',
                 errorText: profilePageProvider.fullname.error,
                 autofocus: false,
-                obscureText: false,
+                obscureText: profilePageProvider.isPasswordVariable,
                 keyboardType: TextInputType.text,
                 textInputAction: TextInputAction.next,
                 controller: profilePageProvider.fullnameController,
@@ -232,10 +233,49 @@ class _BodyState extends State<Body> {
             height: 25,
             content: 'Update',
             color: AppColor.white,
-            backgroundBtn: AppColor.redToast,
+            backgroundBtn: AppColor.red,
             voidCallBack: () {
               profilePageProvider.submitData(context);
             },
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget bottomSheet(context) {
+    return Container(
+      //height: 100.0,
+      width: MediaQuery.of(context).size.width,
+      margin: const EdgeInsets.symmetric(
+        horizontal: 20,
+        vertical: 20,
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          const Text(
+            "Choose photo",
+            style: TextStyle(fontSize: 20.0),
+          ),
+          ListTile(
+            leading: const Icon(Icons.camera_alt),
+            title: const Text('Camera'),
+            onTap: () {
+              // pickImage(ImageSource.camera);
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.image),
+            title: const Text('Gallery'),
+            onTap: () {
+              // pickImage(ImageSource.gallery);
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.delete),
+            title: const Text('Remove'),
+            // onTap: removeImage,
           ),
         ],
       ),
