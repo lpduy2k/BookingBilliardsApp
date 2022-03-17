@@ -21,5 +21,12 @@ namespace Api.Data
         {
             optionsBuilder.EnableSensitiveDataLogging();
         }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<User>()
+                .HasIndex(u => u.Email)
+                .IsUnique();
+        }
     }
 }
