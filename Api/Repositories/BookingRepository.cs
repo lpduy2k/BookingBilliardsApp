@@ -68,7 +68,7 @@ namespace Api.Repositories
                              join bidaTable in _context.BidaTables on bookingItem.BidaTableId equals bidaTable.Id
                              join bidaClub in _context.BidaClubs on bidaTable.BidaClubId equals bidaClub.Id
                              where booking.UserId == userId
-                             select new { TimeBooking = booking.TimeBooking, TotalPrice = booking.TotalPrice, BidaTableName = bidaTable.Name, BidaClubName = bidaClub.Name};
+                             select new { TimeBooking = booking.TimeBooking, TotalPrice = booking.TotalPrice, BidaTableName = bidaTable.Name, BidaClubName = bidaClub.Name, ImageTable = bidaTable.Image, AddressClub = bidaClub.Address};
 
                 return bookingList.ToList();
             }
@@ -83,7 +83,7 @@ namespace Api.Repositories
                                   join bidaTable in _context.BidaTables on bookingItem.BidaTableId equals bidaTable.Id
                                   join bidaClub in _context.BidaClubs on bidaTable.BidaClubId equals bidaClub.Id
                                   where booking.UserId == userId
-                                  select new { TimeBooking = booking.TimeBooking, TotalPrice = booking.TotalPrice, BidaTableName = bidaTable.Name, BidaClubName = bidaClub.Name };
+                                  select new { TimeBooking = booking.TimeBooking, TotalPrice = booking.TotalPrice, BidaTableName = bidaTable.Name, BidaClubName = bidaClub.Name, ImageTable = bidaTable.Image, AddressClub = bidaClub.Address };
                 return bookingList.ToPagedList(pageNumber, pageSize).ToList();
             }
             
