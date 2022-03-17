@@ -11,18 +11,24 @@ class GetListHistoryRes {
         this.totalPrice,
         this.bidaTableName,
         this.bidaClubName,
+        this.imageTable,
+        this.addressClub,
     });
 
     DateTime? timeBooking;
     int? totalPrice;
     String? bidaTableName;
     String? bidaClubName;
+    String? imageTable;
+    String? addressClub;
 
     factory GetListHistoryRes.fromJson(Map<String, dynamic> json) => GetListHistoryRes(
         timeBooking: DateTime.parse(json["timeBooking"]),
         totalPrice: json["totalPrice"],
         bidaTableName: json["bidaTableName"],
         bidaClubName: json["bidaClubName"],
+        imageTable: json["imageTable"],
+        addressClub: json["addressClub"],
     );
 
     Map<String, dynamic> toJson() => {
@@ -30,6 +36,8 @@ class GetListHistoryRes {
         "totalPrice": totalPrice,
         "bidaTableName": bidaTableName,
         "bidaClubName": bidaClubName,
+        "imageTable": imageTable,
+        "addressClub": addressClub,
     };
     static List<GetListHistoryRes> getListHistoryResFromJson(String str) => List<GetListHistoryRes>.from(json.decode(str).map((x) => GetListHistoryRes.fromJson(x)));
 

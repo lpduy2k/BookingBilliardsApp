@@ -39,7 +39,7 @@ class _BookingHistoryState extends State<BookingHistory> {
                   )),
                 ]), // Booking Active
                 const Text(
-                  "Booking List",
+                  "Booking History",
                   textAlign: TextAlign.center,
                   style: TextStyle(
                       fontWeight: FontWeight.w700, fontSize: 18, height: 1.6),
