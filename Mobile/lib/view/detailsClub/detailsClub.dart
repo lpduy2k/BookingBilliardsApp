@@ -1,10 +1,41 @@
 import 'package:booking_billiards_app/configs/themes/app_color.dart';
+import 'package:booking_billiards_app/model/response/get_bida_club_detail_res.dart';
+import 'package:booking_billiards_app/model/response/get_bida_table_res.dart';
+import 'package:booking_billiards_app/repository/impl/bida_table_rep_impl.dart';
 import 'package:booking_billiards_app/utils/window_size.dart';
-import 'package:booking_billiards_app/widgets/button/button.dart';
+import 'package:booking_billiards_app/view/detailsClub/card_bida.dart';
+import 'package:booking_billiards_app/view_model/url_api/url_api.dart';
 import 'package:flutter/material.dart';
 
-class DetailsClub extends StatelessWidget {
-  const DetailsClub({Key? key}) : super(key: key);
+class DetailsClub extends StatefulWidget {
+  final GetBidaClubDetailRes bidaClubDetail;
+  const DetailsClub({
+    Key? key,
+    required this.bidaClubDetail,
+  }) : super(key: key);
+
+  @override
+  State<DetailsClub> createState() => _DetailsClubState();
+}
+
+class _DetailsClubState extends State<DetailsClub> {
+  List<GetBidaTableRes>? listBidaTable = [];
+  @override
+  void initState() {
+    super.initState();
+    BidaTableRepImpl()
+        .getBidaTable(
+            UrlApi.bidaTablePath + "?clubId=${widget.bidaClubDetail.id}")
+        .then((value) async {
+      setState(() {
+        for (var i = 0; i < value.length; i++) {
+          if (value[i].status == "active") {
+            listBidaTable?.add(value[i]);
+          }
+        }
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -16,8 +47,11 @@ class DetailsClub extends StatelessWidget {
       color: AppColor.white,
       child: Scaffold(
         backgroundColor: AppColor.lightGrey,
-        body: const SingleChildScrollView(
-          child: Body(),
+        body: SingleChildScrollView(
+          child: Body(
+            bidaClubDetail: widget.bidaClubDetail,
+            listBidaTable: listBidaTable!,
+          ),
         ),
       ),
     );
@@ -25,24 +59,22 @@ class DetailsClub extends StatelessWidget {
 }
 
 class Body extends StatelessWidget {
+  final GetBidaClubDetailRes bidaClubDetail;
+  final List<GetBidaTableRes> listBidaTable;
   const Body({
     Key? key,
+    required this.bidaClubDetail,
+    required this.listBidaTable,
   }) : super(key: key);
   @override
-  Widget build(BuildContext context) {
-    double windowWidth = MediaQuery.of(context).size.width;
+  Widget build(BuildContext context) {    
     double windowHeight = MediaQuery.of(context).size.height;
 
     return Container(
-      // padding: EdgeInsets.only(
-      //   top: windowHeight * windowSizeHeight(70),
-      //   bottom: windowHeight * windowSizeHeight(35),
-      // ),
       padding: const EdgeInsets.symmetric(horizontal: 20),
       width: double.infinity,
       height: MediaQuery.of(context).size.height,
       child: Column(
-        // mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Padding(
             padding: EdgeInsets.only(
@@ -50,23 +82,22 @@ class Body extends StatelessWidget {
               bottom: windowHeight * windowSizeHeight(15),
             ),
           ),
-          ListTile(
-            leading: IconButton(
-              icon: Icon(Icons.arrow_back),
-              onPressed: () {
-                Navigator.pop(context);
-              },
-            ),
-            title: const Text(
-              'Billiards details',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-              textAlign: TextAlign.center,
-            ),
-
-            // tileColor: AppColor.white,
-            iconColor: AppColor.black,
+          Row(
+            children: [
+              IconButton(
+                icon: Icon(Icons.arrow_back),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+              ),
+            ],
           ),
-          Padding(
+          const Text(
+            'Billiards details',
+            style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
+            textAlign: TextAlign.center,
+          ),
+          const Padding(
             padding: EdgeInsets.only(top: 10),
           ),
           Column(
@@ -79,8 +110,8 @@ class Body extends StatelessWidget {
                     children: [
                       Row(
                         children: [
-                          const Text('F81 Billiard Club',
-                              style: TextStyle(
+                          Text(bidaClubDetail.name!,
+                              style: const TextStyle(
                                   fontSize: 18, fontWeight: FontWeight.bold),
                               textAlign: TextAlign.right),
                         ],
@@ -95,7 +126,7 @@ class Body extends StatelessWidget {
                           const Padding(
                             padding: EdgeInsets.only(right: 5),
                           ),
-                          const Text('1 Quang Trung, Go Vap'),
+                          Text(bidaClubDetail.address!),
                         ],
                       ),
                     ],
@@ -119,16 +150,17 @@ class Body extends StatelessWidget {
               ),
             ],
           ),
-          Padding(
+          const Padding(
             padding: EdgeInsets.only(top: 10),
           ),
           ClipRRect(
             borderRadius: BorderRadius.circular(8.0),
             child: Image.network(
-              'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTCR-s1OFav5Qn1MIUjAp3VE1FFIgohqJuauA&usqp=CAU',
+              bidaClubDetail.image!,
+              height: windowHeight * windowSizeHeight(180),
             ),
           ),
-          Padding(
+          const Padding(
             padding: EdgeInsets.only(top: 10),
           ),
           Column(
@@ -153,8 +185,11 @@ class Body extends StatelessWidget {
                       ),
                       Row(
                         children: [
-                          const Text('10:00 PM - 12:00 PM',
-                              style: TextStyle(
+                          Text(
+                              bidaClubDetail.timeOpen! +
+                                  ' - ' +
+                                  bidaClubDetail.timeClose!,
+                              style: const TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold,
                               ),
@@ -211,49 +246,13 @@ class Body extends StatelessWidget {
                   height: 10,
                 ),
                 SizedBox(
-                  height: windowHeight * windowSizeHeight(100),
-                  child: ListView(
-                    padding: EdgeInsets.zero,
-                    children: [
-                      GestureDetector(
-                        child: Card(
-                          elevation: 8,
-                          child: ListTile(
-                            leading: Image.network(
-                              'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTCR-s1OFav5Qn1MIUjAp3VE1FFIgohqJuauA&usqp=CAU',
-                              width: windowWidth * windowSizeWidth(60),
-                            ),
-                            title: Text(
-                              "Demo Table",
-                              style: const TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            subtitle: Row(
-                              children: [
-                                Text(
-                                  "100k/h",
-                                  style: const TextStyle(fontSize: 10),
-                                ),
-                              ],
-                            ),
-                            trailing: ButtonDefault(
-                              width: 75,
-                              height: 25,
-                              content: 'Book',
-                              color: AppColor.white,
-                              backgroundBtn: AppColor.black,
-                              voidCallBack: () {
-                                Navigator.of(context).pushNamed(
-                                  '/confirmBooking',
-                                );
-                              },
-                            ),
-                          ),
-                        ),
-                      )
-                    ],
+                  height: windowHeight * windowSizeHeight(180),
+                  child: ListView.builder(
+                    padding: const EdgeInsets.all(8),
+                    itemCount: listBidaTable.length,
+                    itemBuilder: (context, index) {
+                      return CardBida(bidaTable: listBidaTable[index]);
+                    },
                   ),
                 )
               ],

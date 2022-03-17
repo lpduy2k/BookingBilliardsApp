@@ -70,6 +70,7 @@ namespace Api.Repositories
             else if (pageNumber == 0 && pageSize == 0)
             {
                 var bookingList = from booking in _context.Bookings
+
                              join bookingItem in _context.BookingItems on booking.Id equals bookingItem.BookingId
                              join bidaTable in _context.BidaTables on bookingItem.BidaTableId equals bidaTable.Id
                              join bidaClub in _context.BidaClubs on bidaTable.BidaClubId equals bidaClub.Id
@@ -98,8 +99,9 @@ namespace Api.Repositories
                                   select new { TimeBooking = booking.TimeBooking, TotalPrice = booking.TotalPrice, BidaTableName = bidaTable.Name, BidaClubName = bidaClub.Name, ImageTable = bidaTable.Image, AddressClub = bidaClub.Address, Status = booking.Status };
                 return bookingList.ToPagedList(pageNumber, pageSize).ToList();
             }
-            
+
         }
+
         public async Task<bool> Delete(Guid id)
         {
             Booking booking = await _context.Bookings.FirstOrDefaultAsync(x => x.Id == id);

@@ -1,17 +1,23 @@
+import 'dart:developer';
+
 import 'package:booking_billiards_app/configs/themes/app_color.dart';
 import 'package:booking_billiards_app/model/response/get_bida_club_res.dart';
+import 'package:booking_billiards_app/model/response/get_user_res.dart';
 import 'package:booking_billiards_app/view/accountPage/account.dart';
-import 'package:booking_billiards_app/view/detailsClub/detailsClub.dart';
-import 'package:booking_billiards_app/view/forgetPassword/input_pin_code.dart';
 import 'package:booking_billiards_app/view/home/home.dart';
+import 'package:booking_billiards_app/view/success/success.dart';
 
 import 'package:flutter/material.dart';
 
 class BottomNavBar extends StatefulWidget {
+  int currentIndex = 0; 
   final List<GetBidaClubRes> listBidaClub;
-  const BottomNavBar({
+  final GetUserRes? user;
+  BottomNavBar({
     Key? key,
+    required this.currentIndex,
     required this.listBidaClub,
+    required this.user,
   }) : super(key: key);
 
   @override
@@ -22,23 +28,22 @@ class _BottomNavBarState extends State<BottomNavBar> {
   var screens = [];
   @override
   void initState() {
+    super.initState();
     screens = [
       Home(listBidaClub: widget.listBidaClub), //nhap home , booking , account
-      DetailsClub(),
-      AccountPage(),
+      SuccessPage(),
+      AccountPage(user: widget.user!),
     ];
   }
-
-  int currentIndex = 0;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColor.lightGrey,
-      body: screens[currentIndex],
+      body: screens[widget.currentIndex],
       bottomNavigationBar: BottomNavigationBar(
-        currentIndex: currentIndex,
-        onTap: (index) => setState(() => currentIndex = index),
+        currentIndex: widget.currentIndex,
+        onTap: (index) => setState(() => widget.currentIndex = index),
         selectedItemColor: AppColor.black,
         unselectedItemColor: AppColor.lightGrey,
         backgroundColor: AppColor.white,
