@@ -1,7 +1,17 @@
+import 'dart:math';
+
 import 'package:booking_billiards_app/configs/base/base_validation.dart';
+import 'package:booking_billiards_app/configs/toast/toast.dart';
+import 'package:booking_billiards_app/model/request/sign_up_req.dart';
+import 'package:booking_billiards_app/repository/impl/auth_rep_impl.dart';
+import 'package:booking_billiards_app/view_model/service/service_storage.dart';
+import 'package:booking_billiards_app/view_model/url_api/url_api.dart';
 import 'package:flutter/material.dart';
+import 'package:twilio_flutter/twilio_flutter.dart';
 
 class SignUpProvider with ChangeNotifier {
+  final SecureStorage secureStorage = SecureStorage();
+
   ValidationItem _phone = ValidationItem(null, null);
   ValidationItem _password = ValidationItem(null, null);
   ValidationItem _confirm = ValidationItem(null, null);
@@ -118,7 +128,12 @@ class SignUpProvider with ChangeNotifier {
     return false;
   }
 
-  void submitData(BuildContext context) {
+  void submitData(BuildContext context) async {
+    TwilioFlutter twilioFlutter = TwilioFlutter(
+      accountSid: 'ACcbd4489fd2ed4ddf5b0be69083e3c3b1',
+      authToken: '05882e2a7f9479cdcbf244695c165fe5',
+      twilioNumber: '+14025341898',
+    );
     submitValid = _phone.error != null ||
         _password.error != null ||
         _confirm.error != null ||
@@ -132,7 +147,31 @@ class SignUpProvider with ChangeNotifier {
       checkConfirm(_confirm.value ?? "");
       notifyListeners();
     } else if (!submitValid && isValid) {
-      Navigator.of(context).pushNamed('/success');
+      String code = (Random().nextInt(8999) + 1000).toString();
+      await secureStorage.writeSecureData("code", code);
+      await twilioFlutter.sendSMS(
+        toNumber: _phone.value.toString(),
+        messageBody:
+            'Please enter the following verification code to access your Account: ' +
+                code,
+      );
+      Navigator.of(context).pushReplacementNamed('/inputPinCode');
+      AuthRepImpl()
+          .postSignUp(
+              UrlApi.userPath,
+              SignUpReq(
+                username: _phone.value,
+                fullName: null,
+                phoneNumber: _phone.value,
+                password: _password.value,
+                image: null,
+                roleId: '292CA636-D1C7-400E-8665-08D9DB6C000C',
+              ))
+          .then((response) => {
+                showToastSuccess("Register successfully"),
+                Navigator.of(context).pushReplacementNamed("/welcome")
+              })
+          .catchError((e) => print(e));
       clearPhoneController();
       clearPasswordController();
       clearConfirmController();

@@ -1,9 +1,11 @@
 import 'package:booking_billiards_app/configs/themes/app_color.dart';
 import 'package:booking_billiards_app/configs/themes/app_text_style.dart';
 import 'package:booking_billiards_app/utils/window_size.dart';
+import 'package:booking_billiards_app/view_model/providers/input_pin_code_provider.dart';
 import 'package:booking_billiards_app/widgets/button/button.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class InputPinCode extends StatelessWidget {
   const InputPinCode({Key? key}) : super(key: key);
@@ -36,6 +38,9 @@ class Body extends StatelessWidget {
     double windowWidth = MediaQuery.of(context).size.width;
     double windowHeight = MediaQuery.of(context).size.height;
 
+    InputPinCodeProvider inputPinCodeProvider =
+        Provider.of<InputPinCodeProvider>(context);
+
     return Container(
       padding: EdgeInsets.only(
         top: windowHeight * windowSizeHeight(200),
@@ -61,11 +66,67 @@ class Body extends StatelessWidget {
                 ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: const [
-                    InputCode(),
-                    InputCode(),
-                    InputCode(),
-                    InputCode(),
+                  children: [
+                    SizedBox(
+                      width: 30,
+                      child: TextField(
+                        textInputAction: TextInputAction.next,
+                        textAlign: TextAlign.center,
+                        maxLength: 1,
+                        controller: inputPinCodeProvider.input1Controller,
+                        keyboardType: TextInputType.number,
+                        decoration: const InputDecoration(
+                          contentPadding:
+                              EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+                          counterText: '',
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      width: 30,
+                      child: TextField(
+                        textInputAction: TextInputAction.next,
+                        textAlign: TextAlign.center,
+                        maxLength: 1,
+                        controller: inputPinCodeProvider.input2Controller,
+                        keyboardType: TextInputType.number,
+                        decoration: const InputDecoration(
+                          contentPadding:
+                              EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+                          counterText: '',
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      width: 30,
+                      child: TextField(
+                        textInputAction: TextInputAction.next,
+                        textAlign: TextAlign.center,
+                        maxLength: 1,
+                        controller: inputPinCodeProvider.input3Controller,
+                        keyboardType: TextInputType.number,
+                        decoration: const InputDecoration(
+                          contentPadding:
+                              EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+                          counterText: '',
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      width: 30,
+                      child: TextField(
+                        textInputAction: TextInputAction.done,
+                        textAlign: TextAlign.center,
+                        maxLength: 1,
+                        controller: inputPinCodeProvider.input4Controller,
+                        keyboardType: TextInputType.number,
+                        decoration: const InputDecoration(
+                          contentPadding:
+                              EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+                          counterText: '',
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -93,9 +154,10 @@ class Body extends StatelessWidget {
             color: AppColor.white,
             backgroundBtn: AppColor.black,
             voidCallBack: () {
-              Navigator.of(context).pushNamed(
-                '/changeNewPassword',
-              );
+              // Navigator.of(context).pushNamed(
+              //   '/changeNewPassword',
+              // );
+              inputPinCodeProvider.submitData(context);
             },
           ),
         ],
@@ -104,24 +166,28 @@ class Body extends StatelessWidget {
   }
 }
 
-class InputCode extends StatelessWidget {
-  const InputCode({
-    Key? key,
-  }) : super(key: key);
+// class InputCode extends StatelessWidget {
+//   const InputCode({
+//     Key? key,
+//     required this.inputPinCodeProvider,
+//   }) : super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
-    return const SizedBox(
-      width: 30,
-      child: TextField(
-        textAlign: TextAlign.center,
-        maxLength: 1,
-        keyboardType: TextInputType.number,
-        decoration: InputDecoration(
-          contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 10),
-          counterText: '',
-        ),
-      ),
-    );
-  }
-}
+//   final InputPinCodeProvider inputPinCodeProvider;
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return const SizedBox(
+//       width: 30,
+//       child: TextField(
+//         textAlign: TextAlign.center,
+//         maxLength: 1,
+//         controller: inputPinCodeProvider.,
+//         keyboardType: TextInputType.number,
+//         decoration: InputDecoration(
+//           contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+//           counterText: '',
+//         ),
+//       ),
+//     );
+//   }
+// }
