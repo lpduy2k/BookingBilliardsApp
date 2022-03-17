@@ -13,7 +13,7 @@ class RouteGenerator {
     switch (settings.name) {
       case '/':
         return MaterialPageRoute(
-          builder: (_) => const BookingHistory(),
+          builder: (_) => const Onboarding(),
         );
       case '/welcome':
         return MaterialPageRoute(

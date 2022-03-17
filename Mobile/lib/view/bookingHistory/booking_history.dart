@@ -3,11 +3,18 @@ import 'package:booking_billiards_app/utils/window_size.dart';
 import 'package:booking_billiards_app/widgets/button/button.dart';
 import 'package:flutter/material.dart';
 
-class BookingHistory extends StatelessWidget {
+class BookingHistory extends StatefulWidget {
   const BookingHistory({Key? key}) : super(key: key);
 
   @override
+  State<BookingHistory> createState() => _BookingHistoryState();
+}
+
+class _BookingHistoryState extends State<BookingHistory> {
+  
+  @override
   Widget build(BuildContext context) {
+    
     double windowWidth = MediaQuery.of(context).size.width;
     return Container(
       padding: EdgeInsets.symmetric(
@@ -69,131 +76,56 @@ class Body extends StatelessWidget {
           Padding(
             padding: EdgeInsets.only(top: 10),
           ),
-          Column(
-            children: <Widget>[
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+          SizedBox(
+                  height: windowHeight * windowSizeHeight(100),
+                  child: ListView(
+                    padding: EdgeInsets.zero,
                     children: [
-                      Row(
-                        children: [
-                          const Text('Tên quán',
-                              style: TextStyle(
-                                  fontSize: 18, fontWeight: FontWeight.bold),
-                              textAlign: TextAlign.right),
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          Icon(
-                            Icons.location_on,
-                            color: AppColor.pink,
-                            size: 20,
+                      Card(
+                        elevation: 8,
+                        child: ListTile(
+                          leading: Image.network(
+                            'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTCR-s1OFav5Qn1MIUjAp3VE1FFIgohqJuauA&usqp=CAU',
+                            width: windowWidth * windowSizeWidth(60),
                           ),
-                          const Padding(
-                            padding: EdgeInsets.only(right: 5),
-                          ),
-                          const Text('Tên bàn'),
-                        ],
-                      ),
-                    ],
-                  ),
-                  GestureDetector(
-                    onTap: () {},
-                    child: Row(
-                      children: [
-                        Icon(
-                          Icons.assistant_direction_outlined,
-                          color: AppColor.pink,
-                        ),
-                        Text(
-                          'Visit the billard',
-                          style: TextStyle(color: AppColor.pink),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-          Padding(
-            padding: EdgeInsets.only(top: 10),
-          ),
-          ClipRRect(
-            borderRadius: BorderRadius.circular(8.0),
-            child: Image.network(
-              'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTCR-s1OFav5Qn1MIUjAp3VE1FFIgohqJuauA&usqp=CAU',
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.only(top: 10),
-          ),
-          Column(
-            children: <Widget>[
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Row(
-                        children: [
-                          Icon(
-                            Icons.access_time_filled,
-                            color: AppColor.black,
-                          ),
-                          const Padding(
-                            padding: EdgeInsets.only(right: 5),
-                          ),
-                          const Text('Time using'),
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          const Text('10:00',
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
+                          title: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "ten quan",
+                                style: const TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
-                              textAlign: TextAlign.right),
-                        ],
-                      ),
-                    ],
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Row(
-                        children: [
-                          Icon(
-                            Icons.price_check,
-                            color: AppColor.black,
-                          ),
-                          const Padding(
-                            padding: EdgeInsets.only(right: 5),
-                          ),
-                          const Text('Total price'),
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          const Text('100.000',
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
+                              Text(
+                                "tien",
+                                style: const TextStyle(
+                                  fontSize: 14,
+                                ),
                               ),
-                              textAlign: TextAlign.right),
-                        ],
-                      ),
+                            ],
+                          ),
+                          subtitle: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "ten ban",
+                                style: const TextStyle(fontSize: 10),
+                              ),
+                              Text(
+                                "time",
+                                style: const TextStyle(fontSize: 14),
+                              ),
+                            ],
+                          ),
+                          
+                          
+                        ),
+                      )
                     ],
                   ),
-                ],
-              ),
-            ],
-          ),
+                )
         ],
       ),
     );
