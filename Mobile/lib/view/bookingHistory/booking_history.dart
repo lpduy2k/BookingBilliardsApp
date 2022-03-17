@@ -60,7 +60,7 @@ class _BookingHistoryState extends State<BookingHistory> {
                         //     0, size.height * 0.01, 0, size.height * 0.0001),
                         padding: EdgeInsets.only(top: 5, bottom: 5),
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
                             Image.network(
                               'https://media.istockphoto.com/photos/3d-rendering-of-an-isolated-billiard-table-in-a-top-view-with-a-full-picture-id945650288?k=20&m=945650288&s=170667a&w=0&h=p0tphNgA9OnGaOGYpwDYKE2MPV5SjmIkgupkmD6TOpE=',
@@ -70,6 +70,13 @@ class _BookingHistoryState extends State<BookingHistory> {
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: const [
+                                Text(
+                                  'Table Name',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w700,
+                                      fontSize: 15,
+                                      height: 1.6),
+                                ),
                                 Text(
                                   'Total price',
                                   style: TextStyle(
@@ -115,7 +122,7 @@ class _BookingHistoryState extends State<BookingHistory> {
                                         height: 1.6),
                                   ),
                                   Text(
-                                    'Tên Bàn',
+                                    'Địa chỉ quán',
                                     style: TextStyle(
                                         fontWeight: FontWeight.w400,
                                         fontSize: 12,
