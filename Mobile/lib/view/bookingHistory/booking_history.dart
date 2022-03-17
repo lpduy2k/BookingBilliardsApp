@@ -86,11 +86,15 @@ class Body extends StatelessWidget {
                         child: ListTile(
                           leading: Image.network(
                             'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTCR-s1OFav5Qn1MIUjAp3VE1FFIgohqJuauA&usqp=CAU',
-                            width: windowWidth * windowSizeWidth(60),
+                            width: windowWidth * windowSizeWidth(50),
                           ),
                           title: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
+                              Icon(
+                            Icons.sports_golf,
+                            color: AppColor.black,
+                          ),
                               Text(
                                 "ten quan",
                                 style: const TextStyle(
@@ -98,6 +102,10 @@ class Body extends StatelessWidget {
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
+                              Icon(
+                            Icons.price_check,
+                            color: AppColor.black,
+                          ),
                               Text(
                                 "tien",
                                 style: const TextStyle(
@@ -109,10 +117,18 @@ class Body extends StatelessWidget {
                           subtitle: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
+                              Icon(
+                            Icons.tablet,
+                            color: AppColor.black,
+                          ),
                               Text(
                                 "ten ban",
                                 style: const TextStyle(fontSize: 10),
                               ),
+                              Icon(
+                            Icons.access_time_filled,
+                            color: AppColor.black,
+                          ),
                               Text(
                                 "time",
                                 style: const TextStyle(fontSize: 14),
