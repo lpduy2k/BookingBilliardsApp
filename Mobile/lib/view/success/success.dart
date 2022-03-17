@@ -70,7 +70,7 @@ class Body extends StatelessWidget {
             color: AppColor.white,
             backgroundBtn: AppColor.black,
             voidCallBack: () {
-              Navigator.of(context).pushNamed(
+              Navigator.of(context).pushReplacementNamed(
                 '/welcome',
               );
             },
