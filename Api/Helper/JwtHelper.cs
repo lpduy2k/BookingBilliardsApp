@@ -39,7 +39,7 @@ namespace quiz_app_dotnet_api.Helper
             var claim = new[]{
                 new Claim("Id", user.Id.ToString()),
                 new Claim("UserName", user.Username),
-                new Claim("FullName", user.FullName),
+                new Claim("FullName", user.FullName != null ? user.FullName : ""),
                 new Claim("PhoneNumber", user.PhoneNumber),
                 new Claim("Role", role.Name)
             };
