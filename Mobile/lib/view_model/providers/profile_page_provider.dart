@@ -1,11 +1,27 @@
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:booking_billiards_app/configs/base/base_validation.dart';
+import 'package:booking_billiards_app/configs/toast/toast.dart';
+import 'package:booking_billiards_app/model/request/upload_user_req.dart';
+import 'package:booking_billiards_app/repository/impl/image_rep_impl.dart';
+import 'package:booking_billiards_app/repository/impl/user_rep_impl.dart';
+import 'package:booking_billiards_app/view_model/url_api/url_api.dart';
 import 'package:flutter/material.dart';
 
+import '../service/service_storage.dart';
+
 class ProfilePageProvider with ChangeNotifier {
+  final SecureStorage secureStorage = SecureStorage();
+
+  String? idUser;
+  File? image;
+  String? avatarSto;
   ValidationItem _phone = ValidationItem(null, null);
   ValidationItem _fullname = ValidationItem(null, null);
+  String? username;
+  String? password;
+  String? roleId;
 
   //Getters
   ValidationItem get phone => _phone;
@@ -83,7 +99,28 @@ class ProfilePageProvider with ChangeNotifier {
     return false;
   }
 
-  void submitData(BuildContext context) {
+  void addDataUser(
+      String idData,
+      String imageData,
+      String phoneData,
+      String fullNameData,
+      String usernameData,
+      String passwordData,
+      String roleIdData) {
+    idUser = idData;
+    avatarSto = imageData;
+
+    _phone.value = phoneData;
+    _fullname.value = fullNameData;
+    _phoneTextEditController.text = phoneData;
+    _fullnameTextEditController.text = fullNameData;
+
+    username = usernameData;
+    password = passwordData;
+    roleId = roleIdData;
+  }
+
+  void submitData(BuildContext context) async {
     submitValid = _phone.error != null ||
         _fullname.error != null ||
         _phone.value == null ||
@@ -94,7 +131,70 @@ class ProfilePageProvider with ChangeNotifier {
       checkFullname(_fullname.value ?? "");
       notifyListeners();
     } else if (!submitValid && isValid) {
-      log('done');
+      if (image != null) {
+        await ImageRepImpl()
+            .uploadImage(UrlApi.imagePath, image!)
+            .then((value) async {
+          final urlImage = await secureStorage.readSecureData("urlImage");
+          await UserRepImpl()
+              .putUser(
+            UrlApi.userPath + "/$idUser",
+            UploadUserReq(
+                id: idUser!,
+                username: username!,
+                fullName: textFullname,
+                phoneNumber: textPhone,
+                password: password!,
+                image: urlImage,
+                roleId: roleId!),
+          )
+              .then((value) async {
+            await secureStorage.deleteSecureData("urlImage");
+            showToastSuccess(value);
+          }).onError((error, stackTrace) {
+            log(error.toString());
+          });
+        }).onError((error, stackTrace) {
+          log(error.toString());
+        });
+      } else if (avatarSto != null) {
+        await UserRepImpl()
+            .putUser(
+          UrlApi.userPath + "/$idUser",
+          UploadUserReq(
+              id: idUser!,
+              username: username!,
+              fullName: textFullname,
+              phoneNumber: textPhone,
+              password: password!,
+              image: avatarSto!,
+              roleId: roleId!),
+        )
+            .then((value) async {
+          showToastSuccess(value);
+        }).onError((error, stackTrace) {
+          log(error.toString());
+        });
+      } else {
+        String avatar = "null";
+        await UserRepImpl()
+            .putUser(
+          UrlApi.userPath + "/$idUser",
+          UploadUserReq(
+              id: idUser!,
+              username: username!,
+              fullName: textFullname,
+              phoneNumber: textPhone,
+              password: password!,
+              image: avatar,
+              roleId: roleId!),
+        )
+            .then((value) async {
+          showToastSuccess(value);
+        }).onError((error, stackTrace) {
+          log(error.toString());
+        });
+      }
     }
   }
 }

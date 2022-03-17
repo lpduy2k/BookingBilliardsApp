@@ -1,17 +1,22 @@
 import 'package:booking_billiards_app/configs/themes/app_color.dart';
+import 'package:booking_billiards_app/model/response/get_list_history_res.dart';
+import 'package:booking_billiards_app/repository/impl/booking_rep_impl.dart';
 import 'package:booking_billiards_app/utils/window_size.dart';
 import 'package:booking_billiards_app/view/detailsClub/detailsClub.dart';
 import 'package:booking_billiards_app/widgets/button/button.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class BookingHistory extends StatefulWidget {
-  const BookingHistory({Key? key}) : super(key: key);
+  final List<GetListHistoryRes> listHistory;
+  const BookingHistory({Key? key, required this.listHistory}) : super(key: key);
 
   @override
   State<BookingHistory> createState() => _BookingHistoryState();
 }
 
 class _BookingHistoryState extends State<BookingHistory> {
+  final format = NumberFormat("#,##0,000");
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -26,18 +31,6 @@ class _BookingHistoryState extends State<BookingHistory> {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisSize: MainAxisSize.min,
               children: [
-                Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-                  SizedBox(
-                      child: IconButton(
-                    icon: const Icon(
-                      Icons.arrow_back,
-                      color: Colors.black87,
-                    ),
-                    onPressed: () {
-                      Navigator.popAndPushNamed(context, "/home");
-                    },
-                  )),
-                ]), // Booking Active
                 const Text(
                   "Booking History",
                   textAlign: TextAlign.center,
@@ -47,6 +40,7 @@ class _BookingHistoryState extends State<BookingHistory> {
                 SizedBox(
                   height: size.height * 0.005,
                 ),
+                for (var list in widget.listHistory)
                 Card(
                   // color: AppColor.lightGreen,
                   shape: OutlineInputBorder(
@@ -63,21 +57,21 @@ class _BookingHistoryState extends State<BookingHistory> {
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
                             Image.network(
-                              'https://media.istockphoto.com/photos/3d-rendering-of-an-isolated-billiard-table-in-a-top-view-with-a-full-picture-id945650288?k=20&m=945650288&s=170667a&w=0&h=p0tphNgA9OnGaOGYpwDYKE2MPV5SjmIkgupkmD6TOpE=',
+                              list.imageTable!,
                               width: 150,
                               height: 100,
                             ),
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.center,
-                              children: const [
+                              children:  [
                                 Text(
-                                  'Table Name',
-                                  style: TextStyle(
+                                  list.bidaTableName!,
+                                  style: const TextStyle (
                                       fontWeight: FontWeight.w700,
                                       fontSize: 15,
                                       height: 1.6),
                                 ),
-                                Text(
+                                const Text(
                                   'Total price',
                                   style: TextStyle(
                                       fontWeight: FontWeight.w700,
@@ -85,8 +79,8 @@ class _BookingHistoryState extends State<BookingHistory> {
                                       height: 1.6),
                                 ),
                                 Text(
-                                  '100.000',
-                                  style: TextStyle(
+                                  format.format(list.totalPrice!).toString() + " VND",
+                                  style: const TextStyle(
                                       fontWeight: FontWeight.w400,
                                       fontSize: 12,
                                       height: 1.6),
@@ -97,55 +91,53 @@ class _BookingHistoryState extends State<BookingHistory> {
                         ),
                       ),
                       subtitle: Container(
-                        padding: EdgeInsets.only(top: 5, bottom: 5),
+                        padding: const EdgeInsets.only(top: 5, bottom: 5),
                         child: Column(children: [
-                          Container(
-                            child: const Divider(
-                              height: 2,
-                              thickness: 1,
-                              indent: 0,
-                              endIndent: 0,
-                              color: Colors.grey,
-                            ),
+                          const Divider(
+                            height: 2,
+                            thickness: 1,
+                            indent: 0,
+                            endIndent: 0,
+                            color: Colors.grey,
                           ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
-                                children: const [
+                                children: [
                                   Text(
-                                    'Tên Quán',
-                                    style: TextStyle(
+                                    list.bidaClubName!,
+                                    style: const TextStyle(
                                         fontWeight: FontWeight.w700,
                                         fontSize: 15,
                                         height: 1.6),
                                   ),
                                   Text(
-                                    'Địa chỉ quán',
-                                    style: TextStyle(
+                                    list.addressClub!,
+                                    style: const TextStyle(
                                         fontWeight: FontWeight.w400,
                                         fontSize: 12,
                                         height: 1.6),
                                   )
                                 ],
                               ),
-                              ElevatedButton(
-                                  onPressed: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              const DetailsClub()),
-                                    );
-                                  },
-                                  child: const Text(
-                                    "Detail",
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.normal,
-                                      fontSize: 14.0,
-                                    ),
-                                  ))
+                              // ElevatedButton(
+                              //     onPressed: () {
+                              //       Navigator.push(
+                              //         context,
+                              //         MaterialPageRoute(
+                              //             builder: (context) =>
+                              //                 DetailsClub(bidaClubDetail: bidaClubDetail)),
+                              //       );
+                              //     },
+                              //     child: const Text(
+                              //       "Detail",
+                              //       style: TextStyle(
+                              //         fontWeight: FontWeight.normal,
+                              //         fontSize: 14.0,
+                              //       ),
+                              //     ))
                             ],
                           )
                         ]),

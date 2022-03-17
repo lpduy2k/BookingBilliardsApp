@@ -1,7 +1,9 @@
 import 'package:booking_billiards_app/configs/themes/app_color.dart';
-import 'package:booking_billiards_app/configs/themes/app_text_style.dart';
 import 'package:booking_billiards_app/model/response/get_bida_club_res.dart';
+import 'package:booking_billiards_app/repository/impl/bida_club_rep_impl.dart';
 import 'package:booking_billiards_app/utils/window_size.dart';
+import 'package:booking_billiards_app/view/detailsClub/detailsClub.dart';
+import 'package:booking_billiards_app/view_model/url_api/url_api.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -28,7 +30,6 @@ class Home extends StatelessWidget {
       ),
       color: AppColor.white,
       child: Scaffold(
-        // resizeToAvoidBottomInset: false,
         body: SingleChildScrollView(
           child: Body(
             listImage: listImage,
@@ -52,6 +53,8 @@ class Body extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final styleActive = TextStyle(color: Colors.black);
+    final styleHint = TextStyle(color: Colors.black54);
     double windowWidth = MediaQuery.of(context).size.width;
     double windowHeight = MediaQuery.of(context).size.height;
     return Column(
@@ -67,30 +70,33 @@ class Body extends StatelessWidget {
                 height: 10,
               ),
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                height: 40,
-                child: TextField(
-                  decoration: InputDecoration(
-                    contentPadding: const EdgeInsets.symmetric(
-                      vertical: 10,
-                      horizontal: 10,
+                height: 42,
+                margin: const EdgeInsets.fromLTRB(16, 16, 16, 16),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(12),
+                  color: Colors.white,
+                  border: Border.all(color: Colors.black26),
+                ),
+                padding: const EdgeInsets.symmetric(horizontal: 8),
+                child: InkWell(
+                  onTap: () {
+                    Navigator.of(context).pushNamed(
+                      '/searchBidaClub',
+                    );
+                  },
+                  child: const TextField(
+                    enabled: false,
+                    decoration: InputDecoration(
+                      icon: Icon(Icons.search, color: Colors.black54),
+                      hintText: 'Search',
+                      hintStyle: TextStyle(color: Colors.black54),
+                      border: InputBorder.none,
                     ),
-                    hintText: 'Search',
-                    prefixIcon: const Padding(
-                      padding: EdgeInsetsDirectional.only(start: 20, top: 10),
-                      child: FaIcon(
-                        FontAwesomeIcons.search,
-                        size: 20,
-                      ),
-                    ),
-                    hintStyle: AppTextStyles.h5Black,
-                    border: OutlineInputBorder(
-                      borderSide: BorderSide(color: AppColor.grey, width: 2),
-                      borderRadius: BorderRadius.circular(12),
-                    ),
+                    autofocus: false,
+                    style: TextStyle(color: Colors.black54),
                   ),
                 ),
-              ),
+              )
             ],
           ),
         ),
@@ -166,7 +172,19 @@ class Body extends StatelessWidget {
                     for (var list in listBidaClub)
                       SizedBox(
                         child: GestureDetector(
-                          onTap: () => print('ok'),
+                          onTap: () {
+                            BidaClubRepImpl()
+                                .getBidaClubDetail(
+                                    UrlApi.bidaClubPath + "/${list.id}")
+                                .then((value) async {
+                              Navigator.push(context,
+                                  MaterialPageRoute(builder: (context) {
+                                return DetailsClub(
+                                  bidaClubDetail: value,
+                                );
+                              }));
+                            });
+                          },
                           child: Card(
                             elevation: 8,
                             child: Padding(
@@ -269,14 +287,24 @@ class Body extends StatelessWidget {
                 height: 10,
               ),
               SizedBox(
-                height: windowHeight * windowSizeHeight(300),
+                height: windowHeight * windowSizeHeight(200),
                 child: ListView(
                   padding: EdgeInsets.zero,
                   children: [
                     for (var list in listBidaClub.reversed)
                       GestureDetector(
                         onTap: () {
-                          print('ok');
+                          BidaClubRepImpl()
+                              .getBidaClubDetail(
+                                  UrlApi.bidaClubPath + "/${list.id}")
+                              .then((value) async {
+                            Navigator.push(context,
+                                MaterialPageRoute(builder: (context) {
+                              return DetailsClub(
+                                bidaClubDetail: value,
+                              );
+                            }));
+                          });
                         },
                         child: Card(
                           elevation: 8,

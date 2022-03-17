@@ -99,7 +99,7 @@ class SignInProvider with ChangeNotifier {
       checkPassword(_password.value ?? "");
       notifyListeners();
     } else if (!submitValid && isValid) {
-      Navigator.of(context).pushNamed('/success');
+      Navigator.of(context).pushNamed('/home');
       clearPhoneController();
       clearPasswordController();
     }

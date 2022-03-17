@@ -25,13 +25,14 @@ namespace Api.Services
         {
             return await _repo.GetById(id);
         }
-        public List<Booking> GetList(int pageNumber, int pageSize)
+        public dynamic GetList(Guid userId, int pageNumber, int pageSize)
         {
-            return _repo.GetList(pageNumber, pageSize);
+            return _repo.GetList(userId, pageNumber, pageSize);
         }
         public async Task<bool> Delete(Guid id)
         {
             return await _repo.Delete(id);
         }
+        
     }
 }
