@@ -12,6 +12,7 @@ class SignUpReq {
   SignUpReq({
     this.username,
     this.fullName,
+    this.email,
     this.phoneNumber,
     this.password,
     this.image,
@@ -20,6 +21,7 @@ class SignUpReq {
 
   String? username;
   String? fullName;
+  String? email;
   String? phoneNumber;
   String? password;
   String? image;
@@ -28,6 +30,7 @@ class SignUpReq {
   factory SignUpReq.fromJson(Map<String, dynamic> json) => SignUpReq(
         username: json["username"],
         fullName: json["fullName"],
+        email: json["email"],
         phoneNumber: json["phoneNumber"],
         password: json["password"],
         image: json["image"],
@@ -37,6 +40,7 @@ class SignUpReq {
   Map<String, dynamic> toJson() => {
         "username": username,
         "fullName": fullName,
+        "email": email,
         "phoneNumber": phoneNumber,
         "password": password,
         "image": image,

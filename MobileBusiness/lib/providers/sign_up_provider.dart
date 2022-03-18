@@ -1,4 +1,12 @@
+import 'dart:math';
+
+import 'package:booking_billiards_app/configs/toast/toast.dart';
+import 'package:booking_billiards_app/model/request/sign_up_req.dart';
+import 'package:booking_billiards_app/repository/impl/auth_rep_impl.dart';
+import 'package:booking_billiards_app/service/service_storage.dart';
+import 'package:booking_billiards_app/url_api/url_api.dart';
 import 'package:flutter/material.dart';
+import 'package:twilio_flutter/twilio_flutter.dart';
 
 class ValidationItem {
   final String? value;
@@ -7,6 +15,8 @@ class ValidationItem {
 }
 
 class SignUpProvider with ChangeNotifier {
+  final SecureStorage secureStorage = SecureStorage();
+
   ValidationItem _phone = ValidationItem(null, null);
   ValidationItem _password = ValidationItem(null, null);
   ValidationItem _confirm = ValidationItem(null, null);
@@ -123,7 +133,12 @@ class SignUpProvider with ChangeNotifier {
     return false;
   }
 
-  void submitData(BuildContext context) {
+  void submitData(BuildContext context) async {
+    TwilioFlutter twilioFlutter = TwilioFlutter(
+      accountSid: 'ACcbd4489fd2ed4ddf5b0be69083e3c3b1',
+      authToken: '54f396cd2afed44cc77013c20729bb30',
+      twilioNumber: '+14025341898',
+    );
     submitValid = _phone.error != null ||
         _password.error != null ||
         _confirm.error != null ||
@@ -137,10 +152,35 @@ class SignUpProvider with ChangeNotifier {
       checkConfirm(_confirm.value ?? "");
       notifyListeners();
     } else if (!submitValid && isValid) {
-      Navigator.of(context).pushNamed('/success');
-      clearPhoneController();
-      clearPasswordController();
-      clearConfirmController();
+      String phoneHaveAreaCode = _phone.value.toString().replaceAll('0', '+84');
+      String code = (Random().nextInt(8999) + 1000).toString();
+      await secureStorage.writeSecureData("code", code);
+      await twilioFlutter.sendSMS(
+        toNumber: phoneHaveAreaCode,
+        messageBody:
+            'Please enter the following verification code to access your Account: ' +
+                code,
+      );
+      AuthRepImpl()
+          .postSignUp(
+              UrlApi.userPath,
+              SignUpReq(
+                username: _phone.value,
+                fullName: null,
+                email: null,
+                phoneNumber: phoneHaveAreaCode,
+                password: _password.value,
+                image: null,
+                roleId: '595392F9-37C3-42CD-41BC-08DA08936A9E',
+              ))
+          .then((response) async => {
+                await Navigator.of(context)
+                    .pushReplacementNamed('/inputPinCode'),
+                clearPhoneController(),
+                clearPasswordController(),
+                clearConfirmController(),
+              })
+          .catchError((e) => print(e));
     }
   }
 }
