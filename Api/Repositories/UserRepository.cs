@@ -22,9 +22,6 @@ namespace Api.Repositories
         }
         public async Task<User> Create(User user)
         {
-            // default user have role is 'User'
-            var role = _context.Roles.FirstOrDefault(x => x.Name == "USER");
-            user.RoleId = role.Id;
             user.Password = BCrypt.Net.BCrypt.HashPassword(user.Password);
             await _context.Users.AddAsync(user);
             await _context.SaveChangesAsync();

@@ -147,10 +147,11 @@ class SignUpProvider with ChangeNotifier {
       checkConfirm(_confirm.value ?? "");
       notifyListeners();
     } else if (!submitValid && isValid) {
+      String phoneHaveAreaCode = _phone.value.toString().replaceAll('0', '+84');
       String code = (Random().nextInt(8999) + 1000).toString();
       await secureStorage.writeSecureData("code", code);
       await twilioFlutter.sendSMS(
-        toNumber: _phone.value.toString(),
+        toNumber: phoneHaveAreaCode,
         messageBody:
             'Please enter the following verification code to access your Account: ' +
                 code,
@@ -162,7 +163,7 @@ class SignUpProvider with ChangeNotifier {
               SignUpReq(
                 username: _phone.value,
                 fullName: null,
-                phoneNumber: _phone.value,
+                phoneNumber: phoneHaveAreaCode,
                 password: _password.value,
                 image: null,
                 roleId: '292CA636-D1C7-400E-8665-08D9DB6C000C',
