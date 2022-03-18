@@ -11,9 +11,7 @@ import 'package:booking_billiards_app/view/table/tablelist.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatefulWidget {
-  const Home({
-    Key? key,
-  }) : super(key: key);
+  const Home({Key? key}) : super(key: key);
 
   @override
   State<Home> createState() => _HomeState();
@@ -36,10 +34,10 @@ class _HomeState extends State<Home> {
               children: <Widget>[
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: const <Widget>[
+                  children: <Widget>[
                     Text(
-                      "Welcome xxx ,",
-                      style: TextStyle(
+                      "Welcome  ,",
+                      style: const TextStyle(
                           color: Color.fromARGB(255, 102, 85, 85),
                           fontSize: 18,
                           fontWeight: FontWeight.bold),
