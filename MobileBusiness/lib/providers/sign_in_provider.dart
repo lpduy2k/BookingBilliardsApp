@@ -140,7 +140,6 @@ class SignInProvider with ChangeNotifier {
                 }
               else
                 {
-                  Navigator.pop(context),
                   notifyListeners(),
                 }
             },

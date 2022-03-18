@@ -156,7 +156,7 @@ class SignUpProvider with ChangeNotifier {
             'Please enter the following verification code to access your Account: ' +
                 code,
       );
-      Navigator.of(context).pushReplacementNamed('/inputPinCode');
+      // Navigator.of(context).pushReplacementNamed('/inputPinCode');
       AuthRepImpl()
           .postSignUp(
               UrlApi.userPath,
@@ -170,7 +170,8 @@ class SignUpProvider with ChangeNotifier {
               ))
           .then((response) => {
                 showToastSuccess("Register successfully"),
-                Navigator.of(context).pushReplacementNamed("/welcome")
+                // Navigator.of(context).pushReplacementNamed("/welcome")
+                Navigator.of(context).pushReplacementNamed('/inputPinCode')
               })
           .catchError((e) => print(e));
       clearPhoneController();
