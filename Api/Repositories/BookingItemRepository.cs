@@ -18,6 +18,9 @@ namespace Api.Repositories
         }
         public async Task<BookingItem> Create(BookingItem bookingItem)
         {
+            BidaTable bidaTable = _context.BidaTables.AsNoTracking().FirstOrDefault(x => x.Id == bookingItem.BidaTableId);
+            bidaTable.Status = "inactive";
+            _context.BidaTables.Update(bidaTable);
             await _context.BookingItems.AddAsync(bookingItem);
             await _context.SaveChangesAsync();
             return bookingItem;
