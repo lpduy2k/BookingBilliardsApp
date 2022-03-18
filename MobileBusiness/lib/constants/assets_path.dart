@@ -11,4 +11,5 @@ class AssetPath {
   static const String profile = '$prePath/profile.png';
   static const String order = '$prePath/order.png';
   static const String table = '$prePath/table.png';
+  static const String defaultAvatar = '$prePath/default_avatar.png';
 }

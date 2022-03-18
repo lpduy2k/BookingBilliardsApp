@@ -1,5 +1,6 @@
 import 'package:booking_billiards_app/view/accountPage/account.dart';
-import 'package:booking_billiards_app/view/bottomNavBar/bottomNavBar.dart';
+import 'package:booking_billiards_app/view/accountPage/profilePage.dart';
+
 import 'package:booking_billiards_app/view/clubProfile/club_profile.dart';
 import 'package:booking_billiards_app/view/clubProfile/edit_club_profile.dart';
 import 'package:booking_billiards_app/view/forgetPassword/change_new_password.dart';
@@ -39,18 +40,11 @@ class RouteGenerator {
         return MaterialPageRoute(
           builder: (_) => const SuccessPage(),
         );
-      case '/bottomNavBar':
-        return MaterialPageRoute(
-          builder: (_) => const BottomNavBar(),
-        );
       case '/home':
         return MaterialPageRoute(
           builder: (_) => const Home(),
         );
-      case '/account':
-        return MaterialPageRoute(
-          builder: (_) => const AccountPage(),
-        );
+
       case '/clubprofile':
         return MaterialPageRoute(
           builder: (_) => const ClubProfile(),
@@ -62,6 +56,10 @@ class RouteGenerator {
       case '/history':
         return MaterialPageRoute(
           builder: (_) => const HistoryPage(),
+        );
+      case '/profilePage':
+        return MaterialPageRoute(
+          builder: (_) => const ProfilePage(),
         );
       default:
         return _errorRouter();

@@ -1,5 +1,9 @@
 import 'package:booking_billiards_app/configs/themes/app_color.dart';
 import 'package:booking_billiards_app/constants/assets_path.dart';
+import 'package:booking_billiards_app/model/response/get_user_res.dart';
+import 'package:booking_billiards_app/repository/impl/user_rep_impl.dart';
+import 'package:booking_billiards_app/service/service_storage.dart';
+import 'package:booking_billiards_app/url_api/url_api.dart';
 import 'package:booking_billiards_app/view/accountPage/account.dart';
 import 'package:booking_billiards_app/view/clubProfile/club_profile.dart';
 import 'package:booking_billiards_app/view/historyPage/history.dart';
@@ -7,7 +11,9 @@ import 'package:booking_billiards_app/view/table/tablelist.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatefulWidget {
-  const Home({Key? key}) : super(key: key);
+  const Home({
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<Home> createState() => _HomeState();
@@ -249,12 +255,19 @@ class GridDashboard extends StatelessWidget {
                   ],
                 ),
               ),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const AccountPage()),
-                );
-                print("Click event on Container");
+              onTap: () async {
+                final SecureStorage secureStorage = SecureStorage();
+                final username = await secureStorage.readSecureData("userName");
+
+                UserRepImpl()
+                    .getUser(UrlApi.userPath + "/$username")
+                    .then((value) async {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return AccountPage(
+                      user: value,
+                    );
+                  }));
+                });
               },
             ),
           ]),
