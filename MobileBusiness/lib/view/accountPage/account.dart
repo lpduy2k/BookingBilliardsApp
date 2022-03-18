@@ -75,6 +75,7 @@ class Body extends StatelessWidget {
                     user.image!,
                     user.phoneNumber!,
                     user.fullName!,
+                    user.email!,
                     user.username!,
                     user.password!,
                     user.roleId!);
@@ -96,7 +97,7 @@ class Body extends StatelessWidget {
             child: user.image! == "null"
                 ? Image.asset(
                     AssetPath.defaultAvatar,
-                    width: 250,
+                    width: 150,
                     height: 150,
                     fit: BoxFit.cover,
                   )

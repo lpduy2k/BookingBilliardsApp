@@ -3,6 +3,7 @@ import 'package:booking_billiards_app/model/request/sign_in_req.dart';
 import 'package:booking_billiards_app/repository/impl/auth_rep_impl.dart';
 import 'package:booking_billiards_app/service/service_storage.dart';
 import 'package:booking_billiards_app/url_api/url_api.dart';
+import 'package:booking_billiards_app/view/homePage/home.dart';
 import 'package:flutter/material.dart';
 import 'package:jwt_decode/jwt_decode.dart';
 
@@ -135,7 +136,6 @@ class SignInProvider with ChangeNotifier {
                   ),
                   clearPhoneController(),
                   clearPasswordController(),
-                  Navigator.of(context).pushReplacementNamed('/home'),
                   showToastSuccess("Login successfully"),
                 }
               else

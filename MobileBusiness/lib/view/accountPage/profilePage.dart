@@ -203,10 +203,59 @@ class _BodyState extends State<Body> {
                 },
               ),
               const SizedBox(
-                height: 15,
+                height: 5,
+              ),
+              InputDefault(
+                title: 'Email',
+                suffixIcon: profilePageProvider.textEmail.isNotEmpty
+                    ? IconButton(
+                        onPressed: () =>
+                            profilePageProvider.clearEmailController(),
+                        icon: const Icon(Icons.clear_rounded),
+                        color: AppColor.pink,
+                      )
+                    : null,
+                hintText: 'Update Email',
+                errorText: profilePageProvider.email.error,
+                autofocus: false,
+                obscureText: false,
+                keyboardType: TextInputType.text,
+                textInputAction: TextInputAction.next,
+                controller: profilePageProvider.emailController,
+                onChanged: (String value) {
+                  profilePageProvider.checkEmail(value);
+                },
+                focusNode: profilePageProvider.emailFocus,
+                onEditingComplete: () {
+                  profilePageProvider.changeFocus(context, 'email');
+                },
               ),
             ],
           ),
+          // InputDefault(
+          //   title: 'Email',
+          //   suffixIcon: profilePageProvider.textEmail.isNotEmpty
+          //       ? IconButton(
+          //           onPressed: () => profilePageProvider.clearEmailController(),
+          //           icon: const Icon(Icons.clear_rounded),
+          //           color: AppColor.pink,
+          //         )
+          //       : null,
+          //   hintText: 'Update Email',
+          //   errorText: profilePageProvider.email.error,
+          //   autofocus: false,
+          //   obscureText: false,
+          //   keyboardType: TextInputType.text,
+          //   textInputAction: TextInputAction.next,
+          //   controller: profilePageProvider.emailController,
+          //   onChanged: (String value) {
+          //     profilePageProvider.checkEmail(value);
+          //   },
+          //   focusNode: profilePageProvider.emailFocus,
+          //   onEditingComplete: () {
+          //     profilePageProvider.changeFocus(context, 'email');
+          //   },
+          // ),
           ButtonDefault(
             width: 200,
             height: 25,
