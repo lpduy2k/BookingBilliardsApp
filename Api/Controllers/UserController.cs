@@ -25,6 +25,7 @@ namespace Api.Controllers
             User user = new User
             {
                 Username = newUser.Username,
+                Email = newUser.Email,
                 FullName = newUser.FullName,
                 Image = newUser.Image,
                 Password = newUser.Password,
@@ -48,6 +49,7 @@ namespace Api.Controllers
             {
                 Id = response.Id,
                 Username = response.Username,
+                Email = response.Email,
                 FullName = response.FullName,
                 Image = response.Image,
                 Password = response.Password,
@@ -91,6 +93,7 @@ namespace Api.Controllers
             {
                 Id = updateUser.Id,
                 Username = updateUser.Username,
+                Email = updateUser.Email,
                 FullName = updateUser.FullName,
                 Password = updateUser.Password,
                 PhoneNumber = updateUser.PhoneNumber,
