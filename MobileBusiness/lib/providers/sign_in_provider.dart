@@ -136,6 +136,7 @@ class SignInProvider with ChangeNotifier {
                   ),
                   clearPhoneController(),
                   clearPasswordController(),
+                  Navigator.of(context).pushReplacementNamed('/home'),
                   showToastSuccess("Login successfully"),
                 }
               else
