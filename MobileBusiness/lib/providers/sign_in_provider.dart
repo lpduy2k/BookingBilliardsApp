@@ -1,4 +1,10 @@
+import 'package:booking_billiards_app/configs/toast/toast.dart';
+import 'package:booking_billiards_app/model/request/sign_in_req.dart';
+import 'package:booking_billiards_app/repository/impl/auth_rep_impl.dart';
+import 'package:booking_billiards_app/service/service_storage.dart';
+import 'package:booking_billiards_app/url_api/url_api.dart';
 import 'package:flutter/material.dart';
+import 'package:jwt_decode/jwt_decode.dart';
 
 class ValidationItem {
   final String? value;
@@ -7,6 +13,8 @@ class ValidationItem {
 }
 
 class SignInProvider with ChangeNotifier {
+  final SecureStorage secureStorage = SecureStorage();
+
   ValidationItem _phone = ValidationItem(null, null);
   ValidationItem _password = ValidationItem(null, null);
 
@@ -88,7 +96,8 @@ class SignInProvider with ChangeNotifier {
     return false;
   }
 
-  void submitData(BuildContext context) {
+  void submitData(BuildContext context) async {
+    Map<String, dynamic> payload;
     submitValid = _phone.error != null ||
         _password.error != null ||
         _phone.value == null ||
@@ -99,9 +108,43 @@ class SignInProvider with ChangeNotifier {
       checkPassword(_password.value ?? "");
       notifyListeners();
     } else if (!submitValid && isValid) {
-      Navigator.of(context).pushNamed('/home');
-      clearPhoneController();
-      clearPasswordController();
+      AuthRepImpl()
+          .postSignIn(
+            UrlApi.userPath,
+            SignInReq(
+              username: _phone.value.toString(),
+              password: _password.value.toString(),
+            ),
+          )
+          .then(
+            (value) async => {
+              if (value.token != null)
+                {
+                  await secureStorage.writeSecureData(
+                    "token",
+                    value.token.toString(),
+                  ),
+                  payload = Jwt.parseJwt(value.token.toString()),
+                  await secureStorage.writeSecureData(
+                    "userId",
+                    payload['Id'].toString(),
+                  ),
+                  await secureStorage.writeSecureData(
+                    "userName",
+                    payload['UserName'].toString(),
+                  ),
+                  clearPhoneController(),
+                  clearPasswordController(),
+                  Navigator.of(context).pushReplacementNamed('/home'),
+                  showToastSuccess("Login successfully"),
+                }
+              else
+                {
+                  Navigator.pop(context),
+                  notifyListeners(),
+                }
+            },
+          );
     }
   }
 }
