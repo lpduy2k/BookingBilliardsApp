@@ -147,7 +147,7 @@ class SignUpProvider with ChangeNotifier {
       checkConfirm(_confirm.value ?? "");
       notifyListeners();
     } else if (!submitValid && isValid) {
-      String phoneHaveAreaCode = _phone.value.toString().replaceAll('0', '+84');
+      String phoneHaveAreaCode = _phone.value.toString().replaceFirst('0', '+84');
       String code = (Random().nextInt(8999) + 1000).toString();
       await secureStorage.writeSecureData("code", code);
       await twilioFlutter.sendSMS(
