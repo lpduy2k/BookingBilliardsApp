@@ -98,7 +98,7 @@ class GridDashboard extends StatelessWidget {
                   children: <Widget>[
                     Image.asset(
                       AssetPath.club,
-                      width: 100,
+                      width: 90,
                     ),
                     SizedBox(
                       height: 14,
@@ -141,7 +141,7 @@ class GridDashboard extends StatelessWidget {
                   children: <Widget>[
                     Image.asset(
                       AssetPath.order,
-                      width: 80,
+                      width: 70,
                     ),
                     const SizedBox(
                       height: 14,
@@ -212,8 +212,7 @@ class GridDashboard extends StatelessWidget {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(
-                      builder: (context) => const TableListPage()),
+                  MaterialPageRoute(builder: (context) => TableListPage()),
                 );
                 print("Click event on Container");
               },
@@ -228,9 +227,9 @@ class GridDashboard extends StatelessWidget {
                   children: <Widget>[
                     Image.asset(
                       AssetPath.profile,
-                      width: 120,
+                      width: 100,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 14,
                     ),
                     const Text(
@@ -240,7 +239,7 @@ class GridDashboard extends StatelessWidget {
                           fontSize: 16,
                           fontWeight: FontWeight.w600),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 8,
                     ),
                     const Text(

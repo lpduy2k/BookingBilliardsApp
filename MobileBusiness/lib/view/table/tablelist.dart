@@ -1,4 +1,5 @@
 import 'package:booking_billiards_app/configs/themes/app_color.dart';
+import 'package:booking_billiards_app/model/response/get_bida_table_res.dart';
 import 'package:booking_billiards_app/utils/window_size.dart';
 import 'package:booking_billiards_app/view/table/add_table.dart';
 import 'package:booking_billiards_app/view/table/edit_table.dart';
@@ -6,7 +7,8 @@ import 'package:booking_billiards_app/widgets/button/button.dart';
 import 'package:flutter/material.dart';
 
 class TableListPage extends StatelessWidget {
-  const TableListPage({Key? key}) : super(key: key);
+  final GetBidaTableRes bidaTable;
+  TableListPage({Key? key, required this.bidaTable}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +21,9 @@ class TableListPage extends StatelessWidget {
       child: Scaffold(
         backgroundColor: AppColor.lightGreen,
         body: SingleChildScrollView(
-          child: Body(),
+          child: Body(
+            bidaTable: bidaTable,
+          ),
         ),
       ),
     );
@@ -27,9 +31,8 @@ class TableListPage extends StatelessWidget {
 }
 
 class Body extends StatelessWidget {
-  const Body({
-    Key? key,
-  }) : super(key: key);
+  final GetBidaTableRes bidaTable;
+  const Body({Key? key, required this.bidaTable}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     double windowWidth = MediaQuery.of(context).size.width;
@@ -56,7 +59,7 @@ class Body extends StatelessWidget {
             ),
             iconColor: AppColor.black,
           ),
-          Text(
+          const Text(
             'List table',
             style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             textAlign: TextAlign.center,
@@ -118,11 +121,11 @@ class Body extends StatelessWidget {
                         elevation: 8,
                         child: ListTile(
                           leading: Image.network(
-                            'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTCR-s1OFav5Qn1MIUjAp3VE1FFIgohqJuauA&usqp=CAU',
+                            bidaTable!.image!,
                             width: windowWidth * windowSizeWidth(60),
                           ),
                           title: Text(
-                            "Table 1",
+                            bidaTable.name!,
                             style: const TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.bold,
