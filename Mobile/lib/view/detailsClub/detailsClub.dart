@@ -67,7 +67,7 @@ class Body extends StatelessWidget {
     required this.listBidaTable,
   }) : super(key: key);
   @override
-  Widget build(BuildContext context) {    
+  Widget build(BuildContext context) {
     double windowHeight = MediaQuery.of(context).size.height;
 
     return Container(
@@ -246,7 +246,7 @@ class Body extends StatelessWidget {
                   height: 10,
                 ),
                 SizedBox(
-                  height: windowHeight * windowSizeHeight(180),
+                  height: windowHeight * windowSizeHeight(120),
                   child: ListView.builder(
                     padding: const EdgeInsets.all(8),
                     itemCount: listBidaTable.length,
