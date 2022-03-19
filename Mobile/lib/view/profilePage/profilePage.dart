@@ -4,10 +4,14 @@ import 'dart:async';
 
 import 'package:booking_billiards_app/configs/themes/app_color.dart';
 import 'package:booking_billiards_app/constants/assets_path.dart';
+import 'package:booking_billiards_app/model/response/get_list_history_res.dart';
 import 'package:booking_billiards_app/model/response/get_user_res.dart';
+import 'package:booking_billiards_app/repository/impl/booking_rep_impl.dart';
 import 'package:booking_billiards_app/repository/impl/user_rep_impl.dart';
 import 'package:booking_billiards_app/utils/window_size.dart';
+import 'package:booking_billiards_app/view/bottomNavBar/bottomNavBar.dart';
 import 'package:booking_billiards_app/view_model/providers/profile_page_provider.dart';
+import 'package:booking_billiards_app/view_model/service/service_storage.dart';
 import 'package:booking_billiards_app/view_model/url_api/url_api.dart';
 import 'package:booking_billiards_app/widgets/button/button.dart';
 import 'package:booking_billiards_app/widgets/input/input.dart';
@@ -17,7 +21,6 @@ import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
 import '../../repository/impl/bida_club_rep_impl.dart';
-import '../bottomNavBar/bottomNavBar.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -50,8 +53,9 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
+  final SecureStorage secureStorage = SecureStorage();
   GetUserRes? user;
-
+  List<GetListHistoryRes>? listHistory;
   @override
   Widget build(BuildContext context) {
     ProfilePageProvider profilePageProvider =
@@ -96,15 +100,26 @@ class _BodyState extends State<Body> {
                         .then((value) async {
                       user = value;
                     });
-                    // await Navigator.push(
-                    //   context,
-                    //   MaterialPageRoute(
-                    //     builder: (context) {
-                    //       return BottomNavBar(
-                    //           currentIndex: 2, listBidaClub: value, user: user);
-                    //     },
-                    //   ),
-                    // );
+                    String userId =
+                        await secureStorage.readSecureData('userId') ?? "";
+                    await BookingRepImpl()
+                        .getListHistoryBooking(
+                            UrlApi.bookingPath + "?userId=$userId")
+                        .then((value) async {
+                      listHistory = value;
+                    });
+                    await Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) {
+                          return BottomNavBar(
+                              currentIndex: 2,
+                              listBidaClub: value,
+                              user: user,
+                              listHistory: listHistory!);
+                        },
+                      ),
+                    );
                   },
                 );
               },
@@ -210,11 +225,52 @@ class _BodyState extends State<Body> {
               const SizedBox(
                 height: 15,
               ),
+              InputDefault(
+                title: 'Email',
+                suffixIcon: profilePageProvider.textEmail.isNotEmpty
+                    ? IconButton(
+                        onPressed: () =>
+                            profilePageProvider.clearEmailController(),
+                        icon: const Icon(Icons.clear_rounded),
+                        color: AppColor.pink,
+                      )
+                    : null,
+                hintText: 'Update Email',
+                errorText: profilePageProvider.email.error,
+                autofocus: false,
+                obscureText: false,
+                keyboardType: TextInputType.text,
+                textInputAction: TextInputAction.next,
+                controller: profilePageProvider.emailController,
+                onChanged: (String value) {
+                  profilePageProvider.checkEmail(value);
+                },
+                focusNode: profilePageProvider.emailFocus,
+                onEditingComplete: () {
+                  profilePageProvider.changeFocus(context, 'email');
+                },
+              ),
+              const SizedBox(
+                height: 15,
+              ),
             ],
           ),
           ButtonDefault(
+            width: 150,
+            height: 30,
+            content: 'Update',
+            color: AppColor.white,
+            backgroundBtn: AppColor.redToast,
+            voidCallBack: () {
+              profilePageProvider.submitData(context);
+            },
+          ),
+          const Padding(
+            padding: EdgeInsets.only(top: 20),
+          ),
+          ButtonDefault(
             width: 200,
-            height: 25,
+            height: 30,
             content: 'Change Password',
             color: AppColor.white,
             backgroundBtn: AppColor.black,
@@ -222,19 +278,6 @@ class _BodyState extends State<Body> {
               Navigator.of(context).pushNamed(
                 '/changeNewPassword',
               );
-            },
-          ),
-          const Padding(
-            padding: EdgeInsets.only(top: 20),
-          ),
-          ButtonDefault(
-            width: 100,
-            height: 25,
-            content: 'Update',
-            color: AppColor.white,
-            backgroundBtn: AppColor.redToast,
-            voidCallBack: () {
-              profilePageProvider.submitData(context);
             },
           ),
         ],

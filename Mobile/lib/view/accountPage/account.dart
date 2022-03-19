@@ -1,4 +1,5 @@
 import 'package:booking_billiards_app/constants/assets_path.dart';
+import 'package:booking_billiards_app/view_model/service/service_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -110,13 +111,14 @@ class Body extends StatelessWidget {
               icon: const Icon(Icons.edit),
               onPressed: () {
                 profilePageProvider.addDataUser(
-                  user.id!, 
-                  user.image!, 
-                  user.phoneNumber!, 
-                  user.fullName!,
-                  user.username!,
-                  user.password!,
-                  user.roleId!);
+                    user.id!,
+                    user.image!,
+                    user.phoneNumber!,
+                    user.fullName!,
+                    user.email!,
+                    user.username!,
+                    user.password!,
+                    user.roleId!);
                 Navigator.of(context).pushNamed(
                   '/profilePage',
                 );
@@ -181,6 +183,8 @@ class Body extends StatelessWidget {
             color: AppColor.white,
             backgroundBtn: AppColor.red,
             voidCallBack: () {
+              final SecureStorage secureStorage = SecureStorage();
+              secureStorage.deleteAll();
               Navigator.of(context).pushNamed(
                 '/welcome',
               );

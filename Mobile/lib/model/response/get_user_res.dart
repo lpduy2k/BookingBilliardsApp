@@ -9,6 +9,7 @@ class GetUserRes {
     this.id,
     this.username,
     this.fullName,
+    this.email,
     this.phoneNumber,
     this.password,
     this.image,
@@ -18,6 +19,7 @@ class GetUserRes {
   String? id;
   String? username;
   String? fullName;
+  String? email;
   String? phoneNumber;
   String? password;
   String? image;
@@ -27,6 +29,7 @@ class GetUserRes {
         id: json["id"],
         username: json["username"],
         fullName: json["fullName"],
+        email: json["email"],
         phoneNumber: json["phoneNumber"],
         password: json["password"],
         image: json["image"],
@@ -37,6 +40,7 @@ class GetUserRes {
         "id": id,
         "username": username,
         "fullName": fullName,
+        "email": email,
         "phoneNumber": phoneNumber,
         "password": password,
         "image": image,
