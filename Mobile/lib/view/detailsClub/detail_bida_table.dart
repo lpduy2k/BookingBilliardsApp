@@ -1,8 +1,17 @@
 import 'package:booking_billiards_app/configs/themes/app_color.dart';
 import 'package:booking_billiards_app/constants/assets_path.dart';
+import 'package:booking_billiards_app/model/request/post_booking_item_req.dart';
+import 'package:booking_billiards_app/model/request/post_booking_req.dart';
+import 'package:booking_billiards_app/model/response/get_bida_club_detail_res.dart';
 import 'package:booking_billiards_app/model/response/get_bida_table_res.dart';
+import 'package:booking_billiards_app/repository/impl/bida_club_rep_impl.dart';
+import 'package:booking_billiards_app/repository/impl/booking_item_rep_impl.dart';
+import 'package:booking_billiards_app/repository/impl/booking_rep_impl.dart';
 import 'package:booking_billiards_app/utils/window_size.dart';
-import 'package:booking_billiards_app/widgets/button/button.dart';
+import 'package:booking_billiards_app/view/confirmBooking/confirm_booking.dart';
+import 'package:booking_billiards_app/view_model/service/service_storage.dart';
+import 'package:booking_billiards_app/view_model/url_api/url_api.dart';
+import 'package:booking_billiards_app/widgets/input/datetime_picker_widget.dart';
 import 'package:booking_billiards_app/widgets/dialog/dialog_confirm.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -39,10 +48,10 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
-  TimeOfDay time = TimeOfDay.now();
-
+  final SecureStorage secureStorage = SecureStorage();
   @override
   Widget build(BuildContext context) {
+    GetBidaClubDetailRes? bidaClubDetail;
     final format = NumberFormat("#,##0,000");
     double windowHeight = MediaQuery.of(context).size.height;
     double windowWidth = MediaQuery.of(context).size.width;
@@ -165,41 +174,7 @@ class _BodyState extends State<Body> {
                                 margin: const EdgeInsets.all(20),
                                 child: Column(
                                   children: [
-                                    Text(
-                                      "Choose Time Booking",
-                                      style: TextStyle(
-                                          fontSize: 20,
-                                          color: AppColor.white,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                    SizedBox(
-                                      height: windowHeight * 0.01,
-                                    ),
-                                    Text(
-                                      "${time.hour.toString().padLeft(2, '0')}:${time.minute.toString().padLeft(2, '0')}",
-                                      style: const TextStyle(fontSize: 50),
-                                    ),
-                                    SizedBox(
-                                      height: windowHeight * 0.01,
-                                    ),
-                                    ButtonDefault(
-                                      width: 150,
-                                      height: 29,
-                                      content: 'Select Time',
-                                      color: AppColor.white,
-                                      backgroundBtn: AppColor.greenToast,
-                                      voidCallBack: () async {
-                                        TimeOfDay? newTime =
-                                            await showTimePicker(
-                                                context: context,
-                                                initialTime: time);
-                                        if (newTime != null) {
-                                          setState(() {
-                                            time = newTime;
-                                          });
-                                        }
-                                      },
-                                    ),
+                                    DatetimePickerWidget(),
                                   ],
                                 ),
                               ),
@@ -213,8 +188,42 @@ class _BodyState extends State<Body> {
                                 contentButton: 'BOOKING',
                                 color: AppColor.white,
                                 backgroundBtn: AppColor.black,
-                                voidCallBack: () {
-                                  print('thanh cong');
+                                voidCallBack: () async {
+                                  String dateTime = await secureStorage
+                                      .readSecureData("dateTime");
+                                  bidaClubDetail = await BidaClubRepImpl()
+                                      .getBidaClubDetail(UrlApi.bidaClubPath +
+                                          "/${widget.bidaTableDetail.bidaClubId}");
+
+                                  String userId = await secureStorage
+                                      .readSecureData("userId");
+                                  await BookingRepImpl()
+                                      .postBooking(
+                                          UrlApi.bookingPath,
+                                          PostBookingReq(
+                                              timeBooking:
+                                                  DateTime.parse(dateTime),
+                                              totalQuantity: 0,
+                                              totalPrice: 0,
+                                              status: "inactive",
+                                              userId: userId))
+                                      .then((value) async {
+                                    await BookingItemRepImpl().postBookingItem(
+                                        UrlApi.bookingItemPath,
+                                        PostBookingItemReq(
+                                            price: 0,
+                                            bookingId: "${value.id}",
+                                            bidaTableId:
+                                                "${widget.bidaTableDetail.id}"));
+                                  });
+
+                                  Navigator.push(context,
+                                      MaterialPageRoute(builder: (context) {
+                                    return ConfirmBooking(
+                                      bidaClubDetail: bidaClubDetail,
+                                      timeBooking: dateTime,
+                                    );
+                                  }));
                                 },
                                 contentTitleDialog: 'Notification',
                                 contentDialog:

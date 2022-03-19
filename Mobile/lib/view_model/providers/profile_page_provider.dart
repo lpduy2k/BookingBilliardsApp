@@ -19,6 +19,7 @@ class ProfilePageProvider with ChangeNotifier {
   String? avatarSto;
   ValidationItem _phone = ValidationItem(null, null);
   ValidationItem _fullname = ValidationItem(null, null);
+  ValidationItem _email = ValidationItem(null, null);
   String? username;
   String? password;
   String? roleId;
@@ -26,23 +27,28 @@ class ProfilePageProvider with ChangeNotifier {
   //Getters
   ValidationItem get phone => _phone;
   ValidationItem get fullname => _fullname;
+  ValidationItem get email => _email;
 
   final _phoneTextEditController = TextEditingController();
   final _fullnameTextEditController = TextEditingController();
+  final _emailTextEditController = TextEditingController();
 
   TextEditingController get phoneController => _phoneTextEditController;
   TextEditingController get fullnameController => _fullnameTextEditController;
+  TextEditingController get emailController => _emailTextEditController;
 
   String get textPhone => phoneController.text;
   String get textFullname => fullnameController.text;
+  String get textEmail => emailController.text;
 
   final _phoneFocus = FocusNode();
   final _fullnameFocus = FocusNode();
+  final _emailFocus = FocusNode();
 
   FocusNode get phoneFocus => _phoneFocus;
   FocusNode get fullnameFocus => _fullnameFocus;
+  FocusNode get emailFocus => _emailFocus;
 
-  bool isPasswordVariable = true;
   bool submitValid = false;
 
   void clearPhoneController() {
@@ -57,8 +63,9 @@ class ProfilePageProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  void changeFullnameVariable() {
-    isPasswordVariable = !isPasswordVariable;
+  void clearEmailController() {
+    emailController.clear();
+    _email = ValidationItem(null, null);
     notifyListeners();
   }
 
@@ -79,6 +86,18 @@ class ProfilePageProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  void checkEmail(String value) {
+    if (value.isEmpty) {
+      _email = ValidationItem(value, "email is empty");
+    } else if (!RegExp(r'^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$')
+        .hasMatch(value)) {
+      _email = ValidationItem(value, "email invalid ");
+    } else {
+      _email = ValidationItem(value, null);
+    }
+    notifyListeners();
+  }
+
   void changeFocus(BuildContext context, String field) {
     var newFocus = _phoneFocus;
     if (_phone.value != null && field.contains("phone")) {
@@ -87,6 +106,11 @@ class ProfilePageProvider with ChangeNotifier {
       return;
     }
     if (_fullname.value != null && field.contains('fullname')) {
+      newFocus = _emailFocus;
+      FocusScope.of(context).requestFocus(newFocus);
+      return;
+    }
+    if (_email.value != null && field.contains('email')) {
       FocusScope.of(context).unfocus();
       submitData(context);
     }
@@ -104,6 +128,7 @@ class ProfilePageProvider with ChangeNotifier {
       String imageData,
       String phoneData,
       String fullNameData,
+      String emailData,
       String usernameData,
       String passwordData,
       String roleIdData) {
@@ -114,6 +139,7 @@ class ProfilePageProvider with ChangeNotifier {
     _fullname.value = fullNameData;
     _phoneTextEditController.text = phoneData;
     _fullnameTextEditController.text = fullNameData;
+    _emailTextEditController.text = emailData;
 
     username = usernameData;
     password = passwordData;
@@ -123,12 +149,15 @@ class ProfilePageProvider with ChangeNotifier {
   void submitData(BuildContext context) async {
     submitValid = _phone.error != null ||
         _fullname.error != null ||
+        _email.error != null ||
         _phone.value == null ||
-        _fullname.value == null;
+        _fullname.value == null ||
+        _email.value == null;
 
     if (submitValid) {
       checkPhone(_phone.value ?? "");
       checkFullname(_fullname.value ?? "");
+      checkEmail(_email.value ?? "");
       notifyListeners();
     } else if (!submitValid && isValid) {
       if (image != null) {
@@ -143,6 +172,7 @@ class ProfilePageProvider with ChangeNotifier {
                 id: idUser!,
                 username: username!,
                 fullName: textFullname,
+                email: textEmail,
                 phoneNumber: textPhone,
                 password: password!,
                 image: urlImage,
@@ -165,6 +195,7 @@ class ProfilePageProvider with ChangeNotifier {
               id: idUser!,
               username: username!,
               fullName: textFullname,
+              email: textEmail,
               phoneNumber: textPhone,
               password: password!,
               image: avatarSto!,
@@ -184,6 +215,7 @@ class ProfilePageProvider with ChangeNotifier {
               id: idUser!,
               username: username!,
               fullName: textFullname,
+              email: textEmail,
               phoneNumber: textPhone,
               password: password!,
               image: avatar,

@@ -146,7 +146,6 @@ class SignInProvider with ChangeNotifier {
                           .then((value) async {
                         user = value;
                       });
-                      print(payload['Id'].toString());
                       await BookingRepImpl().getListHistoryBooking(UrlApi.bookingPath + "?userId=${payload['Id'].toString()}").then((value) async {
                         listHistory = value;
                       });

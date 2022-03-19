@@ -1,9 +1,8 @@
 import 'package:booking_billiards_app/configs/themes/app_color.dart';
 import 'package:booking_billiards_app/model/response/get_list_history_res.dart';
-import 'package:booking_billiards_app/repository/impl/booking_rep_impl.dart';
-import 'package:booking_billiards_app/utils/window_size.dart';
+import 'package:booking_billiards_app/repository/impl/bida_club_rep_impl.dart';
 import 'package:booking_billiards_app/view/detailsClub/detailsClub.dart';
-import 'package:booking_billiards_app/widgets/button/button.dart';
+import 'package:booking_billiards_app/view_model/url_api/url_api.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -41,110 +40,118 @@ class _BookingHistoryState extends State<BookingHistory> {
                   height: size.height * 0.005,
                 ),
                 for (var list in widget.listHistory)
-                Card(
-                  // color: AppColor.lightGreen,
-                  shape: OutlineInputBorder(
-                    borderSide: BorderSide(color: AppColor.grey, width: 1),
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  child: Column(children: [
-                    ListTile(
-                      title: Container(
-                        // padding: EdgeInsets.fromLTRB(
-                        //     0, size.height * 0.01, 0, size.height * 0.0001),
-                        padding: EdgeInsets.only(top: 5, bottom: 5),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            Image.network(
-                              list.imageTable!,
-                              width: 150,
-                              height: 100,
-                            ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children:  [
-                                Text(
-                                  list.bidaTableName!,
-                                  style: const TextStyle (
-                                      fontWeight: FontWeight.w700,
-                                      fontSize: 15,
-                                      height: 1.6),
-                                ),
-                                const Text(
-                                  'Total price',
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.w700,
-                                      fontSize: 15,
-                                      height: 1.6),
-                                ),
-                                Text(
-                                  format.format(list.totalPrice!).toString() + " VND",
-                                  style: const TextStyle(
-                                      fontWeight: FontWeight.w400,
-                                      fontSize: 12,
-                                      height: 1.6),
-                                )
-                              ],
-                            )
-                          ],
-                        ),
-                      ),
-                      subtitle: Container(
-                        padding: const EdgeInsets.only(top: 5, bottom: 5),
-                        child: Column(children: [
-                          const Divider(
-                            height: 2,
-                            thickness: 1,
-                            indent: 0,
-                            endIndent: 0,
-                            color: Colors.grey,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  Card(
+                    // color: AppColor.lightGreen,
+                    shape: OutlineInputBorder(
+                      borderSide: BorderSide(color: AppColor.grey, width: 1),
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: Column(children: [
+                      ListTile(
+                        title: Container(
+                          // padding: EdgeInsets.fromLTRB(
+                          //     0, size.height * 0.01, 0, size.height * 0.0001),
+                          padding: EdgeInsets.only(top: 5, bottom: 5),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
+                              Image.network(
+                                list.imageTable!,
+                                width: 150,
+                                height: 100,
+                              ),
                               Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   Text(
-                                    list.bidaClubName!,
+                                    list.bidaTableName!,
                                     style: const TextStyle(
                                         fontWeight: FontWeight.w700,
                                         fontSize: 15,
                                         height: 1.6),
                                   ),
+                                  const Text(
+                                    'Total price',
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.w700,
+                                        fontSize: 15,
+                                        height: 1.6),
+                                  ),
                                   Text(
-                                    list.addressClub!,
+                                    format.format(list.totalPrice!).toString() +
+                                        " VND",
                                     style: const TextStyle(
                                         fontWeight: FontWeight.w400,
                                         fontSize: 12,
                                         height: 1.6),
                                   )
                                 ],
-                              ),
-                              // ElevatedButton(
-                              //     onPressed: () {
-                              //       Navigator.push(
-                              //         context,
-                              //         MaterialPageRoute(
-                              //             builder: (context) =>
-                              //                 DetailsClub(bidaClubDetail: bidaClubDetail)),
-                              //       );
-                              //     },
-                              //     child: const Text(
-                              //       "Detail",
-                              //       style: TextStyle(
-                              //         fontWeight: FontWeight.normal,
-                              //         fontSize: 14.0,
-                              //       ),
-                              //     ))
+                              )
                             ],
-                          )
-                        ]),
+                          ),
+                        ),
+                        subtitle: Container(
+                          padding: const EdgeInsets.only(top: 5, bottom: 5),
+                          child: Column(children: [
+                            const Divider(
+                              height: 2,
+                              thickness: 1,
+                              indent: 0,
+                              endIndent: 0,
+                              color: Colors.grey,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      list.bidaClubName!,
+                                      style: const TextStyle(
+                                          fontWeight: FontWeight.w700,
+                                          fontSize: 15,
+                                          height: 1.6),
+                                    ),
+                                    Text(
+                                      list.addressClub!,
+                                      style: const TextStyle(
+                                          fontWeight: FontWeight.w400,
+                                          fontSize: 12,
+                                          height: 1.6),
+                                    )
+                                  ],
+                                ),
+                                ElevatedButton(
+                                    onPressed: () {
+                                      // BidaClubRepImpl()
+                                      //     .getBidaClubDetail(
+                                      //         UrlApi.bidaClubPath +
+                                      //             "/${list.}")
+                                      //     .then((value) async {
+                                      //   Navigator.push(context,
+                                      //       MaterialPageRoute(
+                                      //           builder: (context) {
+                                      //     return DetailsClub(
+                                      //       bidaClubDetail: value,
+                                      //     );
+                                      //   }));
+                                      // });
+                                    },
+                                    child: const Text(
+                                      "Detail",
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.normal,
+                                        fontSize: 14.0,
+                                      ),
+                                    ))
+                              ],
+                            )
+                          ]),
+                        ),
                       ),
-                    ),
-                  ]),
-                ),
+                    ]),
+                  ),
               ],
             ),
           ),

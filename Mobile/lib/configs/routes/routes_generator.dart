@@ -37,10 +37,6 @@ class RouteGenerator {
         return MaterialPageRoute(
           builder: (_) => const SuccessPage(),
         );
-      case '/confirmBooking':
-        return MaterialPageRoute(
-          builder: (_) => const ConfirmBooking(),
-        );
       case '/searchBidaClub':
         return MaterialPageRoute(
           builder: (_) => const SearchBidaClub(),

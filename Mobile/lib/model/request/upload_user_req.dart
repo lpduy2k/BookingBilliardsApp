@@ -14,6 +14,7 @@ class UploadUserReq {
     required this.id,
     required this.username,
     required this.fullName,
+    required this.email,
     required this.phoneNumber,
     required this.password,
     required this.image,
@@ -23,6 +24,7 @@ class UploadUserReq {
   String id;
   String username;
   String fullName;
+  String email;
   String phoneNumber;
   String password;
   String image;
@@ -32,6 +34,7 @@ class UploadUserReq {
         id: json["id"],
         username: json["username"],
         fullName: json["fullName"],
+        email: json["email"],
         phoneNumber: json["phoneNumber"],
         password: json["password"],
         image: json["image"],
@@ -42,6 +45,7 @@ class UploadUserReq {
         "id": id,
         "username": username,
         "fullName": fullName,
+        "email": email,
         "phoneNumber": phoneNumber,
         "password": password,
         "image": image,

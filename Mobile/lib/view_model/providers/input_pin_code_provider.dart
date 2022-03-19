@@ -1,4 +1,3 @@
-import 'package:booking_billiards_app/configs/base/base_validation.dart';
 import 'package:booking_billiards_app/configs/toast/toast.dart';
 import 'package:booking_billiards_app/view_model/service/service_storage.dart';
 import 'package:flutter/cupertino.dart';
