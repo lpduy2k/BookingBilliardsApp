@@ -135,7 +135,7 @@ class _EditTablePageState extends State<EditTablePage> {
                   ),
                 ),
                 Container(
-                  padding: EdgeInsets.only(left: 155),
+                  padding: EdgeInsets.only(left: 125),
                   margin: EdgeInsets.fromLTRB(0, size.height * 0.07, 0, 0),
                   child: ButtonDefault(
                     width: 100,
