@@ -1,6 +1,7 @@
 import 'package:booking_billiards_app/configs/themes/app_color.dart';
 import 'package:booking_billiards_app/constants/assets_path.dart';
 import 'package:booking_billiards_app/model/response/get_user_res.dart';
+import 'package:booking_billiards_app/repository/impl/bida_club_rep_impl.dart';
 import 'package:booking_billiards_app/repository/impl/user_rep_impl.dart';
 import 'package:booking_billiards_app/service/service_storage.dart';
 import 'package:booking_billiards_app/url_api/url_api.dart';
@@ -98,7 +99,7 @@ class GridDashboard extends StatelessWidget {
                   children: <Widget>[
                     Image.asset(
                       AssetPath.club,
-                      width: 100,
+                      width: 90,
                     ),
                     SizedBox(
                       height: 14,
@@ -141,7 +142,7 @@ class GridDashboard extends StatelessWidget {
                   children: <Widget>[
                     Image.asset(
                       AssetPath.order,
-                      width: 80,
+                      width: 70,
                     ),
                     const SizedBox(
                       height: 14,
@@ -210,12 +211,16 @@ class GridDashboard extends StatelessWidget {
                 ),
               ),
               onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const TableListPage()),
-                );
-                print("Click event on Container");
+                BidaClubRepImpl()
+                    .getBidaClubDetail(UrlApi.bidaClubPath +
+                        "/f234efe9-3774-45f5-38ae-08d9db6c7456")
+                    .then((value) async {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return TableListPage(
+                      bidaClubDetail: value,
+                    );
+                  }));
+                });
               },
             ),
             InkWell(
@@ -228,9 +233,9 @@ class GridDashboard extends StatelessWidget {
                   children: <Widget>[
                     Image.asset(
                       AssetPath.profile,
-                      width: 120,
+                      width: 100,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 14,
                     ),
                     const Text(
@@ -240,7 +245,7 @@ class GridDashboard extends StatelessWidget {
                           fontSize: 16,
                           fontWeight: FontWeight.w600),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 8,
                     ),
                     const Text(

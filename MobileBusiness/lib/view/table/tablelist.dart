@@ -1,12 +1,44 @@
 import 'package:booking_billiards_app/configs/themes/app_color.dart';
+import 'package:booking_billiards_app/model/response/get_bida_club_detail_res.dart';
+import 'package:booking_billiards_app/model/response/get_bida_table_res.dart';
+import 'package:booking_billiards_app/repository/impl/bida_table_rep_impl.dart';
+import 'package:booking_billiards_app/url_api/url_api.dart';
 import 'package:booking_billiards_app/utils/window_size.dart';
 import 'package:booking_billiards_app/view/table/add_table.dart';
+import 'package:booking_billiards_app/view/table/card_table.dart';
 import 'package:booking_billiards_app/view/table/edit_table.dart';
 import 'package:booking_billiards_app/widgets/button/button.dart';
 import 'package:flutter/material.dart';
 
-class TableListPage extends StatelessWidget {
-  const TableListPage({Key? key}) : super(key: key);
+class TableListPage extends StatefulWidget {
+  final GetBidaClubDetailRes bidaClubDetail;
+  const TableListPage({
+    Key? key,
+    required this.bidaClubDetail,
+  }) : super(key: key);
+
+  @override
+  State<TableListPage> createState() => _TableListPageState();
+}
+
+class _TableListPageState extends State<TableListPage> {
+  List<GetBidaTableRes>? listBidaTable = [];
+  @override
+  void initState() {
+    super.initState();
+    BidaTableRepImpl()
+        .getBidaTable(
+            UrlApi.bidaTablePath + "?clubId=${widget.bidaClubDetail.id}")
+        .then((value) async {
+      setState(() {
+        for (var i = 0; i < value.length; i++) {
+          if (value[i].status == "active") {
+            listBidaTable?.add(value[i]);
+          }
+        }
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +51,10 @@ class TableListPage extends StatelessWidget {
       child: Scaffold(
         backgroundColor: AppColor.lightGreen,
         body: SingleChildScrollView(
-          child: Body(),
+          child: Body(
+            bidaClubDetail: widget.bidaClubDetail,
+            listBidaTable: listBidaTable!,
+          ),
         ),
       ),
     );
@@ -27,8 +62,12 @@ class TableListPage extends StatelessWidget {
 }
 
 class Body extends StatelessWidget {
+  final GetBidaClubDetailRes bidaClubDetail;
+  final List<GetBidaTableRes> listBidaTable;
   const Body({
     Key? key,
+    required this.bidaClubDetail,
+    required this.listBidaTable,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -56,7 +95,7 @@ class Body extends StatelessWidget {
             ),
             iconColor: AppColor.black,
           ),
-          Text(
+          const Text(
             'List table',
             style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             textAlign: TextAlign.center,
@@ -73,8 +112,8 @@ class Body extends StatelessWidget {
                   children: [
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text(
+                      children: const [
+                        Text(
                           'All table in your Club',
                           style: TextStyle(
                             fontSize: 16,
@@ -110,54 +149,13 @@ class Body extends StatelessWidget {
                   height: 10,
                 ),
                 SizedBox(
-                  height: windowHeight * windowSizeHeight(100),
-                  child: ListView(
+                  height: windowHeight * windowSizeHeight(400),
+                  child: ListView.builder(
                     padding: EdgeInsets.zero,
-                    children: [
-                      Card(
-                        elevation: 8,
-                        child: ListTile(
-                          leading: Image.network(
-                            'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTCR-s1OFav5Qn1MIUjAp3VE1FFIgohqJuauA&usqp=CAU',
-                            width: windowWidth * windowSizeWidth(60),
-                          ),
-                          title: Text(
-                            "Table 1",
-                            style: const TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          subtitle: Row(
-                            children: const [
-                              Text(
-                                "Status:",
-                                style: TextStyle(fontSize: 10),
-                              ),
-                              Text(
-                                "xxx",
-                                style: TextStyle(fontSize: 10),
-                              ),
-                            ],
-                          ),
-                          trailing: ButtonDefault(
-                            width: 100,
-                            height: 25,
-                            content: 'Details',
-                            color: AppColor.white,
-                            backgroundBtn: AppColor.lightBlue,
-                            voidCallBack: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        const EditTablePage()),
-                              );
-                            },
-                          ),
-                        ),
-                      ),
-                    ],
+                    itemCount: listBidaTable.length,
+                    itemBuilder: (context, index) {
+                      return CardBida(bidaTable: listBidaTable[index]);
+                    },
                   ),
                 )
               ],
