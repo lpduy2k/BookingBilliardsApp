@@ -1,11 +1,13 @@
 import 'package:booking_billiards_app/configs/themes/app_color.dart';
 import 'package:booking_billiards_app/model/response/get_bida_table_res.dart';
+import 'package:booking_billiards_app/providers/table_page_provider.dart';
 import 'package:booking_billiards_app/repository/impl/bida_table_rep_impl.dart';
 import 'package:booking_billiards_app/url_api/url_api.dart';
 import 'package:booking_billiards_app/utils/window_size.dart';
 import 'package:booking_billiards_app/view/table/edit_table.dart';
 import 'package:booking_billiards_app/widgets/button/button.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class CardBida extends StatefulWidget {
   GetBidaTableRes? bidaTable;
@@ -18,6 +20,8 @@ class CardBida extends StatefulWidget {
 class _CardBidaState extends State<CardBida> {
   @override
   Widget build(BuildContext context) {
+    TablePageProvider tablePageProvider =
+        Provider.of<TablePageProvider>(context);
     double windowHeight = MediaQuery.of(context).size.height;
     double windowWidth = MediaQuery.of(context).size.width;
     return Card(
@@ -53,14 +57,29 @@ class _CardBidaState extends State<CardBida> {
           color: AppColor.white,
           backgroundBtn: AppColor.lightBlue,
           voidCallBack: () {
-            BidaTableRepImpl()
-                .getBidaTableDetail(
-                    UrlApi.bidaTablePath + "/${widget.bidaTable!.id!}")
-                .then((value) async {
-              Navigator.push(context, MaterialPageRoute(builder: (context) {
-                return EditTablePage();
-              }));
-            });
+            // BidaTableRepImpl()
+            //     .getBidaTableDetail(
+            //         UrlApi.bidaTablePath + "/${widget.bidaTable!.id!}")
+            //     .then((value) async {
+            //   Navigator.push(context, MaterialPageRoute(builder: (context) {
+            //     return EditTablePage(
+            //       // bidaTableDetail: value,
+            //     );
+            //   }));
+            // });
+            // print(widget.bidaTable!.id);
+
+            tablePageProvider.addDataTable(
+                widget.bidaTable!.id!,
+                widget.bidaTable!.image!,
+                widget.bidaTable!.name!,
+                widget.bidaTable!.price!,
+                widget.bidaTable!.type!,
+                widget.bidaTable!.status!,
+                widget.bidaTable!.bidaClubId!);
+            Navigator.of(context).pushNamed(
+              '/tableDetailsPage',
+            );
           },
         ),
       ),
