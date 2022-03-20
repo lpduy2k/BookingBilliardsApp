@@ -4,6 +4,8 @@
 
 import 'dart:convert';
 
+import 'dart:ffi';
+
 UploadTableReq uploadTableReqFromJson(String str) =>
     UploadTableReq.fromJson(json.decode(str));
 
@@ -24,7 +26,7 @@ class UploadTableReq {
   String name;
   String type;
   String image;
-  int price;
+  double price;
   String status;
   String bidaClubId;
 

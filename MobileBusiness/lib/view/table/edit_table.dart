@@ -1,7 +1,16 @@
+import 'dart:developer';
+import 'dart:io';
+
 import 'package:booking_billiards_app/configs/themes/app_color.dart';
+import 'package:booking_billiards_app/constants/assets_path.dart';
 import 'package:booking_billiards_app/model/response/get_bida_table_res.dart';
+import 'package:booking_billiards_app/providers/table_page_provider.dart';
 import 'package:booking_billiards_app/widgets/button/button.dart';
+import 'package:booking_billiards_app/widgets/input/input.dart';
+import 'package:booking_billiards_app/widgets/upload_image/upload_image.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
 
 class EditTablePage extends StatefulWidget {
   final GetBidaTableRes bidaTableDetail;
@@ -26,6 +35,22 @@ class _EditTablePageState extends State<EditTablePage> {
 
   @override
   Widget build(BuildContext context) {
+    TablePageProvider tablePageProvider =
+        Provider.of<TablePageProvider>(context);
+
+        Future pickImage(ImageSource source) async {
+      try {
+        final image = await ImagePicker().pickImage(source: source);
+        if (image == null) return;
+        final imageTemporary = File(image.path);
+        setState(() {
+          tablePageProvider.image = imageTemporary;
+        });
+      } catch (e) {
+        log("Failed to pick image: $e");
+      }
+    }
+
     Size size = MediaQuery.of(context).size;
     double sizeHeightInput = size.height * 0.12;
 
@@ -51,50 +76,138 @@ class _EditTablePageState extends State<EditTablePage> {
                 },
               )),
             ]),
-            Stack(
-              children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(8.0),
-                  child: Image.network(
-                    widget.bidaTableDetail.image!,
-                  ),
-                ),
-                Positioned(
-                  bottom: 0,
-                  right: 0,
-                  child: InkWell(
-                    onTap: () {
-                      showModalBottomSheet(
-                          context: context,
-                          builder: ((builder) => bottomSheet(context)));
-                    },
-                    child: const CircleAvatar(
-                      backgroundColor: Colors.white,
-                      child: Icon(
-                        Icons.camera_alt,
-                        size: 20,
-                      ),
-                    ),
-                  ),
-                )
-              ],
-            ),
-            SizedBox(
-              height: sizeHeightInput,
-              child: const TextField(
-                decoration: InputDecoration(
-                  labelText: 'Table Name',
-                ),
+            // Stack(
+            //   children: [
+            //     ClipRRect(
+            //       borderRadius: BorderRadius.circular(8.0),
+            //       child: Image.network(
+            //         widget.bidaTableDetail.image!,
+            //       ),
+            //     ),
+            //     Positioned(
+            //       bottom: 0,
+            //       right: 0,
+            //       child: InkWell(
+            //         onTap: () {
+            //           showModalBottomSheet(
+            //               context: context,
+            //               builder: ((builder) => bottomSheet(context)));
+            //         },
+            //         child: const CircleAvatar(
+            //           backgroundColor: Colors.white,
+            //           child: Icon(
+            //             Icons.camera_alt,
+            //             size: 20,
+            //           ),
+            //         ),
+            //       ),
+            //     )
+            //   ],
+            // ),
+            UploadImage(
+              widget: ClipRRect(
+                  borderRadius: BorderRadius.circular(100 / 2),
+                  child: tablePageProvider.image != null
+                      ? Image.file(
+                          tablePageProvider.image!,
+                          fit: BoxFit.cover,
+                          width: 100,
+                          height: 100,
+                        )
+                      : (tablePageProvider.avatarTable != "null"
+                          ? Image.network(
+                              tablePageProvider.avatarTable!,
+                              fit: BoxFit.cover,
+                              width: 100,
+                              height: 100,
+                            )
+                          : const Image(
+                              image: AssetImage(AssetPath.defaultAvatar),
+                              fit: BoxFit.cover,
+                              width: 100,
+                              height: 100,
+                            ))),
+              pickImage: pickImage,
+              removeImage: () {
+                setState(() {
+                  tablePageProvider.image = null;
+                  tablePageProvider.avatarTable = "null";
+                });
+              }),
+            // SizedBox(
+            //   height: sizeHeightInput,
+            //   child: const TextField(
+            //     decoration: InputDecoration(
+            //       labelText: 'Table Name',
+            //     ),
+            //   ),
+            // ),
+            // SizedBox(
+            //   height: sizeHeightInput,
+            //   child: const TextField(
+            //     decoration: InputDecoration(
+            //       labelText: 'Price',
+            //     ),
+            //   ),
+            // ),
+
+            Column(
+            children: <Widget>[
+              InputDefault(
+                title: 'Full Name',
+                suffixIcon: tablePageProvider.textName.isNotEmpty
+                    ? IconButton(
+                        onPressed: () =>
+                            tablePageProvider.clearNameController(),
+                        icon: const Icon(Icons.clear_rounded),
+                        color: AppColor.pink,
+                      )
+                    : null,
+                hintText: 'Update Name',
+                errorText: tablePageProvider.name.error,
+                autofocus: false,
+                obscureText: false,
+                keyboardType: TextInputType.text,
+                textInputAction: TextInputAction.next,
+                controller: tablePageProvider.nameController,
+                onChanged: (String value) {
+                  tablePageProvider.checkName(value);
+                },
+                focusNode: tablePageProvider.nameFocus,
+                onEditingComplete: () {
+                  tablePageProvider.changeFocus(context, 'Name');
+                },
               ),
-            ),
-            SizedBox(
-              height: sizeHeightInput,
-              child: const TextField(
-                decoration: InputDecoration(
-                  labelText: 'Price',
-                ),
+              InputDefault(
+                title: 'Price',
+                suffixIcon: tablePageProvider.textPrice.isNotEmpty
+                    ? IconButton(
+                        onPressed: () =>
+                            tablePageProvider.clearPriceController(),
+                        icon: const Icon(Icons.clear_rounded),
+                        color: AppColor.pink,
+                      )
+                    : null,
+                hintText: 'Update Price',
+                errorText: tablePageProvider.price.error,
+                autofocus: false,
+                obscureText: false,
+                keyboardType: TextInputType.text,
+                textInputAction: TextInputAction.next,
+                controller: tablePageProvider.priceController,
+                onChanged: (String value) {
+                  tablePageProvider.checkPrice(value);
+                },
+                focusNode: tablePageProvider.nameFocus,
+                onEditingComplete: () {
+                  tablePageProvider.changeFocus(context, 'Price');
+                },
               ),
-            ),
+              const SizedBox(
+                height: 5,
+              ),
+            ],
+          ),
             Column(
               children: [
                 Row(
@@ -157,42 +270,42 @@ class _EditTablePageState extends State<EditTablePage> {
     );
   }
 
-  Widget bottomSheet(context) {
-    return Container(
-      //height: 100.0,
-      width: MediaQuery.of(context).size.width,
-      margin: const EdgeInsets.symmetric(
-        horizontal: 20,
-        vertical: 20,
-      ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-          const Text(
-            "Choose photo",
-            style: TextStyle(fontSize: 20.0),
-          ),
-          ListTile(
-            leading: const Icon(Icons.camera_alt),
-            title: const Text('Camera'),
-            onTap: () {
-              // pickImage(ImageSource.camera);
-            },
-          ),
-          ListTile(
-            leading: const Icon(Icons.image),
-            title: const Text('Gallery'),
-            onTap: () {
-              // pickImage(ImageSource.gallery);
-            },
-          ),
-          ListTile(
-            leading: const Icon(Icons.delete),
-            title: const Text('Remove'),
-            // onTap: removeImage,
-          ),
-        ],
-      ),
-    );
-  }
+  // Widget bottomSheet(context) {
+  //   return Container(
+  //     //height: 100.0,
+  //     width: MediaQuery.of(context).size.width,
+  //     margin: const EdgeInsets.symmetric(
+  //       horizontal: 20,
+  //       vertical: 20,
+  //     ),
+  //     child: Column(
+  //       mainAxisSize: MainAxisSize.min,
+  //       children: <Widget>[
+  //         const Text(
+  //           "Choose photo",
+  //           style: TextStyle(fontSize: 20.0),
+  //         ),
+  //         ListTile(
+  //           leading: const Icon(Icons.camera_alt),
+  //           title: const Text('Camera'),
+  //           onTap: () {
+  //             // pickImage(ImageSource.camera);
+  //           },
+  //         ),
+  //         ListTile(
+  //           leading: const Icon(Icons.image),
+  //           title: const Text('Gallery'),
+  //           onTap: () {
+  //             // pickImage(ImageSource.gallery);
+  //           },
+  //         ),
+  //         ListTile(
+  //           leading: const Icon(Icons.delete),
+  //           title: const Text('Remove'),
+  //           // onTap: removeImage,
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
 }

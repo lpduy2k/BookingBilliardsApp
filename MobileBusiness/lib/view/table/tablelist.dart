@@ -32,9 +32,9 @@ class _TableListPageState extends State<TableListPage> {
         .then((value) async {
       setState(() {
         for (var i = 0; i < value.length; i++) {
-          if (value[i].status == "active") {
+          
             listBidaTable?.add(value[i]);
-          }
+          
         }
       });
     });
