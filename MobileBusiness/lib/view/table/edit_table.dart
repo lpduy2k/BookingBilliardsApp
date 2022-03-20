@@ -5,9 +5,12 @@ import 'package:booking_billiards_app/configs/themes/app_color.dart';
 import 'package:booking_billiards_app/constants/assets_path.dart';
 import 'package:booking_billiards_app/model/response/get_bida_table_res.dart';
 import 'package:booking_billiards_app/providers/table_page_provider.dart';
+import 'package:booking_billiards_app/repository/impl/bida_club_rep_impl.dart';
 import 'package:booking_billiards_app/repository/impl/bida_table_rep_impl.dart';
+import 'package:booking_billiards_app/service/service_storage.dart';
 import 'package:booking_billiards_app/url_api/url_api.dart';
 import 'package:booking_billiards_app/view/homePage/home.dart';
+import 'package:booking_billiards_app/view/table/tablelist.dart';
 import 'package:booking_billiards_app/widgets/button/button.dart';
 import 'package:booking_billiards_app/widgets/dialog/dialog_confirm.dart';
 import 'package:booking_billiards_app/widgets/input/input.dart';
@@ -73,8 +76,18 @@ class _EditTablePageState extends State<EditTablePage> {
                   Icons.arrow_back,
                   color: Colors.black87,
                 ),
-                onPressed: () {
-                  Navigator.pop(context);
+                onPressed: () async {
+                  BidaClubRepImpl()
+                      .getBidaClubDetail(UrlApi.bidaClubPath +
+                          "/f234efe9-3774-45f5-38ae-08d9db6c7456")
+                      .then((value) async {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) {
+                      return TableListPage(
+                        bidaClubDetail: value,
+                      );
+                    }));
+                  });
                 },
               )),
             ]),
@@ -85,21 +98,21 @@ class _EditTablePageState extends State<EditTablePage> {
                         ? Image.file(
                             tablePageProvider.image!,
                             fit: BoxFit.cover,
-                            width: 100,
-                            height: 100,
+                            width: 400,
+                            height: 200,
                           )
                         : (tablePageProvider.avatarTable != "null"
                             ? Image.network(
                                 tablePageProvider.avatarTable!,
                                 fit: BoxFit.cover,
-                                width: 100,
-                                height: 100,
+                                width: 400,
+                                height: 200,
                               )
                             : const Image(
                                 image: AssetImage(AssetPath.defaultAvatar),
                                 fit: BoxFit.cover,
-                                width: 100,
-                                height: 100,
+                                width: 400,
+                                height: 200,
                               ))),
                 pickImage: pickImage,
                 removeImage: () {
@@ -108,6 +121,9 @@ class _EditTablePageState extends State<EditTablePage> {
                     tablePageProvider.avatarTable = "null";
                   });
                 }),
+            const SizedBox(
+              height: 15,
+            ),
             Column(
               children: <Widget>[
                 InputDefault(
@@ -212,20 +228,6 @@ class _EditTablePageState extends State<EditTablePage> {
                 Container(
                     padding: const EdgeInsets.only(left: 105),
                     margin: EdgeInsets.fromLTRB(0, size.height * 0.07, 0, 0),
-                    // child: ButtonDefault(
-                    //     width: 100,
-                    //     height: 29,
-                    //     content: 'Delete',
-                    //     color: AppColor.white,
-                    //     backgroundBtn: AppColor.red,
-                    //     voidCallBack: () {
-                    //       BidaTableRepImpl()
-                    //           .deleteTable(UrlApi.bidaTablePath +
-                    //               "/${tablePageProvider.idTable}")
-                    //           .then((value) async {
-                    //         Navigator.pop(context);
-                    //       });
-                    //     }),
                     child: DialogConfirm(
                         width: 100,
                         height: 29,
