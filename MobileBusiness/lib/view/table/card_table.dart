@@ -58,7 +58,9 @@ class _CardBidaState extends State<CardBida> {
                     UrlApi.bidaTablePath + "/${widget.bidaTable!.id!}")
                 .then((value) async {
               Navigator.push(context, MaterialPageRoute(builder: (context) {
-                return EditTablePage();
+                return EditTablePage(
+                  bidaTableDetail: value,
+                );
               }));
             });
           },

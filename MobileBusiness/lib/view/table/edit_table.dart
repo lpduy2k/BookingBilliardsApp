@@ -1,9 +1,12 @@
 import 'package:booking_billiards_app/configs/themes/app_color.dart';
+import 'package:booking_billiards_app/model/response/get_bida_table_res.dart';
 import 'package:booking_billiards_app/widgets/button/button.dart';
 import 'package:flutter/material.dart';
 
 class EditTablePage extends StatefulWidget {
-  const EditTablePage({Key? key}) : super(key: key);
+  final GetBidaTableRes bidaTableDetail;
+  const EditTablePage({Key? key, required this.bidaTableDetail})
+      : super(key: key);
 
   @override
   State<EditTablePage> createState() => _EditTablePageState();
@@ -12,8 +15,8 @@ class EditTablePage extends StatefulWidget {
 class _EditTablePageState extends State<EditTablePage> {
   List<DropdownMenuItem<String>> get dropdownItems {
     List<DropdownMenuItem<String>> menuItems = [
-      DropdownMenuItem(child: Text("Ready"), value: "Active"),
-      DropdownMenuItem(child: Text("Occupied"), value: "Inactive"),
+      const DropdownMenuItem(child: Text("Ready"), value: "Active"),
+      const DropdownMenuItem(child: Text("Occupied"), value: "Inactive"),
     ];
 
     return menuItems;
@@ -53,7 +56,7 @@ class _EditTablePageState extends State<EditTablePage> {
                 ClipRRect(
                   borderRadius: BorderRadius.circular(8.0),
                   child: Image.network(
-                    'https://media.istockphoto.com/photos/3d-rendering-of-an-isolated-billiard-table-in-a-top-view-with-a-full-picture-id945650288?k=20&m=945650288&s=170667a&w=0&h=p0tphNgA9OnGaOGYpwDYKE2MPV5SjmIkgupkmD6TOpE=',
+                    widget.bidaTableDetail.image!,
                   ),
                 ),
                 Positioned(
