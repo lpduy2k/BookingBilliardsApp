@@ -4,6 +4,7 @@ import 'package:booking_billiards_app/model/response/get_bida_table_res.dart';
 import 'package:booking_billiards_app/repository/impl/bida_table_rep_impl.dart';
 import 'package:booking_billiards_app/url_api/url_api.dart';
 import 'package:booking_billiards_app/utils/window_size.dart';
+import 'package:booking_billiards_app/view/homePage/home.dart';
 import 'package:booking_billiards_app/view/table/add_table.dart';
 import 'package:booking_billiards_app/view/table/card_table.dart';
 import 'package:booking_billiards_app/view/table/edit_table.dart';
@@ -32,9 +33,7 @@ class _TableListPageState extends State<TableListPage> {
         .then((value) async {
       setState(() {
         for (var i = 0; i < value.length; i++) {
-          
-            listBidaTable?.add(value[i]);
-          
+          listBidaTable?.add(value[i]);
         }
       });
     });
@@ -90,7 +89,9 @@ class Body extends StatelessWidget {
             leading: IconButton(
               icon: Icon(Icons.arrow_back),
               onPressed: () {
-                Navigator.pop(context);
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return Home();
+                }));
               },
             ),
             iconColor: AppColor.black,
