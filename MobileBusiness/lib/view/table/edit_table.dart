@@ -13,8 +13,8 @@ import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
 class EditTablePage extends StatefulWidget {
-  final GetBidaTableRes bidaTableDetail;
-  const EditTablePage({Key? key, required this.bidaTableDetail})
+
+  const EditTablePage({Key? key,})
       : super(key: key);
 
   @override
@@ -76,34 +76,8 @@ class _EditTablePageState extends State<EditTablePage> {
                 },
               )),
             ]),
-            // Stack(
-            //   children: [
-            //     ClipRRect(
-            //       borderRadius: BorderRadius.circular(8.0),
-            //       child: Image.network(
-            //         widget.bidaTableDetail.image!,
-            //       ),
-            //     ),
-            //     Positioned(
-            //       bottom: 0,
-            //       right: 0,
-            //       child: InkWell(
-            //         onTap: () {
-            //           showModalBottomSheet(
-            //               context: context,
-            //               builder: ((builder) => bottomSheet(context)));
-            //         },
-            //         child: const CircleAvatar(
-            //           backgroundColor: Colors.white,
-            //           child: Icon(
-            //             Icons.camera_alt,
-            //             size: 20,
-            //           ),
-            //         ),
-            //       ),
-            //     )
-            //   ],
-            // ),
+           
+
             UploadImage(
               widget: ClipRRect(
                   borderRadius: BorderRadius.circular(100 / 2),
@@ -134,22 +108,8 @@ class _EditTablePageState extends State<EditTablePage> {
                   tablePageProvider.avatarTable = "null";
                 });
               }),
-            // SizedBox(
-            //   height: sizeHeightInput,
-            //   child: const TextField(
-            //     decoration: InputDecoration(
-            //       labelText: 'Table Name',
-            //     ),
-            //   ),
-            // ),
-            // SizedBox(
-            //   height: sizeHeightInput,
-            //   child: const TextField(
-            //     decoration: InputDecoration(
-            //       labelText: 'Price',
-            //     ),
-            //   ),
-            // ),
+            
+          
 
             Column(
             children: <Widget>[
@@ -198,7 +158,7 @@ class _EditTablePageState extends State<EditTablePage> {
                 onChanged: (String value) {
                   tablePageProvider.checkPrice(value);
                 },
-                focusNode: tablePageProvider.nameFocus,
+                focusNode: tablePageProvider.priceFocus,
                 onEditingComplete: () {
                   tablePageProvider.changeFocus(context, 'Price');
                 },
@@ -247,11 +207,13 @@ class _EditTablePageState extends State<EditTablePage> {
                     content: 'Update',
                     color: AppColor.white,
                     backgroundBtn: AppColor.green,
-                    voidCallBack: () {},
+                    voidCallBack: () {
+                      tablePageProvider.submitData(context);
+                    },
                   ),
                 ),
                 Container(
-                  padding: EdgeInsets.only(left: 125),
+                  padding: EdgeInsets.only(left: 105),
                   margin: EdgeInsets.fromLTRB(0, size.height * 0.07, 0, 0),
                   child: ButtonDefault(
                     width: 100,
@@ -270,42 +232,5 @@ class _EditTablePageState extends State<EditTablePage> {
     );
   }
 
-  // Widget bottomSheet(context) {
-  //   return Container(
-  //     //height: 100.0,
-  //     width: MediaQuery.of(context).size.width,
-  //     margin: const EdgeInsets.symmetric(
-  //       horizontal: 20,
-  //       vertical: 20,
-  //     ),
-  //     child: Column(
-  //       mainAxisSize: MainAxisSize.min,
-  //       children: <Widget>[
-  //         const Text(
-  //           "Choose photo",
-  //           style: TextStyle(fontSize: 20.0),
-  //         ),
-  //         ListTile(
-  //           leading: const Icon(Icons.camera_alt),
-  //           title: const Text('Camera'),
-  //           onTap: () {
-  //             // pickImage(ImageSource.camera);
-  //           },
-  //         ),
-  //         ListTile(
-  //           leading: const Icon(Icons.image),
-  //           title: const Text('Gallery'),
-  //           onTap: () {
-  //             // pickImage(ImageSource.gallery);
-  //           },
-  //         ),
-  //         ListTile(
-  //           leading: const Icon(Icons.delete),
-  //           title: const Text('Remove'),
-  //           // onTap: removeImage,
-  //         ),
-  //       ],
-  //     ),
-  //   );
-  // }
+  
 }

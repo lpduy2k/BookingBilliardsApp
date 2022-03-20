@@ -10,6 +10,7 @@ import 'package:booking_billiards_app/view/historyPage/history.dart';
 import 'package:booking_billiards_app/view/homePage/home.dart';
 import 'package:booking_billiards_app/view/success/success.dart';
 import 'package:booking_billiards_app/view/onboarding/onboarding.dart';
+import 'package:booking_billiards_app/view/table/edit_table.dart';
 import 'package:booking_billiards_app/view/welcome/welcome.dart';
 import 'package:flutter/material.dart';
 
@@ -60,6 +61,10 @@ class RouteGenerator {
       case '/profilePage':
         return MaterialPageRoute(
           builder: (_) => const ProfilePage(),
+        );
+         case '/tableDetailsPage':
+        return MaterialPageRoute(
+          builder: (_) => const EditTablePage(),
         );
       default:
         return _errorRouter();

@@ -87,16 +87,26 @@ void clearPriceController() {
     }
   }
 
-  void addDataUser(String idData, String imageData, String nameData,
-      String priceData, String typeData, String statusData, String idTable) {
-    idTable = idData;
+  void addDataTable(
+    String idTableData, 
+    String imageData, 
+    String nameData,
+    int priceData, 
+    String typeData, 
+    String statusData, 
+    String idClubData) {
+
+    idTable = idTableData;
     avatarTable = imageData;
 
     _name.value = nameData;
-    _price.value = priceData;
-
+    _price.value = priceData.toString();
+    _nameTextEditController.text = nameData;
+    _priceTextEditController.text = priceData.toString();
+   
     type = typeData;
     status = statusData;
+    idClub = idClubData;
   }
 
   void submitData(BuildContext context) async {
