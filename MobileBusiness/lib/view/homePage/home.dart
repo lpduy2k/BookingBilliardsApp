@@ -1,5 +1,6 @@
 import 'package:booking_billiards_app/configs/themes/app_color.dart';
 import 'package:booking_billiards_app/constants/assets_path.dart';
+import 'package:booking_billiards_app/model/response/get_bida_club_res.dart';
 import 'package:booking_billiards_app/model/response/get_user_res.dart';
 import 'package:booking_billiards_app/repository/impl/bida_club_rep_impl.dart';
 import 'package:booking_billiards_app/repository/impl/user_rep_impl.dart';
@@ -12,7 +13,8 @@ import 'package:booking_billiards_app/view/table/tablelist.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatefulWidget {
-  const Home({Key? key}) : super(key: key);
+  GetBidaClubRes? bidaClub;
+  Home({Key? key, required this.bidaClub}) : super(key: key);
 
   @override
   State<Home> createState() => _HomeState();
@@ -37,8 +39,8 @@ class _HomeState extends State<Home> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
-                      "Welcome  ,",
-                      style: const TextStyle(
+                      widget.bidaClub!.name!,
+                      style: TextStyle(
                           color: Color.fromARGB(255, 102, 85, 85),
                           fontSize: 18,
                           fontWeight: FontWeight.bold),
@@ -55,21 +57,23 @@ class _HomeState extends State<Home> {
                     ),
                   ],
                 ),
-                // IconButton(
-                //   alignment: Alignment.topCenter,
-                //   icon: Image.asset(
-                //     "assets/notification.png",
-                //     width: 24,
-                //   ),
-                //   onPressed: () {},
-                // )
+                IconButton(
+                  alignment: Alignment.topCenter,
+                  icon: Image.asset(
+                    "assets/notification.png",
+                    width: 24,
+                  ),
+                  onPressed: () {},
+                )
               ],
             ),
           ),
           const SizedBox(
             height: 40,
           ),
-          GridDashboard(),
+          GridDashboard(
+            bidaClub: widget.bidaClub,
+          ),
         ],
       ),
     );
@@ -77,7 +81,8 @@ class _HomeState extends State<Home> {
 }
 
 class GridDashboard extends StatelessWidget {
-  const GridDashboard({Key? key}) : super(key: key);
+  GetBidaClubRes? bidaClub;
+  GridDashboard({Key? key, required this.bidaClub}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -127,7 +132,10 @@ class GridDashboard extends StatelessWidget {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const ClubProfile()),
+                  MaterialPageRoute(
+                      builder: (context) => ClubProfile(
+                            bidaClub: bidaClub,
+                          )),
                 );
                 print("click");
               },

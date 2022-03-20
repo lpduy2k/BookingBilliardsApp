@@ -78,8 +78,8 @@ class _EditTablePageState extends State<EditTablePage> {
                 ),
                 onPressed: () async {
                   BidaClubRepImpl()
-                      .getBidaClubDetail(UrlApi.bidaClubPath +
-                          "/f234efe9-3774-45f5-38ae-08d9db6c7456")
+                      .getBidaClub(
+                          UrlApi.bidaClubPath + tablePageProvider.idClub!)
                       .then((value) async {
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) {
@@ -239,10 +239,17 @@ class _EditTablePageState extends State<EditTablePage> {
                               .deleteTable(UrlApi.bidaTablePath +
                                   "/${tablePageProvider.idTable}")
                               .then((value) async {
-                            Navigator.push(context,
-                                MaterialPageRoute(builder: (context) {
-                              return Home();
-                            }));
+                            BidaClubRepImpl()
+                                .getBidaClub(UrlApi.bidaClubPath +
+                                    "/f234efe9-3774-45f5-38ae-08d9db6c7456")
+                                .then((value) async {
+                              Navigator.push(context,
+                                  MaterialPageRoute(builder: (context) {
+                                return Home(
+                                  bidaClub: value,
+                                );
+                              }));
+                            });
                           });
                         },
                         contentTitleDialog: 'Notification',

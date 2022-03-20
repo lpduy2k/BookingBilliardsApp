@@ -57,18 +57,6 @@ class _CardBidaState extends State<CardBida> {
           color: AppColor.white,
           backgroundBtn: AppColor.lightBlue,
           voidCallBack: () {
-            // BidaTableRepImpl()
-            //     .getBidaTableDetail(
-            //         UrlApi.bidaTablePath + "/${widget.bidaTable!.id!}")
-            //     .then((value) async {
-            //   Navigator.push(context, MaterialPageRoute(builder: (context) {
-            //     return EditTablePage(
-            //       // bidaTableDetail: value,
-            //     );
-            //   }));
-            // });
-            // print(widget.bidaTable!.id);
-
             tablePageProvider.addDataTable(
                 widget.bidaTable!.id!,
                 widget.bidaTable!.image!,

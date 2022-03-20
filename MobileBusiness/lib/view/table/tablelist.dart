@@ -1,6 +1,8 @@
 import 'package:booking_billiards_app/configs/themes/app_color.dart';
-import 'package:booking_billiards_app/model/response/get_bida_club_detail_res.dart';
+
+import 'package:booking_billiards_app/model/response/get_bida_club_res.dart';
 import 'package:booking_billiards_app/model/response/get_bida_table_res.dart';
+import 'package:booking_billiards_app/repository/impl/bida_club_rep_impl.dart';
 import 'package:booking_billiards_app/repository/impl/bida_table_rep_impl.dart';
 import 'package:booking_billiards_app/url_api/url_api.dart';
 import 'package:booking_billiards_app/utils/window_size.dart';
@@ -12,7 +14,7 @@ import 'package:booking_billiards_app/widgets/button/button.dart';
 import 'package:flutter/material.dart';
 
 class TableListPage extends StatefulWidget {
-  final GetBidaClubDetailRes bidaClubDetail;
+  final GetBidaClubRes bidaClubDetail;
   const TableListPage({
     Key? key,
     required this.bidaClubDetail,
@@ -61,7 +63,7 @@ class _TableListPageState extends State<TableListPage> {
 }
 
 class Body extends StatelessWidget {
-  final GetBidaClubDetailRes bidaClubDetail;
+  final GetBidaClubRes bidaClubDetail;
   final List<GetBidaTableRes> listBidaTable;
   const Body({
     Key? key,
@@ -89,9 +91,15 @@ class Body extends StatelessWidget {
             leading: IconButton(
               icon: Icon(Icons.arrow_back),
               onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return Home();
-                }));
+                BidaClubRepImpl()
+                    .getBidaClub(UrlApi.bidaClubPath + bidaClubDetail.id!)
+                    .then((value) async {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return Home(
+                      bidaClub: value,
+                    );
+                  }));
+                });
               },
             ),
             iconColor: AppColor.black,

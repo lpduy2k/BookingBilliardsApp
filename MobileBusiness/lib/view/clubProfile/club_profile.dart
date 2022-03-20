@@ -1,10 +1,12 @@
 import 'package:booking_billiards_app/configs/themes/app_color.dart';
+import 'package:booking_billiards_app/model/response/get_bida_club_res.dart';
 import 'package:booking_billiards_app/utils/window_size.dart';
 import 'package:booking_billiards_app/widgets/button/button.dart';
 import 'package:flutter/material.dart';
 
 class ClubProfile extends StatelessWidget {
-  const ClubProfile({Key? key}) : super(key: key);
+  GetBidaClubRes? bidaClub;
+  ClubProfile({Key? key, required this.bidaClub}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -16,8 +18,10 @@ class ClubProfile extends StatelessWidget {
       color: AppColor.white,
       child: Scaffold(
         backgroundColor: AppColor.lightGreen,
-        body: const SingleChildScrollView(
-          child: Body(),
+        body: SingleChildScrollView(
+          child: Body(
+            bidaClub: bidaClub,
+          ),
         ),
       ),
     );
@@ -25,9 +29,8 @@ class ClubProfile extends StatelessWidget {
 }
 
 class Body extends StatelessWidget {
-  const Body({
-    Key? key,
-  }) : super(key: key);
+  GetBidaClubRes? bidaClub;
+  Body({Key? key, required this.bidaClub}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     double windowWidth = MediaQuery.of(context).size.width;
@@ -79,7 +82,7 @@ class Body extends StatelessWidget {
                     children: [
                       Row(
                         children: [
-                          const Text('F81 Billiard Club',
+                          Text(bidaClub!.name!,
                               style: TextStyle(
                                   fontSize: 18, fontWeight: FontWeight.bold),
                               textAlign: TextAlign.right),
@@ -95,7 +98,7 @@ class Body extends StatelessWidget {
                           const Padding(
                             padding: EdgeInsets.only(right: 5),
                           ),
-                          const Text('1 Quang Trung, Go Vap'),
+                          Text(bidaClub!.address!),
                         ],
                       ),
                     ],
@@ -107,7 +110,7 @@ class Body extends StatelessWidget {
                         color: AppColor.black,
                       ),
                       Text(
-                        '0839539151',
+                        bidaClub!.phoneNumber!,
                         style: TextStyle(
                           color: AppColor.green,
                           fontSize: 16,
@@ -125,7 +128,7 @@ class Body extends StatelessWidget {
           ClipRRect(
             borderRadius: BorderRadius.circular(8.0),
             child: Image.network(
-              'https://media-cdn.tripadvisor.com/media/photo-s/0d/c9/5b/eb/billiard-club-ripska.jpg',
+              bidaClub!.image!,
             ),
           ),
           Padding(
@@ -153,8 +156,8 @@ class Body extends StatelessWidget {
                       ),
                       Row(
                         children: [
-                          const Text('08:00 AM',
-                              style: TextStyle(
+                          Text(bidaClub!.timeOpen!,
+                              style: const TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold,
                               ),
@@ -180,8 +183,8 @@ class Body extends StatelessWidget {
                       ),
                       Row(
                         children: [
-                          const Text('12:00 PM',
-                              style: TextStyle(
+                          Text(bidaClub!.timeClose!,
+                              style: const TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold,
                               ),
@@ -219,9 +222,9 @@ class Body extends StatelessWidget {
                   const Padding(
                     padding: EdgeInsets.only(right: 5),
                   ),
-                  const Text(
-                    '15',
-                    style: TextStyle(
+                  Text(
+                    bidaClub!.quantity!.toString(),
+                    style: const TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
                     ),
@@ -234,15 +237,15 @@ class Body extends StatelessWidget {
             padding: EdgeInsets.only(top: 10),
           ),
           Row(
-            children: const [
-              Text('Status : ',
+            children: [
+              const Text('Status : ',
                   style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
                   ),
                   textAlign: TextAlign.right),
-              Text(' Active',
-                  style: TextStyle(
+              Text(bidaClub!.status!,
+                  style: const TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
                   ),

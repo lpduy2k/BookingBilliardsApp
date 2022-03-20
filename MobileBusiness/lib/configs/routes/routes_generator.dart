@@ -1,13 +1,9 @@
-import 'package:booking_billiards_app/view/accountPage/account.dart';
 import 'package:booking_billiards_app/view/accountPage/profilePage.dart';
-
-import 'package:booking_billiards_app/view/clubProfile/club_profile.dart';
 import 'package:booking_billiards_app/view/clubProfile/edit_club_profile.dart';
 import 'package:booking_billiards_app/view/forgetPassword/change_new_password.dart';
 import 'package:booking_billiards_app/view/forgetPassword/forget_password.dart';
 import 'package:booking_billiards_app/view/forgetPassword/input_pin_code.dart';
 import 'package:booking_billiards_app/view/historyPage/history.dart';
-import 'package:booking_billiards_app/view/homePage/home.dart';
 import 'package:booking_billiards_app/view/success/success.dart';
 import 'package:booking_billiards_app/view/onboarding/onboarding.dart';
 import 'package:booking_billiards_app/view/table/edit_table.dart';
@@ -41,15 +37,6 @@ class RouteGenerator {
         return MaterialPageRoute(
           builder: (_) => const SuccessPage(),
         );
-      case '/home':
-        return MaterialPageRoute(
-          builder: (_) => const Home(),
-        );
-
-      case '/clubprofile':
-        return MaterialPageRoute(
-          builder: (_) => const ClubProfile(),
-        );
       case '/editclubprofile':
         return MaterialPageRoute(
           builder: (_) => const EditClubProfile(),
@@ -62,7 +49,7 @@ class RouteGenerator {
         return MaterialPageRoute(
           builder: (_) => const ProfilePage(),
         );
-         case '/tableDetailsPage':
+      case '/tableDetailsPage':
         return MaterialPageRoute(
           builder: (_) => const EditTablePage(),
         );
