@@ -22,11 +22,11 @@ class TablePageProvider with ChangeNotifier {
   String? avatarTable;
   String? status;
   String? idClub;
+  String selectedValue = "active";
 
   ValidationItem get name => _name;
   ValidationItem get price => _price;
   bool submitValid = false;
-
 
   final _nameTextEditController = TextEditingController();
   final _priceTextEditController = TextEditingController();
@@ -49,16 +49,19 @@ class TablePageProvider with ChangeNotifier {
     }
     return false;
   }
-void clearPriceController() {
+
+  void clearPriceController() {
     priceController.clear();
     _price = ValidationItem(null, null);
     notifyListeners();
   }
+
   void clearNameController() {
     nameController.clear();
     _name = ValidationItem(null, null);
     notifyListeners();
   }
+
   void checkPrice(String value) {
     if (value.isEmpty) {
       _price = ValidationItem(null, "Price can not empty");
@@ -87,15 +90,8 @@ void clearPriceController() {
     }
   }
 
-  void addDataTable(
-    String idTableData, 
-    String imageData, 
-    String nameData,
-    int priceData, 
-    String typeData, 
-    String statusData, 
-    String idClubData) {
-
+  void addDataTable(String idTableData, String imageData, String nameData,
+      int priceData, String typeData, String statusData, String idClubData) {
     idTable = idTableData;
     avatarTable = imageData;
 
@@ -103,9 +99,10 @@ void clearPriceController() {
     _price.value = priceData.toString();
     _nameTextEditController.text = nameData;
     _priceTextEditController.text = priceData.toString();
-   
+
     type = typeData;
     status = statusData;
+    selectedValue = statusData;
     idClub = idClubData;
   }
 
@@ -114,6 +111,7 @@ void clearPriceController() {
         _name.error != null || price.toString().isEmpty || _name.value == null;
 
     if (!submitValid && isValid) {
+      print(selectedValue);
       if (image != null) {
         await ImageRepImpl()
             .uploadImage(UrlApi.imagePath, image!)
@@ -128,7 +126,7 @@ void clearPriceController() {
                       type: type!,
                       image: urlImage,
                       price: double.parse(textPrice),
-                      status: status!,
+                      status: selectedValue,
                       bidaClubId: idClub!))
               .then((value) async {
             await secureStorage.deleteSecureData("urlImage");
@@ -149,7 +147,7 @@ void clearPriceController() {
                     type: type!,
                     image: avatarTable!,
                     price: double.parse(textPrice),
-                    status: status!,
+                    status: selectedValue,
                     bidaClubId: idClub!))
             .then((value) async {
           showToastSuccess(value);
@@ -167,7 +165,7 @@ void clearPriceController() {
                     type: type!,
                     image: avatar,
                     price: double.parse(textPrice),
-                    status: status!,
+                    status: selectedValue,
                     bidaClubId: idClub!))
             .then((value) async {
           showToastSuccess(value);
