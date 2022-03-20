@@ -4,6 +4,8 @@
 
 import 'dart:convert';
 
+String getBidaClubResToJson(GetBidaClubRes data) => json.encode(data.toJson());
+
 class GetBidaClubRes {
   GetBidaClubRes({
     this.id,
@@ -54,11 +56,6 @@ class GetBidaClubRes {
         "status": status,
         "userId": userId,
       };
-
-  static List<GetBidaClubRes> getBidaClubResFromJson(String str) =>
-      List<GetBidaClubRes>.from(
-          json.decode(str).map((x) => GetBidaClubRes.fromJson(x)));
-
-  String getBidaClubResToJson(List<GetBidaClubRes> data) =>
-      json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+  static GetBidaClubRes getBidaClubResFromJson(String str) =>
+      GetBidaClubRes.fromJson(json.decode(str));
 }

@@ -2,6 +2,8 @@ import 'package:booking_billiards_app/configs/themes/app_text_style.dart';
 import 'package:booking_billiards_app/constants/assets_path.dart';
 import 'package:booking_billiards_app/model/response/get_user_res.dart';
 import 'package:booking_billiards_app/providers/profile_page_provider.dart';
+import 'package:booking_billiards_app/repository/impl/bida_club_rep_impl.dart';
+import 'package:booking_billiards_app/url_api/url_api.dart';
 import 'package:booking_billiards_app/view/accountPage/profilePage.dart';
 import 'package:booking_billiards_app/view/homePage/home.dart';
 import 'package:flutter/material.dart';
@@ -61,10 +63,16 @@ class Body extends StatelessWidget {
             leading: IconButton(
               icon: Icon(Icons.arrow_back),
               onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => Home()),
-                );
+                BidaClubRepImpl()
+                    .getBidaClub(UrlApi.bidaClubPath +
+                        "/f234efe9-3774-45f5-38ae-08d9db6c7456")
+                    .then((value) async {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return Home(
+                      bidaClub: value,
+                    );
+                  }));
+                });
               },
             ),
             trailing: IconButton(

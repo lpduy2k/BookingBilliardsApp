@@ -1,6 +1,11 @@
 import 'package:booking_billiards_app/configs/toast/toast.dart';
 import 'package:booking_billiards_app/model/request/sign_in_req.dart';
+import 'package:booking_billiards_app/model/response/get_bida_club_res.dart';
+import 'package:booking_billiards_app/model/response/get_list_history_res.dart';
+import 'package:booking_billiards_app/model/response/get_user_res.dart';
 import 'package:booking_billiards_app/repository/impl/auth_rep_impl.dart';
+import 'package:booking_billiards_app/repository/impl/bida_club_rep_impl.dart';
+import 'package:booking_billiards_app/repository/impl/user_rep_impl.dart';
 import 'package:booking_billiards_app/service/service_storage.dart';
 import 'package:booking_billiards_app/url_api/url_api.dart';
 import 'package:booking_billiards_app/view/homePage/home.dart';
@@ -8,6 +13,8 @@ import 'package:flutter/material.dart';
 import 'package:jwt_decode/jwt_decode.dart';
 
 class ValidationItem {
+  GetBidaClubRes? bidaClub;
+
   final String? value;
   final String? error;
   ValidationItem(this.value, this.error);
@@ -134,9 +141,26 @@ class SignInProvider with ChangeNotifier {
                     "userName",
                     payload['UserName'].toString(),
                   ),
+                  BidaClubRepImpl()
+                      .getBidaClub(UrlApi.bidaClubPath +
+                          "?userId=${payload['Id'].toString()}")
+                      .then(
+                    (value) async {
+                      await Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) {
+                            return Home(
+                              bidaClub: value,
+                            );
+                          },
+                        ),
+                      );
+                    },
+                  ),
                   clearPhoneController(),
                   clearPasswordController(),
-                  Navigator.of(context).pushReplacementNamed('/home'),
+                  // Navigator.of(context).pushReplacementNamed('/home'),
                   showToastSuccess("Login successfully"),
                 }
               else

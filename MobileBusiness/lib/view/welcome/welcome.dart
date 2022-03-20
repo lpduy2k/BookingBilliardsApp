@@ -425,7 +425,7 @@ class _WelcomePageState extends State<WelcomePage> {
                             : null,
                         hintText: 'Eg: 0333xxx.xxx',
                         errorText: signInProvider.phone.error,
-                        autofocus: true,
+                        autofocus: false,
                         obscureText: false,
                         keyboardType: TextInputType.phone,
                         textInputAction: TextInputAction.next,
