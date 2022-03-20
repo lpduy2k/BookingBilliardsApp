@@ -101,6 +101,52 @@ namespace Api.Repositories
             }
 
         }
+        public dynamic GetListByClubId(Guid clubId, int pageNumber, int pageSize)
+        {
+            if (pageNumber == 0 && pageSize == 0 && clubId == Guid.Empty)
+            {
+                var bookingList = from booking in _context.Bookings
+                                  join bookingItem in _context.BookingItems on booking.Id equals bookingItem.BookingId
+                                  join bidaTable in _context.BidaTables on bookingItem.BidaTableId equals bidaTable.Id
+                                  join bidaClub in _context.BidaClubs on bidaTable.BidaClubId equals bidaClub.Id
+
+                                  select new { TimeBooking = booking.TimeBooking, TotalPrice = booking.TotalPrice, BidaTableName = bidaTable.Name, BidaClubName = bidaClub.Name, ImageTable = bidaTable.Image, AddressClub = bidaClub.Address, Status = booking.Status };
+                return bookingList.ToList();
+            }
+            else if (pageNumber == 0 && pageSize == 0)
+            {
+                var bookingList = from booking in _context.Bookings
+
+                                  join bookingItem in _context.BookingItems on booking.Id equals bookingItem.BookingId
+                                  join bidaTable in _context.BidaTables on bookingItem.BidaTableId equals bidaTable.Id
+                                  join bidaClub in _context.BidaClubs on bidaTable.BidaClubId equals bidaClub.Id
+                                  where bidaClub.Id == clubId
+                                  select new { TimeBooking = booking.TimeBooking, TotalPrice = booking.TotalPrice, BidaTableName = bidaTable.Name, BidaClubName = bidaClub.Name, ImageTable = bidaTable.Image, AddressClub = bidaClub.Address, Status = booking.Status };
+
+                return bookingList.ToList();
+            }
+            else if (clubId == Guid.Empty)
+            {
+                var bookingList = from booking in _context.Bookings
+                                  join bookingItem in _context.BookingItems on booking.Id equals bookingItem.BookingId
+                                  join bidaTable in _context.BidaTables on bookingItem.BidaTableId equals bidaTable.Id
+                                  join bidaClub in _context.BidaClubs on bidaTable.BidaClubId equals bidaClub.Id
+
+                                  select new { TimeBooking = booking.TimeBooking, TotalPrice = booking.TotalPrice, BidaTableName = bidaTable.Name, BidaClubName = bidaClub.Name, ImageTable = bidaTable.Image, AddressClub = bidaClub.Address, Status = booking.Status };
+                return bookingList.ToPagedList(pageNumber, pageSize).ToList();
+            }
+            else
+            {
+                var bookingList = from booking in _context.Bookings
+                                  join bookingItem in _context.BookingItems on booking.Id equals bookingItem.BookingId
+                                  join bidaTable in _context.BidaTables on bookingItem.BidaTableId equals bidaTable.Id
+                                  join bidaClub in _context.BidaClubs on bidaTable.BidaClubId equals bidaClub.Id
+                                  where bidaClub.Id == clubId
+                                  select new { TimeBooking = booking.TimeBooking, TotalPrice = booking.TotalPrice, BidaTableName = bidaTable.Name, BidaClubName = bidaClub.Name, ImageTable = bidaTable.Image, AddressClub = bidaClub.Address, Status = booking.Status };
+                return bookingList.ToPagedList(pageNumber, pageSize).ToList();
+            }
+
+        }
 
         public async Task<bool> Delete(Guid id)
         {

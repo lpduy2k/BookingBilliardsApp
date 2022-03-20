@@ -33,6 +33,11 @@ namespace Api.Services
         {
             return await _repo.Delete(id);
         }
+        public dynamic GetListByClubId(Guid clubId, int pageNumber, int pageSize)
+        {
+            return _repo.GetListByClubId(clubId, pageNumber, pageSize);
+        }
         
+
     }
 }

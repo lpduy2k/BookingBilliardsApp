@@ -12,5 +12,6 @@ namespace Api.Repositories
         Task<Booking> GetById(Guid id);
         dynamic GetList(Guid userId,int pageNumber, int pageSize);
         Task<bool> Delete(Guid id);
+        dynamic GetListByClubId(Guid clubId, int pageNumber, int pageSize);
     }
 }

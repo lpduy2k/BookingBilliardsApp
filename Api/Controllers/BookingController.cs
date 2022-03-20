@@ -74,6 +74,14 @@ namespace Api.Controllers
 
             return Ok(listBookings);
         }
+        [HttpGet("/clubId")]
+        [SwaggerOperation(Summary = "Get list booking by bida club id")]
+        public ActionResult GetListByClubId(Guid clubId, int pageNumber, int pageSize)
+        {
+            var listBookings = _service.GetListByClubId(clubId, pageNumber, pageSize);
+
+            return Ok(listBookings);
+        }
         [HttpDelete("{id}")]
         [SwaggerOperation(Summary = "Delete booking by Id")]
         public async Task<ActionResult> Delete(Guid id)
