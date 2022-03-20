@@ -34,14 +34,24 @@ namespace Api.Repositories
             return true;
         }
 
-        public List<BidaClub> GetAll()
+        public async Task<List<BidaClub>> GetAll()
         {
-            return _context.BidaClubs.ToList();
+            return await _context.BidaClubs.ToListAsync();
         }
 
         public async Task<BidaClub> GetById(Guid id)
         {
             BidaClub bida = await _context.BidaClubs.Where(x => x.Id == id).FirstOrDefaultAsync();
+            if (bida == null)
+            {
+                return null;
+            }
+            return bida;
+        }
+
+        public async Task<BidaClub> GetByUserId(Guid userId)
+        {
+            BidaClub bida = await _context.BidaClubs.Where(x => x.UserId == userId).FirstOrDefaultAsync();
             if (bida == null)
             {
                 return null;

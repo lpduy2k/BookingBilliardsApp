@@ -20,53 +20,79 @@ namespace Api.Controllers
         }
 
         [HttpGet]
-        [SwaggerOperation(Summary = "Get all bida club")]
-        public ActionResult GetAll()
+        [SwaggerOperation(Summary = "Get all bida club or userId")]
+        public async Task<ActionResult> GetAll(Guid userId)
         {
-            List<BidaClub> listBidaClub = _service.GetAll();
-            List<ResponseBidaClubModel> newFormatResponse = new List<ResponseBidaClubModel>();
-            foreach (var bidaClub in listBidaClub)
+            if (userId == Guid.Empty)
             {
+                List<BidaClub> listBidaClub = await _service.GetAll();
+                List<ResponseBidaClubModel> newFormatResponse = new List<ResponseBidaClubModel>();
+                foreach (var bidaClub in listBidaClub)
+                {
+                    ResponseBidaClubModel bida = new ResponseBidaClubModel
+                    {
+                        Id = bidaClub.Id,
+                        Name = bidaClub.Name,
+                        Image = bidaClub.Image,
+                        Quantity = bidaClub.Quantity,
+                        TimeClose = bidaClub.TimeClose.ToString(@"hh\:mm"),
+                        TimeOpen = bidaClub.TimeOpen.ToString(@"hh\:mm"),
+                        Address = bidaClub.Address,
+                        PhoneNumber = bidaClub.PhoneNumber,
+                        Status = bidaClub.Status,
+                        UserId = bidaClub.UserId
+                    };
+                    newFormatResponse.Add(bida);
+                }
+                return Ok(newFormatResponse);
+            }
+            else
+            {
+                BidaClub response = await _service.GetByUserId(userId);
+                if (response == null)
+                {
+                    return NotFound();
+                }
                 ResponseBidaClubModel bida = new ResponseBidaClubModel
                 {
-                    Id = bidaClub.Id,
-                    Name = bidaClub.Name,
-                    Image = bidaClub.Image,
-                    Quantity = bidaClub.Quantity,
-                    TimeClose = bidaClub.TimeClose.ToString(@"hh\:mm"),
-                    TimeOpen = bidaClub.TimeOpen.ToString(@"hh\:mm"),
-                    Address = bidaClub.Address,
-                    PhoneNumber = bidaClub.PhoneNumber,
-                    Status = bidaClub.Status,
-                    UserId = bidaClub.UserId
+                    Id = response.Id,
+                    Name = response.Name,
+                    Image = response.Image,
+                    Quantity = response.Quantity,
+                    TimeClose = response.TimeClose.ToString(@"hh\:mm"),
+                    TimeOpen = response.TimeOpen.ToString(@"hh\:mm"),
+                    Address = response.Address,
+                    PhoneNumber = response.PhoneNumber,
+                    Status = response.Status,
+                    UserId = response.UserId
                 };
-                newFormatResponse.Add(bida);
+                return Ok(bida);
             }
-            return Ok(newFormatResponse);
         }
         [HttpGet("{id}")]
         [SwaggerOperation(Summary = "Get bida club by Id")]
-        public async Task<ActionResult> GetById(Guid id)
+        public async Task<ActionResult> GetById(Guid id, Guid userId)
         {
-            BidaClub response = await _service.GetById(id);
-            if (response == null)
-            {
-                return NotFound();
-            }
-            ResponseBidaClubModel bida = new ResponseBidaClubModel
-            {
-                Id = response.Id,
-                Name = response.Name,
-                Image = response.Image,
-                Quantity = response.Quantity,
-                TimeClose = response.TimeClose.ToString(@"hh\:mm"),
-                TimeOpen = response.TimeOpen.ToString(@"hh\:mm"),
-                Address = response.Address,
-                PhoneNumber = response.PhoneNumber,
-                Status = response.Status,
-                UserId = response.UserId
-            };
-            return Ok(bida);
+                BidaClub response = await _service.GetById(id);
+                if (response == null)
+                {
+                    return NotFound();
+                }
+                ResponseBidaClubModel bida = new ResponseBidaClubModel
+                {
+                    Id = response.Id,
+                    Name = response.Name,
+                    Image = response.Image,
+                    Quantity = response.Quantity,
+                    TimeClose = response.TimeClose.ToString(@"hh\:mm"),
+                    TimeOpen = response.TimeOpen.ToString(@"hh\:mm"),
+                    Address = response.Address,
+                    PhoneNumber = response.PhoneNumber,
+                    Status = response.Status,
+                    UserId = response.UserId
+                };
+                return Ok(bida);
+            
         }
         [HttpPost]
         [SwaggerOperation(Summary = "Create new bida club")]

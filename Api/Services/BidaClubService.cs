@@ -14,9 +14,9 @@ namespace Api.Services
         {
             _repo = repo;
         }
-        public List<BidaClub> GetAll()
+        public async Task<List<BidaClub>> GetAll()
         {
-            return _repo.GetAll();
+            return await _repo.GetAll();
         }
         public async Task<BidaClub> Create(BidaClub bidaClub)
         {
@@ -25,6 +25,10 @@ namespace Api.Services
         public async Task<BidaClub> GetById(Guid id)
         {
             return await _repo.GetById(id);
+        }
+        public async Task<BidaClub> GetByUserId(Guid userId)
+        {
+            return await _repo.GetByUserId(userId);
         }
         public async Task<bool> Update(BidaClub newBida)
         {
