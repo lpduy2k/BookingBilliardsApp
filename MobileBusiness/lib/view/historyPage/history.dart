@@ -1,7 +1,12 @@
 import 'package:booking_billiards_app/configs/themes/app_color.dart';
 import 'package:booking_billiards_app/model/response/get_bida_club_res.dart';
 import 'package:booking_billiards_app/model/response/get_list_history_res.dart';
+import 'package:booking_billiards_app/repository/impl/bida_club_rep_impl.dart';
+import 'package:booking_billiards_app/repository/impl/booking_rep_impl.dart';
+import 'package:booking_billiards_app/service/service_storage.dart';
+import 'package:booking_billiards_app/url_api/url_api.dart';
 import 'package:booking_billiards_app/view/historyPage/order_details.dart';
+import 'package:booking_billiards_app/view/homePage/home.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -31,8 +36,19 @@ class HistoryPage extends StatelessWidget {
                       Icons.arrow_back,
                       color: Colors.black87,
                     ),
-                    onPressed: () {
-                      Navigator.popAndPushNamed(context, "/home");
+                    onPressed: () async {
+                      final SecureStorage secureStorage = SecureStorage();
+
+                      final userId =
+                          await secureStorage.readSecureData("userId");
+                      BidaClubRepImpl()
+                          .getBidaClub(UrlApi.bidaClubPath + "?userId=$userId")
+                          .then((value) async {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) {
+                          return Home(bidaClub: value);
+                        }));
+                      });
                     },
                   )),
                 ]), // Booking Active
@@ -128,7 +144,9 @@ class HistoryPage extends StatelessWidget {
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) =>
-                                                const OrderDetailsPage()),
+                                                OrderDetailsPage(
+                                                  orderDetails: list,
+                                                )),
                                       );
                                     },
                                     child: const Text(
