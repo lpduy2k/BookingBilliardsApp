@@ -4,6 +4,7 @@ import 'package:booking_billiards_app/model/response/get_bida_club_res.dart';
 import 'package:booking_billiards_app/model/response/get_user_res.dart';
 import 'package:booking_billiards_app/providers/profile_page_provider.dart';
 import 'package:booking_billiards_app/repository/impl/bida_club_rep_impl.dart';
+import 'package:booking_billiards_app/service/service_storage.dart';
 import 'package:booking_billiards_app/url_api/url_api.dart';
 import 'package:booking_billiards_app/view/accountPage/profilePage.dart';
 import 'package:booking_billiards_app/view/homePage/home.dart';
@@ -185,6 +186,8 @@ class Body extends StatelessWidget {
             color: AppColor.white,
             backgroundBtn: AppColor.red,
             voidCallBack: () {
+              final SecureStorage secureStorage = SecureStorage();
+              secureStorage.deleteAll();
               Navigator.of(context).pushNamed(
                 '/welcome',
               );

@@ -107,7 +107,7 @@ class Body extends StatelessWidget {
             ),
             iconColor: AppColor.black,
           ),
-          Text(
+          const Text(
             'List table',
             style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             textAlign: TextAlign.center,

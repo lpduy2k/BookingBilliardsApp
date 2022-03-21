@@ -84,7 +84,7 @@ class _AddTablePageState extends State<AddTablePage> {
                             height: 200,
                           )
                         : const Image(
-                            image: AssetImage(AssetPath.defaultAvatar),
+                            image: AssetImage(AssetPath.defaultPicture),
                             fit: BoxFit.cover,
                             width: 400,
                             height: 200,

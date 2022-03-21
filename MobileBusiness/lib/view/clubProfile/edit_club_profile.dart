@@ -1,9 +1,20 @@
+import 'dart:developer';
+import 'dart:io';
+
 import 'package:booking_billiards_app/configs/themes/app_color.dart';
-import 'package:booking_billiards_app/providers/profile_page_provider.dart';
-import 'package:booking_billiards_app/utils/window_size.dart';
+import 'package:booking_billiards_app/constants/assets_path.dart';
+import 'package:booking_billiards_app/providers/club_page_provider.dart';
+import 'package:booking_billiards_app/repository/impl/bida_club_rep_impl.dart';
+import 'package:booking_billiards_app/url_api/url_api.dart';
+import 'package:booking_billiards_app/view/clubProfile/club_profile.dart';
+
 import 'package:booking_billiards_app/widgets/button/button.dart';
 import 'package:booking_billiards_app/widgets/input/input.dart';
+import 'package:booking_billiards_app/widgets/upload_image/upload_image.dart';
+
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class EditClubProfile extends StatefulWidget {
@@ -16,19 +27,44 @@ class EditClubProfile extends StatefulWidget {
 class _EditClubProfileState extends State<EditClubProfile> {
   List<DropdownMenuItem<String>> get dropdownItems {
     List<DropdownMenuItem<String>> menuItems = [
-      DropdownMenuItem(child: Text("Active"), value: "Active"),
-      DropdownMenuItem(child: Text("Inactive"), value: "Inactive"),
+      const DropdownMenuItem(child: Text("Open"), value: "active"),
+      const DropdownMenuItem(child: Text("Close"), value: "inactive"),
     ];
 
     return menuItems;
   }
 
-  String selectedValue = "Active";
-
-  TimeOfDay time1 = const TimeOfDay(hour: 10, minute: 20);
-  TimeOfDay time2 = const TimeOfDay(hour: 10, minute: 20);
   @override
   Widget build(BuildContext context) {
+    ClubPageProvider clubPageProvider = Provider.of<ClubPageProvider>(context);
+    TimeOfDay time1 = TimeOfDay(
+        hour: int.parse(clubPageProvider.timeOpen!.split(":")[0]),
+        minute: int.parse(clubPageProvider.timeOpen!.split(":")[1]));
+
+    TimeOfDay time2 = TimeOfDay(
+        hour: int.parse(clubPageProvider.timeClose!.split(":")[0]),
+        minute: int.parse(clubPageProvider.timeClose!.split(":")[1]));
+
+    String formatTimeOfDay(TimeOfDay tod) {
+      final now = new DateTime.now();
+      final dt = DateTime(now.year, now.month, now.day, tod.hour, tod.minute);
+      final format = DateFormat.Hm(); //"6:00 AM"
+      return format.format(dt);
+    }
+
+    Future pickImage(ImageSource source) async {
+      try {
+        final image = await ImagePicker().pickImage(source: source);
+        if (image == null) return;
+        final imageTemporary = File(image.path);
+        setState(() {
+          clubPageProvider.image = imageTemporary;
+        });
+      } catch (e) {
+        log("Failed to pick image: $e");
+      }
+    }
+
     Size size = MediaQuery.of(context).size;
     double sizeHeightInput = size.height * 0.12;
 
@@ -49,53 +85,109 @@ class _EditClubProfileState extends State<EditClubProfile> {
                   color: Colors.black87,
                 ),
                 onPressed: () {
-                  Navigator.pop(context);
+                  BidaClubRepImpl()
+                      .getBidaClub(
+                          UrlApi.bidaClubPath + "/${clubPageProvider.idClub!}")
+                      .then((value) async {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) {
+                      return ClubProfile(
+                        bidaClub: value,
+                      );
+                    }));
+                  });
                 },
               )),
             ]),
-            Stack(
-              children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(8.0),
-                  child: Image.network(
-                    'https://media-cdn.tripadvisor.com/media/photo-s/0d/c9/5b/eb/billiard-club-ripska.jpg',
-                  ),
+            UploadImage(
+                widget: ClipRRect(
+                    borderRadius: BorderRadius.circular(100 / 2),
+                    child: clubPageProvider.image != null
+                        ? Image.file(
+                            clubPageProvider.image!,
+                            fit: BoxFit.cover,
+                            width: 400,
+                            height: 200,
+                          )
+                        : (clubPageProvider.avatarClub != "null"
+                            ? Image.network(
+                                clubPageProvider.avatarClub!,
+                                fit: BoxFit.cover,
+                                width: 400,
+                                height: 200,
+                              )
+                            : const Image(
+                                image: AssetImage(AssetPath.defaultPicture),
+                                fit: BoxFit.cover,
+                                width: 400,
+                                height: 200,
+                              ))),
+                pickImage: pickImage,
+                removeImage: () {
+                  setState(() {
+                    clubPageProvider.image = null;
+                    clubPageProvider.avatarClub = "null";
+                  });
+                }),
+            const SizedBox(
+              height: 15,
+            ),
+            Column(
+              children: <Widget>[
+                InputDefault(
+                  title: 'Club Name',
+                  suffixIcon: clubPageProvider.textName.isNotEmpty
+                      ? IconButton(
+                          onPressed: () =>
+                              clubPageProvider.clearNameController(),
+                          icon: const Icon(Icons.clear_rounded),
+                          color: AppColor.pink,
+                        )
+                      : null,
+                  hintText: 'Update Name',
+                  errorText: clubPageProvider.name.error,
+                  autofocus: false,
+                  obscureText: false,
+                  keyboardType: TextInputType.text,
+                  textInputAction: TextInputAction.next,
+                  controller: clubPageProvider.nameController,
+                  onChanged: (String value) {
+                    clubPageProvider.checkName(value);
+                  },
+                  focusNode: clubPageProvider.nameFocus,
+                  onEditingComplete: () {
+                    clubPageProvider.changeFocus(context, 'Name');
+                  },
                 ),
-                Positioned(
-                  bottom: 0,
-                  right: 0,
-                  child: InkWell(
-                    onTap: () {
-                      showModalBottomSheet(
-                          context: context,
-                          builder: ((builder) => bottomSheet(context)));
-                    },
-                    child: const CircleAvatar(
-                      backgroundColor: Colors.white,
-                      child: Icon(
-                        Icons.camera_alt,
-                        size: 20,
-                      ),
-                    ),
-                  ),
-                )
+                InputDefault(
+                  title: 'Address Club',
+                  suffixIcon: clubPageProvider.textAddress.isNotEmpty
+                      ? IconButton(
+                          onPressed: () =>
+                              clubPageProvider.clearAddressController(),
+                          icon: const Icon(Icons.clear_rounded),
+                          color: AppColor.pink,
+                        )
+                      : null,
+                  hintText: 'Update Address',
+                  errorText: clubPageProvider.address.error,
+                  autofocus: false,
+                  obscureText: false,
+                  keyboardType: TextInputType.text,
+                  textInputAction: TextInputAction.next,
+                  controller: clubPageProvider.addressController,
+                  onChanged: (String value) {
+                    clubPageProvider.checkAddress(value);
+                  },
+                  focusNode: clubPageProvider.addressFocus,
+                  onEditingComplete: () {
+                    clubPageProvider.changeFocus(context, 'Address');
+                  },
+                ),
+                const SizedBox(
+                  height: 5,
+                ),
               ],
-            ),
-            SizedBox(
-              height: sizeHeightInput,
-              child: const TextField(
-                decoration: InputDecoration(
-                  labelText: 'Club Name',
-                ),
-              ),
-            ),
-            SizedBox(
-              height: sizeHeightInput,
-              child: const TextField(
-                decoration: InputDecoration(
-                  labelText: 'Address',
-                ),
-              ),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -105,7 +197,7 @@ class _EditClubProfileState extends State<EditClubProfile> {
                     const Text(
                       'Opening time: ',
                       style: TextStyle(
-                        fontSize: 16,
+                        fontSize: 14,
                       ),
                     ),
                     SizedBox(
@@ -124,7 +216,8 @@ class _EditClubProfileState extends State<EditClubProfile> {
                             context: context, initialTime: time1);
                         if (newTime != null) {
                           setState(() {
-                            time1 = newTime;
+                            clubPageProvider.timeOpen =
+                                formatTimeOfDay(newTime);
                           });
                         }
                       },
@@ -136,7 +229,7 @@ class _EditClubProfileState extends State<EditClubProfile> {
                     const Text(
                       'Closing time: ',
                       style: TextStyle(
-                        fontSize: 16,
+                        fontSize: 14,
                       ),
                     ),
                     SizedBox(
@@ -155,7 +248,8 @@ class _EditClubProfileState extends State<EditClubProfile> {
                             context: context, initialTime: time2);
                         if (newTime != null) {
                           setState(() {
-                            time2 = newTime;
+                            clubPageProvider.timeClose =
+                                formatTimeOfDay(newTime);
                           });
                         }
                       },
@@ -164,42 +258,29 @@ class _EditClubProfileState extends State<EditClubProfile> {
                 ),
               ],
             ),
-            Column(
-              children: [
-                Container(
-                  alignment: Alignment.topLeft,
-                  child: Text(
-                    'Phone number',
-                    style: TextStyle(fontSize: 12, color: Colors.grey[700]),
-                  ),
-                ),
-                Row(
-                  children: [
-                    SizedBox(
-                        height: size.height * 0.105,
-                        width: size.width * 0.1,
-                        child: Column(
-                          children: const [
-                            SizedBox(
-                              height: 13.5,
-                            ),
-                            Text(
-                              '+84 ',
-                              style: TextStyle(fontSize: 15),
-                            ),
-                          ],
-                        )),
-                    SizedBox(
-                      height: size.height * 0.105,
-                      width: size.width - (40 + size.width * 0.1),
-                      child: TextField(
-                        keyboardType: TextInputType.number,
-                        decoration: InputDecoration(),
-                      ),
-                    ),
-                  ],
-                ),
-              ],
+            InputDefault(
+              title: 'Phone Number',
+              suffixIcon: clubPageProvider.textPhone.isNotEmpty
+                  ? IconButton(
+                      onPressed: () => clubPageProvider.clearPhoneController(),
+                      icon: const Icon(Icons.clear_rounded),
+                      color: AppColor.pink,
+                    )
+                  : null,
+              hintText: 'Update Price',
+              errorText: clubPageProvider.phone.error,
+              autofocus: false,
+              obscureText: false,
+              keyboardType: TextInputType.phone,
+              textInputAction: TextInputAction.next,
+              controller: clubPageProvider.phoneController,
+              onChanged: (String value) {
+                clubPageProvider.checkPhone(value);
+              },
+              focusNode: clubPageProvider.phoneFocus,
+              onEditingComplete: () {
+                clubPageProvider.changeFocus(context, 'Phone');
+              },
             ),
             Column(
               children: [
@@ -219,10 +300,10 @@ class _EditClubProfileState extends State<EditClubProfile> {
                     ),
                     const SizedBox(height: 30),
                     DropdownButton(
-                        value: selectedValue,
+                        value: clubPageProvider.selectedValue,
                         onChanged: (String? newValue) {
                           setState(() {
-                            selectedValue = newValue!;
+                            clubPageProvider.selectedValue = newValue!;
                           });
                         },
                         items: dropdownItems),
@@ -238,51 +319,14 @@ class _EditClubProfileState extends State<EditClubProfile> {
                 content: 'Update',
                 color: AppColor.white,
                 backgroundBtn: AppColor.green,
-                voidCallBack: () {},
+                voidCallBack: () {
+                  clubPageProvider.submitData(context);
+                },
               ),
             )
           ],
         ),
       )),
-    );
-  }
-
-  Widget bottomSheet(context) {
-    return Container(
-      //height: 100.0,
-      width: MediaQuery.of(context).size.width,
-      margin: const EdgeInsets.symmetric(
-        horizontal: 20,
-        vertical: 20,
-      ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-          const Text(
-            "Choose photo",
-            style: TextStyle(fontSize: 20.0),
-          ),
-          ListTile(
-            leading: const Icon(Icons.camera_alt),
-            title: const Text('Camera'),
-            onTap: () {
-              // pickImage(ImageSource.camera);
-            },
-          ),
-          ListTile(
-            leading: const Icon(Icons.image),
-            title: const Text('Gallery'),
-            onTap: () {
-              // pickImage(ImageSource.gallery);
-            },
-          ),
-          ListTile(
-            leading: const Icon(Icons.delete),
-            title: const Text('Remove'),
-            // onTap: removeImage,
-          ),
-        ],
-      ),
     );
   }
 }
