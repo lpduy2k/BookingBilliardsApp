@@ -1,31 +1,35 @@
 import 'dart:developer';
-import 'dart:ffi';
+
 import 'dart:io';
 
 import 'package:booking_billiards_app/configs/base/base_validation.dart';
 import 'package:booking_billiards_app/configs/toast/toast.dart';
-import 'package:booking_billiards_app/model/request/upload_table_req.dart';
+import 'package:booking_billiards_app/model/request/create_table_req.dart';
+
+import 'package:booking_billiards_app/repository/impl/bida_club_rep_impl.dart';
 import 'package:booking_billiards_app/repository/impl/bida_table_rep_impl.dart';
 import 'package:booking_billiards_app/repository/impl/image_rep_impl.dart';
 import 'package:booking_billiards_app/service/service_storage.dart';
 import 'package:booking_billiards_app/url_api/url_api.dart';
+import 'package:booking_billiards_app/view/homePage/home.dart';
 import 'package:flutter/material.dart';
 
-class TablePageProvider with ChangeNotifier {
+class CreateTableProvider with ChangeNotifier {
   final SecureStorage secureStorage = SecureStorage();
 
-  String? idTable;
+  // String? idclub;
   ValidationItem _name = ValidationItem(null, null);
   ValidationItem _price = ValidationItem(null, null);
   String? type;
   File? image;
-  String? avatarTable;
+
   String? status;
   String? idClub;
   String selectedValue = "active";
 
   ValidationItem get name => _name;
   ValidationItem get price => _price;
+
   bool submitValid = false;
 
   final _nameTextEditController = TextEditingController();
@@ -42,13 +46,6 @@ class TablePageProvider with ChangeNotifier {
 
   FocusNode get priceFocus => _priceFocus;
   FocusNode get nameFocus => _nameFocus;
-
-  bool get isValid {
-    if (_name.value != null && _price.value != null) {
-      return true;
-    }
-    return false;
-  }
 
   void clearPriceController() {
     priceController.clear();
@@ -87,46 +84,38 @@ class TablePageProvider with ChangeNotifier {
       FocusScope.of(context).requestFocus(newFocus);
       return;
     }
-    if (_name.value != null && field.contains("name")) {
+    if (_name.value != null && field.contains("Name")) {
       newFocus = _nameFocus;
       FocusScope.of(context).requestFocus(newFocus);
       return;
     }
   }
 
-  void addDataTable(String idTableData, String imageData, String nameData,
-      int priceData, String typeData, String statusData, String idClubData) {
-    idTable = idTableData;
-    avatarTable = imageData;
-
-    _name.value = nameData;
-    _price.value = priceData.toString();
-    _nameTextEditController.text = nameData;
-    _priceTextEditController.text = priceData.toString();
-
-    type = typeData;
-    status = statusData;
-    selectedValue = statusData;
-    idClub = idClubData;
+  bool get isValid {
+    if (_name.value != null && _price.value != null) {
+      return true;
+    }
+    return false;
   }
 
-  void submitData(BuildContext context) async {
+  void addData(BuildContext context) async {
     submitValid =
         _name.error != null || price.toString().isEmpty || _name.value == null;
 
     if (!submitValid && isValid) {
       if (image != null) {
+        print("object");
         await ImageRepImpl()
             .uploadImage(UrlApi.imagePath, image!)
             .then((value) async {
           final urlImage = await secureStorage.readSecureData("urlImage");
+
           await BidaTableRepImpl()
-              .putTable(
-                  UrlApi.bidaTablePath + "/$idTable",
-                  UploadTableReq(
-                      id: idTable!,
+              .createTable(
+                  UrlApi.bidaTablePath,
+                  CreateTableReq(
                       name: textName,
-                      type: type!,
+                      type: '1',
                       image: urlImage,
                       price: double.parse(textPrice),
                       status: selectedValue,
@@ -134,48 +123,23 @@ class TablePageProvider with ChangeNotifier {
               .then((value) async {
             await secureStorage.deleteSecureData("urlImage");
             showToastSuccess(value);
-            showToastFail("fail");
+
+            final userId = await secureStorage.readSecureData("userId");
+            BidaClubRepImpl()
+                .getBidaClub(UrlApi.bidaClubPath + "?userId=$userId")
+                .then((value) async {
+              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                return Home(bidaClub: value);
+              }));
+            });
           }).onError((error, stackTrace) {
             log(error.toString());
           });
         }).onError((error, stackTrace) {
           log(error.toString());
         });
-      } else if (avatarTable != null) {
-        await BidaTableRepImpl()
-            .putTable(
-                UrlApi.bidaTablePath + "/$idTable",
-                UploadTableReq(
-                    id: idTable!,
-                    name: textName,
-                    type: type!,
-                    image: avatarTable!,
-                    price: double.parse(textPrice),
-                    status: selectedValue,
-                    bidaClubId: idClub!))
-            .then((value) async {
-          showToastSuccess(value);
-        }).onError((error, stackTrace) {
-          log(error.toString());
-        });
       } else {
-        String avatar = "null";
-        await BidaTableRepImpl()
-            .putTable(
-                UrlApi.bidaTablePath + "/$idTable",
-                UploadTableReq(
-                    id: idTable!,
-                    name: textName,
-                    type: type!,
-                    image: avatar,
-                    price: double.parse(textPrice),
-                    status: selectedValue,
-                    bidaClubId: idClub!))
-            .then((value) async {
-          showToastSuccess(value);
-        }).onError((error, stackTrace) {
-          log(error.toString());
-        });
+        showToastFail("fail ");
       }
     }
   }
