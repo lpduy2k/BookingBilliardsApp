@@ -1,6 +1,20 @@
+import 'dart:developer';
+import 'dart:io';
+
 import 'package:booking_billiards_app/configs/themes/app_color.dart';
+import 'package:booking_billiards_app/configs/themes/app_text_style.dart';
+import 'package:booking_billiards_app/constants/assets_path.dart';
+import 'package:booking_billiards_app/providers/new_table_provider.dart';
+import 'package:booking_billiards_app/providers/table_page_provider.dart';
+import 'package:booking_billiards_app/repository/impl/bida_club_rep_impl.dart';
+import 'package:booking_billiards_app/repository/impl/bida_table_rep_impl.dart';
+import 'package:booking_billiards_app/url_api/url_api.dart';
 import 'package:booking_billiards_app/widgets/button/button.dart';
+import 'package:booking_billiards_app/widgets/input/input.dart';
+import 'package:booking_billiards_app/widgets/upload_image/upload_image.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
 
 class AddTablePage extends StatefulWidget {
   const AddTablePage({Key? key}) : super(key: key);
@@ -12,6 +26,22 @@ class AddTablePage extends StatefulWidget {
 class _AddTablePageState extends State<AddTablePage> {
   @override
   Widget build(BuildContext context) {
+    CreateTableProvider createTableProvider =
+        Provider.of<CreateTableProvider>(context);
+
+    Future pickImage(ImageSource source) async {
+      try {
+        final image = await ImagePicker().pickImage(source: source);
+        if (image == null) return;
+        final imageTemporary = File(image.path);
+        setState(() {
+          createTableProvider.image = imageTemporary;
+        });
+      } catch (e) {
+        log("Failed to pick image: $e");
+      }
+    }
+
     Size size = MediaQuery.of(context).size;
     double sizeHeightInput = size.height * 0.12;
 
@@ -37,49 +67,117 @@ class _AddTablePageState extends State<AddTablePage> {
                 },
               )),
             ]),
-            Stack(
-              children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(8.0),
-                  child: Image.network(
-                    'https://media.istockphoto.com/photos/3d-rendering-of-an-isolated-billiard-table-in-a-top-view-with-a-full-picture-id945650288?k=20&m=945650288&s=170667a&w=0&h=p0tphNgA9OnGaOGYpwDYKE2MPV5SjmIkgupkmD6TOpE=',
-                  ),
-                ),
-                Positioned(
-                  bottom: 0,
-                  right: 0,
-                  child: InkWell(
-                    onTap: () {
-                      showModalBottomSheet(
-                          context: context,
-                          builder: ((builder) => bottomSheet(context)));
-                    },
-                    child: const CircleAvatar(
-                      backgroundColor: Colors.white,
-                      child: Icon(
-                        Icons.camera_alt,
-                        size: 20,
-                      ),
-                    ),
-                  ),
-                )
-              ],
+            Title(
+                color: AppColor.green,
+                child: Text(
+                  "Create Your Table",
+                  style: AppTextStyles.h2Black,
+                )),
+            UploadImage(
+                widget: ClipRRect(
+                    borderRadius: BorderRadius.circular(100 / 2),
+                    child: createTableProvider.image != null
+                        ? Image.file(
+                            createTableProvider.image!,
+                            fit: BoxFit.cover,
+                            width: 400,
+                            height: 200,
+                          )
+                        : const Image(
+                            image: AssetImage(AssetPath.defaultAvatar),
+                            fit: BoxFit.cover,
+                            width: 400,
+                            height: 200,
+                          )),
+                pickImage: pickImage,
+                removeImage: () {
+                  setState(() {
+                    createTableProvider.image = null;
+                  });
+                }),
+            // SizedBox(
+            //   height: sizeHeightInput,
+            //   child: TextField(
+            //     decoration: InputDecoration(
+            //       labelText: "Table name",
+            //       errorText: createTableProvider.name.error,
+            //     ),
+            //     controller: createTableProvider.nameController,
+            //     textInputAction: TextInputAction.next,
+            //     onEditingComplete: () {
+            //       createTableProvider.changeFocus(context, 'Name');
+            //     },
+            //     focusNode: createTableProvider.nameFocus,
+            //     onChanged: (String value) {
+            //       createTableProvider.checkName(value);
+            //     },
+            //   ),
+            // ),
+            InputDefault(
+              title: 'Table name',
+              suffixIcon: createTableProvider.textName.isNotEmpty
+                  ? IconButton(
+                      onPressed: () =>
+                          createTableProvider.clearNameController(),
+                      icon: const Icon(Icons.clear_rounded),
+                      color: AppColor.pink,
+                    )
+                  : null,
+              hintText: 'Name',
+              errorText: createTableProvider.name.error,
+              autofocus: false,
+              obscureText: false,
+              keyboardType: TextInputType.text,
+              textInputAction: TextInputAction.next,
+              controller: createTableProvider.nameController,
+              onChanged: (String value) {
+                createTableProvider.checkName(value);
+              },
+              focusNode: createTableProvider.nameFocus,
+              onEditingComplete: () {
+                createTableProvider.changeFocus(context, 'Name');
+              },
             ),
-            SizedBox(
-              height: sizeHeightInput,
-              child: const TextField(
-                decoration: InputDecoration(
-                  labelText: 'Table Name',
-                ),
-              ),
-            ),
-            SizedBox(
-              height: sizeHeightInput,
-              child: const TextField(
-                decoration: InputDecoration(
-                  labelText: 'Price',
-                ),
-              ),
+            // SizedBox(
+            //   height: sizeHeightInput,
+            //   child: TextField(
+            //     decoration: InputDecoration(
+            //       labelText: "Price",
+            //       errorText: createTableProvider.price.error,
+            //     ),
+            //     controller: createTableProvider.priceController,
+            //     onEditingComplete: () {
+            //       createTableProvider.changeFocus(context, 'Price');
+            //     },
+            //     onChanged: (String value) {
+            //       createTableProvider.checkPrice(value);
+            //     },
+            //   ),
+            // ),
+            InputDefault(
+              title: 'Price',
+              suffixIcon: createTableProvider.textPrice.isNotEmpty
+                  ? IconButton(
+                      onPressed: () =>
+                          createTableProvider.clearPriceController(),
+                      icon: const Icon(Icons.clear_rounded),
+                      color: AppColor.pink,
+                    )
+                  : null,
+              hintText: 'Price',
+              errorText: createTableProvider.price.error,
+              autofocus: false,
+              obscureText: false,
+              keyboardType: TextInputType.number,
+              textInputAction: TextInputAction.done,
+              controller: createTableProvider.priceController,
+              onChanged: (String value) {
+                createTableProvider.checkPrice(value);
+              },
+              focusNode: createTableProvider.priceFocus,
+              onEditingComplete: () {
+                createTableProvider.changeFocus(context, 'Price');
+              },
             ),
             Container(
               margin: EdgeInsets.fromLTRB(0, size.height * 0.07, 0, 0),
@@ -89,51 +187,14 @@ class _AddTablePageState extends State<AddTablePage> {
                 content: 'Add',
                 color: AppColor.white,
                 backgroundBtn: AppColor.green,
-                voidCallBack: () {},
+                voidCallBack: () => {
+                  createTableProvider.addData(context),
+                },
               ),
             )
           ],
         ),
       )),
-    );
-  }
-
-  Widget bottomSheet(context) {
-    return Container(
-      //height: 100.0,
-      width: MediaQuery.of(context).size.width,
-      margin: const EdgeInsets.symmetric(
-        horizontal: 20,
-        vertical: 20,
-      ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-          const Text(
-            "Choose photo",
-            style: TextStyle(fontSize: 20.0),
-          ),
-          ListTile(
-            leading: const Icon(Icons.camera_alt),
-            title: const Text('Camera'),
-            onTap: () {
-              // pickImage(ImageSource.camera);
-            },
-          ),
-          ListTile(
-            leading: const Icon(Icons.image),
-            title: const Text('Gallery'),
-            onTap: () {
-              // pickImage(ImageSource.gallery);
-            },
-          ),
-          ListTile(
-            leading: const Icon(Icons.delete),
-            title: const Text('Remove'),
-            // onTap: removeImage,
-          ),
-        ],
-      ),
     );
   }
 }

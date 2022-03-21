@@ -2,6 +2,7 @@ import 'package:booking_billiards_app/configs/themes/app_color.dart';
 
 import 'package:booking_billiards_app/model/response/get_bida_club_res.dart';
 import 'package:booking_billiards_app/model/response/get_bida_table_res.dart';
+import 'package:booking_billiards_app/providers/new_table_provider.dart';
 import 'package:booking_billiards_app/repository/impl/bida_club_rep_impl.dart';
 import 'package:booking_billiards_app/repository/impl/bida_table_rep_impl.dart';
 import 'package:booking_billiards_app/url_api/url_api.dart';
@@ -12,6 +13,7 @@ import 'package:booking_billiards_app/view/table/card_table.dart';
 import 'package:booking_billiards_app/view/table/edit_table.dart';
 import 'package:booking_billiards_app/widgets/button/button.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class TableListPage extends StatefulWidget {
   final GetBidaClubRes bidaClubDetail;
@@ -74,7 +76,8 @@ class Body extends StatelessWidget {
   Widget build(BuildContext context) {
     double windowWidth = MediaQuery.of(context).size.width;
     double windowHeight = MediaQuery.of(context).size.height;
-
+    CreateTableProvider createTableProvider =
+        Provider.of<CreateTableProvider>(context);
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       width: double.infinity,
@@ -133,10 +136,11 @@ class Body extends StatelessWidget {
                     ),
                     GestureDetector(
                       onTap: () {
+                        createTableProvider.idClub = bidaClubDetail.id;
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => const AddTablePage()),
+                              builder: (context) => AddTablePage()),
                         );
                       },
                       child: Row(

@@ -32,7 +32,7 @@ class _EditTablePageState extends State<EditTablePage> {
   List<DropdownMenuItem<String>> get dropdownItems {
     List<DropdownMenuItem<String>> menuItems = [
       const DropdownMenuItem(child: Text("Ready"), value: "active"),
-      const DropdownMenuItem(child: Text("Occupied"), value: "inactive"),
+      const DropdownMenuItem(child: Text("Booked"), value: "inactive"),
     ];
 
     return menuItems;

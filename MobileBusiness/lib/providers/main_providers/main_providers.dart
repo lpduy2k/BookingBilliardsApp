@@ -1,4 +1,5 @@
 import 'package:booking_billiards_app/providers/input_pin_code_provider.dart';
+import 'package:booking_billiards_app/providers/new_table_provider.dart';
 import 'package:booking_billiards_app/providers/profile_page_provider.dart';
 import 'package:booking_billiards_app/providers/sign_in_provider.dart';
 import 'package:booking_billiards_app/providers/sign_up_provider.dart';
@@ -22,6 +23,9 @@ class MainProviders {
     ),
     ChangeNotifierProvider<TablePageProvider>(
       create: (context) => TablePageProvider(),
+    ),
+    ChangeNotifierProvider<CreateTableProvider>(
+      create: (context) => CreateTableProvider(),
     ),
   ];
 }
