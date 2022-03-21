@@ -1,11 +1,17 @@
 import 'package:booking_billiards_app/configs/themes/app_color.dart';
+import 'package:booking_billiards_app/model/response/get_list_history_res.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class OrderDetailsPage extends StatelessWidget {
-  const OrderDetailsPage({Key? key}) : super(key: key);
+  final GetListHistoryRes? orderDetails;
+  const OrderDetailsPage({Key? key, required this.orderDetails})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final dateFormat = DateFormat("dd-MM-yyyy - KK:mm:ss");
+    final priceFormat = NumberFormat("#,##0,000");
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       body: SingleChildScrollView(
@@ -56,7 +62,7 @@ class OrderDetailsPage extends StatelessWidget {
               child: ClipRRect(
                   borderRadius: BorderRadius.circular(10),
                   child: Image.network(
-                    'https://media.istockphoto.com/photos/3d-rendering-of-an-isolated-billiard-table-in-a-top-view-with-a-full-picture-id945650288?k=20&m=945650288&s=170667a&w=0&h=p0tphNgA9OnGaOGYpwDYKE2MPV5SjmIkgupkmD6TOpE=',
+                    orderDetails!.imageTable!,
                     fit: BoxFit.cover,
                   )),
             ),
@@ -87,7 +93,7 @@ class OrderDetailsPage extends StatelessWidget {
                           style: TextStyle(fontSize: 16, color: AppColor.black),
                         ),
                         Text(
-                          'name',
+                          orderDetails!.bidaClubName!,
                           style: TextStyle(
                               fontSize: 16,
                               color: AppColor.lightBlack,
@@ -103,7 +109,7 @@ class OrderDetailsPage extends StatelessWidget {
                           style: TextStyle(fontSize: 16, color: AppColor.black),
                         ),
                         Text(
-                          'location ',
+                          orderDetails!.addressClub!,
                           style: TextStyle(
                               fontSize: 16,
                               color: AppColor.green,
@@ -119,7 +125,7 @@ class OrderDetailsPage extends StatelessWidget {
                           style: TextStyle(fontSize: 16, color: AppColor.black),
                         ),
                         Text(
-                          'Number',
+                          orderDetails!.bidaTableName!,
                           style: TextStyle(
                               fontSize: 16,
                               color: AppColor.lightBlack,
@@ -135,7 +141,7 @@ class OrderDetailsPage extends StatelessWidget {
                           style: TextStyle(fontSize: 16, color: AppColor.black),
                         ),
                         Text(
-                          'Time',
+                          dateFormat.format(orderDetails!.timeBooking!),
                           style: TextStyle(
                               fontSize: 16,
                               color: AppColor.lightBlack,
@@ -148,7 +154,7 @@ class OrderDetailsPage extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         const Text(
-                          "Total Timing",
+                          "User Name",
                           style: TextStyle(
                               fontWeight: FontWeight.w700,
                               fontSize: 15,
@@ -157,13 +163,8 @@ class OrderDetailsPage extends StatelessWidget {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Icon(
-                              Icons.access_alarm,
-                              color: AppColor.green,
-                              size: 24.0,
-                            ),
                             Text(
-                              'totalTime',
+                              orderDetails!.nameUser!,
                               style: TextStyle(
                                   fontWeight: FontWeight.w700,
                                   fontSize: 15,
@@ -178,11 +179,11 @@ class OrderDetailsPage extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          "Amount:",
+                          "Price:",
                           style: TextStyle(fontSize: 16, color: AppColor.black),
                         ),
                         Text(
-                          "100 VND",
+                          priceFormat.format(orderDetails!.priceTable),
                           style: TextStyle(
                               fontSize: 16,
                               color: AppColor.red,
@@ -194,13 +195,13 @@ class OrderDetailsPage extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          "Status:",
+                          "Booking ID:",
                           style: TextStyle(fontSize: 16, color: AppColor.black),
                         ),
                         Text(
-                          'status',
+                          orderDetails!.idBooking!,
                           style: TextStyle(
-                              fontSize: 16,
+                              fontSize: 10,
                               color: AppColor.green,
                               fontWeight: FontWeight.bold),
                         )
