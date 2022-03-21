@@ -3,6 +3,7 @@ import 'package:booking_billiards_app/constants/assets_path.dart';
 import 'package:booking_billiards_app/model/response/get_bida_club_res.dart';
 import 'package:booking_billiards_app/model/response/get_user_res.dart';
 import 'package:booking_billiards_app/repository/impl/bida_club_rep_impl.dart';
+import 'package:booking_billiards_app/repository/impl/booking_rep_impl.dart';
 import 'package:booking_billiards_app/repository/impl/user_rep_impl.dart';
 import 'package:booking_billiards_app/service/service_storage.dart';
 import 'package:booking_billiards_app/url_api/url_api.dart';
@@ -57,14 +58,6 @@ class _HomeState extends State<Home> {
                     ),
                   ],
                 ),
-                // IconButton(
-                //   alignment: Alignment.topCenter,
-                //   icon: Image.asset(
-                //     "assets/notification.png",
-                //     width: 24,
-                //   ),
-                //   onPressed: () {},
-                // )
               ],
             ),
           ),
@@ -176,13 +169,12 @@ class GridDashboard extends StatelessWidget {
                 ),
               ),
               onTap: () {
-                BidaClubRepImpl()
-                    .getBidaClub(UrlApi.bidaClubPath + "/${bidaClub!.id!}")
+                BookingRepImpl()
+                    .getListHistoryBooking(
+                        UrlApi.bookingPath + '${bidaClub!.id}')
                     .then((value) async {
                   Navigator.push(context, MaterialPageRoute(builder: (context) {
-                    return HistoryPage(
-                      listOrder: value,
-                    );
+                    return HistoryPage(listOrder: value);
                   }));
                 });
               },
@@ -224,7 +216,7 @@ class GridDashboard extends StatelessWidget {
               ),
               onTap: () {
                 BidaClubRepImpl()
-                    .getBidaClub(UrlApi.bidaClubPath + "/${bidaClub!.id!}")
+                    .getBidaClub(UrlApi.bidaClubPath + "/${bidaClub!.id}")
                     .then((value) async {
                   Navigator.push(context, MaterialPageRoute(builder: (context) {
                     return TableListPage(
