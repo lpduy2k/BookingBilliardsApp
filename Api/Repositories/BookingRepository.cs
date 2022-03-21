@@ -109,8 +109,8 @@ namespace Api.Repositories
                                   join bookingItem in _context.BookingItems on booking.Id equals bookingItem.BookingId
                                   join bidaTable in _context.BidaTables on bookingItem.BidaTableId equals bidaTable.Id
                                   join bidaClub in _context.BidaClubs on bidaTable.BidaClubId equals bidaClub.Id
-
-                                  select new { TimeBooking = booking.TimeBooking, TotalPrice = booking.TotalPrice, BidaTableName = bidaTable.Name, BidaClubName = bidaClub.Name, ImageTable = bidaTable.Image, AddressClub = bidaClub.Address, Status = booking.Status };
+                                  join userBooking in _context.Users on bidaClub.UserId equals userBooking.Id
+                                  select new {NameUser = userBooking.FullName, IdBooking = booking.Id, PriceTable = bidaTable.Price, TimeBooking = booking.TimeBooking, TotalPrice = booking.TotalPrice, BidaTableName = bidaTable.Name, BidaClubName = bidaClub.Name, ImageTable = bidaTable.Image, AddressClub = bidaClub.Address, Status = booking.Status };
                 return bookingList.ToList();
             }
             else if (pageNumber == 0 && pageSize == 0)
@@ -120,8 +120,9 @@ namespace Api.Repositories
                                   join bookingItem in _context.BookingItems on booking.Id equals bookingItem.BookingId
                                   join bidaTable in _context.BidaTables on bookingItem.BidaTableId equals bidaTable.Id
                                   join bidaClub in _context.BidaClubs on bidaTable.BidaClubId equals bidaClub.Id
+                                  join userBooking in _context.Users on bidaClub.UserId equals userBooking.Id
                                   where bidaClub.Id == clubId
-                                  select new { TimeBooking = booking.TimeBooking, TotalPrice = booking.TotalPrice, BidaTableName = bidaTable.Name, BidaClubName = bidaClub.Name, ImageTable = bidaTable.Image, AddressClub = bidaClub.Address, Status = booking.Status };
+                                  select new { NameUser = userBooking.FullName, IdBooking = booking.Id, PriceTable = bidaTable.Price, TimeBooking = booking.TimeBooking, TotalPrice = booking.TotalPrice, BidaTableName = bidaTable.Name, BidaClubName = bidaClub.Name, ImageTable = bidaTable.Image, AddressClub = bidaClub.Address, Status = booking.Status };
 
                 return bookingList.ToList();
             }
@@ -131,8 +132,8 @@ namespace Api.Repositories
                                   join bookingItem in _context.BookingItems on booking.Id equals bookingItem.BookingId
                                   join bidaTable in _context.BidaTables on bookingItem.BidaTableId equals bidaTable.Id
                                   join bidaClub in _context.BidaClubs on bidaTable.BidaClubId equals bidaClub.Id
-
-                                  select new { TimeBooking = booking.TimeBooking, TotalPrice = booking.TotalPrice, BidaTableName = bidaTable.Name, BidaClubName = bidaClub.Name, ImageTable = bidaTable.Image, AddressClub = bidaClub.Address, Status = booking.Status };
+                                  join userBooking in _context.Users on bidaClub.UserId equals userBooking.Id
+                                  select new { NameUser = userBooking.FullName, IdBooking = booking.Id, PriceTable = bidaTable.Price, TimeBooking = booking.TimeBooking, TotalPrice = booking.TotalPrice, BidaTableName = bidaTable.Name, BidaClubName = bidaClub.Name, ImageTable = bidaTable.Image, AddressClub = bidaClub.Address, Status = booking.Status };
                 return bookingList.ToPagedList(pageNumber, pageSize).ToList();
             }
             else
@@ -141,8 +142,9 @@ namespace Api.Repositories
                                   join bookingItem in _context.BookingItems on booking.Id equals bookingItem.BookingId
                                   join bidaTable in _context.BidaTables on bookingItem.BidaTableId equals bidaTable.Id
                                   join bidaClub in _context.BidaClubs on bidaTable.BidaClubId equals bidaClub.Id
+                                  join userBooking in _context.Users on bidaClub.UserId equals userBooking.Id
                                   where bidaClub.Id == clubId
-                                  select new { TimeBooking = booking.TimeBooking, TotalPrice = booking.TotalPrice, BidaTableName = bidaTable.Name, BidaClubName = bidaClub.Name, ImageTable = bidaTable.Image, AddressClub = bidaClub.Address, Status = booking.Status };
+                                  select new { NameUser = userBooking.FullName, IdBooking = booking.Id, PriceTable = bidaTable.Price, TimeBooking = booking.TimeBooking, TotalPrice = booking.TotalPrice, BidaTableName = bidaTable.Name, BidaClubName = bidaClub.Name, ImageTable = bidaTable.Image, AddressClub = bidaClub.Address, Status = booking.Status };
                 return bookingList.ToPagedList(pageNumber, pageSize).ToList();
             }
 
