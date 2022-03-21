@@ -92,7 +92,7 @@ class Body extends StatelessWidget {
               icon: Icon(Icons.arrow_back),
               onPressed: () {
                 BidaClubRepImpl()
-                    .getBidaClub(UrlApi.bidaClubPath + bidaClubDetail.id!)
+                    .getBidaClub(UrlApi.bidaClubPath + "/${bidaClubDetail.id}")
                     .then((value) async {
                   Navigator.push(context, MaterialPageRoute(builder: (context) {
                     return Home(
@@ -104,7 +104,7 @@ class Body extends StatelessWidget {
             ),
             iconColor: AppColor.black,
           ),
-          const Text(
+          Text(
             'List table',
             style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             textAlign: TextAlign.center,

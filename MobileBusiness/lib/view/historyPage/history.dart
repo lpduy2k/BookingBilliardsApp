@@ -1,15 +1,12 @@
 import 'package:booking_billiards_app/configs/themes/app_color.dart';
+import 'package:booking_billiards_app/model/response/get_bida_club_res.dart';
 import 'package:booking_billiards_app/view/historyPage/order_details.dart';
 import 'package:flutter/material.dart';
 
-class HistoryPage extends StatefulWidget {
-  const HistoryPage({Key? key}) : super(key: key);
+class HistoryPage extends StatelessWidget {
+  GetBidaClubRes? listOrder;
+  HistoryPage({Key? key, required this.listOrder}) : super(key: key);
 
-  @override
-  State<HistoryPage> createState() => _HistoryPageState();
-}
-
-class _HistoryPageState extends State<HistoryPage> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -19,7 +16,7 @@ class _HistoryPageState extends State<HistoryPage> {
           child: Container(
             margin: EdgeInsets.fromLTRB(
                 0, size.height * 0.05, 0, size.height * 0.05),
-            padding: const EdgeInsets.all(10),
+            padding: EdgeInsets.all(10),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisSize: MainAxisSize.min,
@@ -46,12 +43,9 @@ class _HistoryPageState extends State<HistoryPage> {
                   height: size.height * 0.005,
                 ),
 
-                OrderCard(),
-                OrderCard(),
-                OrderCard(),
-                OrderCard(),
-                OrderCard(),
-                OrderCard(),
+                OrderCard(
+                  listOrder: listOrder,
+                ),
               ],
             ),
           ),
@@ -60,9 +54,8 @@ class _HistoryPageState extends State<HistoryPage> {
 }
 
 class OrderCard extends StatelessWidget {
-  const OrderCard({
-    Key? key,
-  }) : super(key: key);
+  GetBidaClubRes? listOrder;
+  OrderCard({Key? key, required this.listOrder}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -88,9 +81,9 @@ class OrderCard extends StatelessWidget {
                 ),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
-                  children: const [
+                  children: [
                     Text(
-                      'Table 15',
+                      listOrder!.name!,
                       style: TextStyle(
                           fontWeight: FontWeight.w700,
                           fontSize: 15,
