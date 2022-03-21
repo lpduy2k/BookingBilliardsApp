@@ -79,7 +79,7 @@ class _EditTablePageState extends State<EditTablePage> {
                 onPressed: () async {
                   BidaClubRepImpl()
                       .getBidaClub(
-                          UrlApi.bidaClubPath + tablePageProvider.idClub!)
+                          UrlApi.bidaClubPath + "/${tablePageProvider.idClub!}")
                       .then((value) async {
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) {
@@ -241,7 +241,7 @@ class _EditTablePageState extends State<EditTablePage> {
                               .then((value) async {
                             BidaClubRepImpl()
                                 .getBidaClub(UrlApi.bidaClubPath +
-                                    "/f234efe9-3774-45f5-38ae-08d9db6c7456")
+                                    "/${tablePageProvider.idClub}")
                                 .then((value) async {
                               Navigator.push(context,
                                   MaterialPageRoute(builder: (context) {

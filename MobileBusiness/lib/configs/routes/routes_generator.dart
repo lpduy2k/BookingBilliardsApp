@@ -41,10 +41,7 @@ class RouteGenerator {
         return MaterialPageRoute(
           builder: (_) => const EditClubProfile(),
         );
-      case '/history':
-        return MaterialPageRoute(
-          builder: (_) => const HistoryPage(),
-        );
+
       case '/profilePage':
         return MaterialPageRoute(
           builder: (_) => const ProfilePage(),

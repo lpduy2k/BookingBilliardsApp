@@ -1,5 +1,6 @@
 import 'package:booking_billiards_app/configs/themes/app_text_style.dart';
 import 'package:booking_billiards_app/constants/assets_path.dart';
+import 'package:booking_billiards_app/model/response/get_bida_club_res.dart';
 import 'package:booking_billiards_app/model/response/get_user_res.dart';
 import 'package:booking_billiards_app/providers/profile_page_provider.dart';
 import 'package:booking_billiards_app/repository/impl/bida_club_rep_impl.dart';
@@ -15,7 +16,8 @@ import '../../widgets/button/button.dart';
 
 class AccountPage extends StatelessWidget {
   final GetUserRes user;
-  const AccountPage({Key? key, required this.user}) : super(key: key);
+
+  AccountPage({Key? key, required this.user}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +41,8 @@ class AccountPage extends StatelessWidget {
 
 class Body extends StatelessWidget {
   final GetUserRes user;
-  const Body({Key? key, required this.user}) : super(key: key);
+
+  Body({Key? key, required this.user}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     ProfilePageProvider profilePageProvider =
@@ -64,8 +67,7 @@ class Body extends StatelessWidget {
               icon: Icon(Icons.arrow_back),
               onPressed: () {
                 BidaClubRepImpl()
-                    .getBidaClub(UrlApi.bidaClubPath +
-                        "/f234efe9-3774-45f5-38ae-08d9db6c7456")
+                    .getBidaClub(UrlApi.bidaClubPath + "?userId=${user.id}")
                     .then((value) async {
                   Navigator.push(context, MaterialPageRoute(builder: (context) {
                     return Home(

@@ -57,14 +57,14 @@ class _HomeState extends State<Home> {
                     ),
                   ],
                 ),
-                IconButton(
-                  alignment: Alignment.topCenter,
-                  icon: Image.asset(
-                    "assets/notification.png",
-                    width: 24,
-                  ),
-                  onPressed: () {},
-                )
+                // IconButton(
+                //   alignment: Alignment.topCenter,
+                //   icon: Image.asset(
+                //     "assets/notification.png",
+                //     width: 24,
+                //   ),
+                //   onPressed: () {},
+                // )
               ],
             ),
           ),
@@ -176,11 +176,15 @@ class GridDashboard extends StatelessWidget {
                 ),
               ),
               onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const HistoryPage()),
-                );
-                print("Click event on Container");
+                BidaClubRepImpl()
+                    .getBidaClub(UrlApi.bidaClubPath + "/${bidaClub!.id!}")
+                    .then((value) async {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return HistoryPage(
+                      listOrder: value,
+                    );
+                  }));
+                });
               },
             ),
             InkWell(
@@ -220,8 +224,7 @@ class GridDashboard extends StatelessWidget {
               ),
               onTap: () {
                 BidaClubRepImpl()
-                    .getBidaClubDetail(UrlApi.bidaClubPath +
-                        "/f234efe9-3774-45f5-38ae-08d9db6c7456")
+                    .getBidaClub(UrlApi.bidaClubPath + "/${bidaClub!.id!}")
                     .then((value) async {
                   Navigator.push(context, MaterialPageRoute(builder: (context) {
                     return TableListPage(
