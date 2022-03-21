@@ -3,11 +3,9 @@ import 'dart:io';
 
 import 'package:booking_billiards_app/configs/themes/app_color.dart';
 import 'package:booking_billiards_app/constants/assets_path.dart';
-import 'package:booking_billiards_app/model/response/get_bida_table_res.dart';
 import 'package:booking_billiards_app/providers/table_page_provider.dart';
 import 'package:booking_billiards_app/repository/impl/bida_club_rep_impl.dart';
 import 'package:booking_billiards_app/repository/impl/bida_table_rep_impl.dart';
-import 'package:booking_billiards_app/service/service_storage.dart';
 import 'package:booking_billiards_app/url_api/url_api.dart';
 import 'package:booking_billiards_app/view/homePage/home.dart';
 import 'package:booking_billiards_app/view/table/tablelist.dart';
@@ -109,7 +107,7 @@ class _EditTablePageState extends State<EditTablePage> {
                                 height: 200,
                               )
                             : const Image(
-                                image: AssetImage(AssetPath.defaultAvatar),
+                                image: AssetImage(AssetPath.defaultPicture),
                                 fit: BoxFit.cover,
                                 width: 400,
                                 height: 200,

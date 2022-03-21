@@ -1,8 +1,13 @@
 import 'package:booking_billiards_app/configs/themes/app_color.dart';
 import 'package:booking_billiards_app/model/response/get_bida_club_res.dart';
+import 'package:booking_billiards_app/providers/club_page_provider.dart';
+import 'package:booking_billiards_app/repository/impl/bida_club_rep_impl.dart';
+import 'package:booking_billiards_app/url_api/url_api.dart';
 import 'package:booking_billiards_app/utils/window_size.dart';
+import 'package:booking_billiards_app/view/homePage/home.dart';
 import 'package:booking_billiards_app/widgets/button/button.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ClubProfile extends StatelessWidget {
   GetBidaClubRes? bidaClub;
@@ -33,6 +38,7 @@ class Body extends StatelessWidget {
   Body({Key? key, required this.bidaClub}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    ClubPageProvider clubPageProvider = Provider.of<ClubPageProvider>(context);
     double windowWidth = MediaQuery.of(context).size.width;
     double windowHeight = MediaQuery.of(context).size.height;
 
@@ -57,7 +63,15 @@ class Body extends StatelessWidget {
             leading: IconButton(
               icon: Icon(Icons.arrow_back),
               onPressed: () {
-                Navigator.pop(context);
+                BidaClubRepImpl()
+                    .getBidaClub(UrlApi.bidaClubPath + "/${bidaClub!.id}")
+                    .then((value) async {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return Home(
+                      bidaClub: value,
+                    );
+                  }));
+                });
               },
             ),
           ),
@@ -262,6 +276,17 @@ class Body extends StatelessWidget {
             color: AppColor.white,
             backgroundBtn: AppColor.green,
             voidCallBack: () {
+              clubPageProvider.addDataTable(
+                  bidaClub!.id!,
+                  bidaClub!.name!,
+                  bidaClub!.address!,
+                  bidaClub!.phoneNumber!,
+                  bidaClub!.image!,
+                  bidaClub!.timeOpen!,
+                  bidaClub!.timeClose!,
+                  bidaClub!.quantity!,
+                  bidaClub!.status!,
+                  bidaClub!.userId!);
               Navigator.of(context).pushNamed(
                 '/editclubprofile',
               );
