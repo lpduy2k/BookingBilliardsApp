@@ -10,6 +10,7 @@ import 'package:booking_billiards_app/service/service_storage.dart';
 import 'package:booking_billiards_app/url_api/url_api.dart';
 import 'package:booking_billiards_app/view/homePage/home.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:jwt_decode/jwt_decode.dart';
 
 class ValidationItem {
@@ -133,35 +134,49 @@ class SignInProvider with ChangeNotifier {
                     value.token.toString(),
                   ),
                   payload = Jwt.parseJwt(value.token.toString()),
-                  await secureStorage.writeSecureData(
-                    "userId",
-                    payload['Id'].toString(),
-                  ),
-                  await secureStorage.writeSecureData(
-                    "userName",
-                    payload['UserName'].toString(),
-                  ),
-                  BidaClubRepImpl()
-                      .getBidaClub(UrlApi.bidaClubPath +
-                          "?userId=${payload['Id'].toString()}")
-                      .then(
-                    (value) async {
-                      await Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) {
-                            return Home(
-                              bidaClub: value,
-                            );
-                          },
-                        ),
-                      );
-                    },
-                  ),
-                  clearPhoneController(),
-                  clearPasswordController(),
-                  // Navigator.of(context).pushReplacementNamed('/home'),
-                  showToastSuccess("Login successfully"),
+                  if (payload['Role'].toString() == "ADMIN")
+                    {
+                      await secureStorage.writeSecureData(
+                        "userId",
+                        payload['Id'].toString(),
+                      ),
+                      await secureStorage.writeSecureData(
+                        "userName",
+                        payload['UserName'].toString(),
+                      ),
+                      BidaClubRepImpl()
+                          .getBidaClub(UrlApi.bidaClubPath +
+                              "?userId=${payload['Id'].toString()}")
+                          .then(
+                        (value) async {
+                          await Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) {
+                                return Home(
+                                  bidaClub: value,
+                                );
+                              },
+                            ),
+                          );
+                        },
+                      ),
+                      clearPhoneController(),
+                      clearPasswordController(),
+                      // Navigator.of(context).pushReplacementNamed('/home'),
+                      showToastSuccess("Login successfully"),
+                    }
+                  else
+                    {
+                      Fluttertoast.showToast(
+                          msg: "No permission",
+                          toastLength: Toast.LENGTH_SHORT,
+                          gravity: ToastGravity.CENTER,
+                          timeInSecForIosWeb: 1,
+                          backgroundColor: Colors.red,
+                          textColor: Colors.white,
+                          fontSize: 16.0)
+                    }
                 }
               else
                 {

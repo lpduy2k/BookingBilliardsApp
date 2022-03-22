@@ -12,6 +12,7 @@ import 'package:booking_billiards_app/view_model/service/service_storage.dart';
 import 'package:booking_billiards_app/view_model/url_api/url_api.dart';
 import 'package:booking_billiards_app/widgets/loader/loader.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:jwt_decode/jwt_decode.dart';
 
 class SignInProvider with ChangeNotifier {
@@ -130,6 +131,8 @@ class SignInProvider with ChangeNotifier {
                     value.token.toString(),
                   ),
                   payload = Jwt.parseJwt(value.token.toString()),
+                  if (payload['Role'].toString() == "USER")
+                    {
                   await secureStorage.writeSecureData(
                     "userId",
                     payload['Id'].toString(),
@@ -166,6 +169,18 @@ class SignInProvider with ChangeNotifier {
                   clearPhoneController(),
                   clearPasswordController(),
                   showToastSuccess("Login successfully"),
+                }
+                  else
+                    {
+                      Fluttertoast.showToast(
+                          msg: "No permission",
+                          toastLength: Toast.LENGTH_SHORT,
+                          gravity: ToastGravity.CENTER,
+                          timeInSecForIosWeb: 1,
+                          backgroundColor: Colors.red,
+                          textColor: Colors.white,
+                          fontSize: 16.0)
+                    }
                 }
               else
                 {
