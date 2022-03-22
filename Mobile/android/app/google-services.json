@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "283205296046",
+    "project_id": "bookingbilliardsapp",
+    "storage_bucket": "bookingbilliardsapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:283205296046:android:ffc096b8b77c951890723f",
+        "android_client_info": {
+          "package_name": "com.example.booking_billiards_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "283205296046-acs3pps6spt7h7k3e3v0af0nv25v9c19.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.booking_billiards_app",
+            "certificate_hash": "372e001ef3d237a5a32001cb1bfaa947f846c878"
+          }
+        },
+        {
+          "client_id": "283205296046-i0rn2ltc6kordd6smsg18h8me46dbe43.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAnGlFw5T1OxhyNFQVInbM2H0MNKjI7x_g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "283205296046-i0rn2ltc6kordd6smsg18h8me46dbe43.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

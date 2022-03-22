@@ -3,12 +3,15 @@ import 'package:booking_billiards_app/configs/themes/app_color.dart';
 import 'package:booking_billiards_app/utils/window_size.dart';
 import 'package:booking_billiards_app/configs/themes/app_text_style.dart';
 import 'package:booking_billiards_app/constants/assets_path.dart';
+import 'package:booking_billiards_app/view_model/providers/google_signin_provider.dart';
 import 'package:booking_billiards_app/view_model/providers/sign_in_provider.dart';
 import 'package:booking_billiards_app/view_model/providers/sign_up_provider.dart';
 import 'package:booking_billiards_app/widgets/button/button.dart';
 import 'package:booking_billiards_app/widgets/input/input.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class WelcomePage extends StatefulWidget {
   const WelcomePage({Key? key}) : super(key: key);
@@ -54,6 +57,9 @@ class _WelcomePageState extends State<WelcomePage> {
     SignInProvider signInProvider = Provider.of<SignInProvider>(context);
 
     SignUpProvider signUpProvider = Provider.of<SignUpProvider>(context);
+
+    GoogleSignInProvider googleSignInProvider =
+        Provider.of<GoogleSignInProvider>(context);
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -523,7 +529,9 @@ class _WelcomePageState extends State<WelcomePage> {
                         width: double.infinity,
                         height: 49,
                         child: ElevatedButton.icon(
-                          onPressed: () {},
+                          onPressed: () async {
+                            await googleSignInProvider.googleLogin();
+                          },
                           icon: Image.asset(AssetPath.google),
                           label: Text(
                             'Login with Google',

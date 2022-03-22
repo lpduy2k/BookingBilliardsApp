@@ -2,8 +2,11 @@ import 'package:booking_billiards_app/configs/routes/routes_generator.dart';
 import 'package:booking_billiards_app/view_model/providers/main_providers/main_providers.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:firebase_core/firebase_core.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(const MyApp());
 }
 

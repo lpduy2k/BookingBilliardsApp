@@ -47,6 +47,9 @@ dependencies:
     jwt_decode: ^0.3.1
     image_picker: ^0.8.3+1
     time_picker_widget: ^1.0.0+9
+    firebase_core: ^1.13.1
+    firebase_auth: ^3.3.11
+    google_sign_in: ^5.2.4
 
 dev_dependencies:
     flutter_test:
