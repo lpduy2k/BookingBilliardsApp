@@ -134,7 +134,7 @@ class TablePageProvider with ChangeNotifier {
               .then((value) async {
             await secureStorage.deleteSecureData("urlImage");
             showToastSuccess(value);
-            showToastFail("fail");
+            image = null;
           }).onError((error, stackTrace) {
             log(error.toString());
           });
@@ -155,6 +155,7 @@ class TablePageProvider with ChangeNotifier {
                     bidaClubId: idClub!))
             .then((value) async {
           showToastSuccess(value);
+          image = null;
         }).onError((error, stackTrace) {
           log(error.toString());
         });
@@ -173,6 +174,7 @@ class TablePageProvider with ChangeNotifier {
                     bidaClubId: idClub!))
             .then((value) async {
           showToastSuccess(value);
+          image = null;
         }).onError((error, stackTrace) {
           log(error.toString());
         });
