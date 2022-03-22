@@ -17,7 +17,8 @@ import '../../utils/window_size.dart';
 class ConfirmBooking extends StatefulWidget {
   GetBidaClubDetailRes? bidaClubDetail;
   String? timeBooking;
-  ConfirmBooking({Key? key, this.bidaClubDetail, this.timeBooking})
+  String? nameTable;
+  ConfirmBooking({Key? key, this.bidaClubDetail, this.timeBooking, this.nameTable})
       : super(key: key);
 
   @override
@@ -38,7 +39,9 @@ class _ConfirmBookingState extends State<ConfirmBooking> {
         body: SingleChildScrollView(
           child: Body(
               bidaClubDetail: widget.bidaClubDetail!,
-              timeBooking: widget.timeBooking!),
+              timeBooking: widget.timeBooking!,
+              nameTable: widget.nameTable,
+              ),
         ),
       ),
     );
@@ -48,8 +51,9 @@ class _ConfirmBookingState extends State<ConfirmBooking> {
 class Body extends StatelessWidget {
   final GetBidaClubDetailRes bidaClubDetail;
   final String timeBooking;
-  const Body(
-      {Key? key, required this.bidaClubDetail, required this.timeBooking})
+  String? nameTable;
+  Body(
+      {Key? key, required this.bidaClubDetail, required this.timeBooking, required this.nameTable})
       : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -76,8 +80,9 @@ class Body extends StatelessWidget {
               SizedBox(
                 height: windowHeight * 0.05,
               ),
-              const Text(
-                'Billiards details',
+              if(nameTable! != null)
+               Text(
+                nameTable!,
                 style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
                 textAlign: TextAlign.center,
               ),

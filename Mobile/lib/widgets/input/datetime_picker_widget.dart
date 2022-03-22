@@ -14,6 +14,7 @@ class DatetimePickerWidget extends StatefulWidget {
 class _DatetimePickerWidgetState extends State<DatetimePickerWidget> {
   final SecureStorage secureStorage = SecureStorage();
   DateTime dateTime = DateTime.now();
+  DateTime date = DateTime.now();
 
   String getText() {
     if (dateTime == null) {
@@ -59,16 +60,23 @@ class _DatetimePickerWidgetState extends State<DatetimePickerWidget> {
     );
 
     if (newDate == null) return DateTime.now();
+    date = newDate;
     return newDate;
   }
 
   Future<TimeOfDay> pickTime(BuildContext context) async {
     final initialTime = TimeOfDay.now();
-    final newTime = await showCustomTimePicker(
-        context: context,
-        onFailValidation: (context) => print('Unavailable selection'),
-        initialTime: TimeOfDay.now(),
-        selectableTimePredicate: (time) => time!.hour >= TimeOfDay.now().hour);
+    final newTime = date.day == DateTime.now().day
+        ? await showCustomTimePicker(
+            context: context,
+            onFailValidation: (context) => print('Unavailable selection'),
+            initialTime: TimeOfDay.now(),
+            selectableTimePredicate: (time) =>
+                time!.hour >= TimeOfDay.now().hour)
+        : await showTimePicker(
+            context: context,
+            initialTime: TimeOfDay.now(),
+          );
     if (newTime == null) return TimeOfDay.now();
 
     return newTime;

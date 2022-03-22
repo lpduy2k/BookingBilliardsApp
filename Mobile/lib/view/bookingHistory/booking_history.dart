@@ -16,6 +16,7 @@ class BookingHistory extends StatefulWidget {
 
 class _BookingHistoryState extends State<BookingHistory> {
   final format = NumberFormat("#,##0,000");
+  final dateFormat = DateFormat("dd-MM-yyyy - KK:mm:ss");
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -39,7 +40,7 @@ class _BookingHistoryState extends State<BookingHistory> {
                 SizedBox(
                   height: size.height * 0.005,
                 ),
-                for (var list in widget.listHistory)
+                for (var list in widget.listHistory.reversed)
                   Card(
                     // color: AppColor.lightGreen,
                     shape: OutlineInputBorder(
@@ -49,8 +50,6 @@ class _BookingHistoryState extends State<BookingHistory> {
                     child: Column(children: [
                       ListTile(
                         title: Container(
-                          // padding: EdgeInsets.fromLTRB(
-                          //     0, size.height * 0.01, 0, size.height * 0.0001),
                           padding: EdgeInsets.only(top: 5, bottom: 5),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -71,20 +70,16 @@ class _BookingHistoryState extends State<BookingHistory> {
                                         height: 1.6),
                                   ),
                                   const Text(
-                                    'Total price',
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.w700,
-                                        fontSize: 15,
-                                        height: 1.6),
+                                    'Time Booking: ',
+                                    style: TextStyle(fontSize: 12, height: 1.6),
                                   ),
                                   Text(
-                                    format.format(list.totalPrice!).toString() +
-                                        " VND",
+                                    dateFormat.format(list.timeBooking!),
                                     style: const TextStyle(
                                         fontWeight: FontWeight.w400,
-                                        fontSize: 12,
+                                        fontSize: 10,
                                         height: 1.6),
-                                  )
+                                  ),
                                 ],
                               )
                             ],
@@ -124,19 +119,19 @@ class _BookingHistoryState extends State<BookingHistory> {
                                 ),
                                 ElevatedButton(
                                     onPressed: () {
-                                      // BidaClubRepImpl()
-                                      //     .getBidaClubDetail(
-                                      //         UrlApi.bidaClubPath +
-                                      //             "/${list.}")
-                                      //     .then((value) async {
-                                      //   Navigator.push(context,
-                                      //       MaterialPageRoute(
-                                      //           builder: (context) {
-                                      //     return DetailsClub(
-                                      //       bidaClubDetail: value,
-                                      //     );
-                                      //   }));
-                                      // });
+                                      BidaClubRepImpl()
+                                          .getBidaClubDetail(
+                                              UrlApi.bidaClubPath +
+                                                  "/${list.clubId}")
+                                          .then((value) async {
+                                        Navigator.push(context,
+                                            MaterialPageRoute(
+                                                builder: (context) {
+                                          return DetailsClub(
+                                            bidaClubDetail: value,
+                                          );
+                                        }));
+                                      });
                                     },
                                     child: const Text(
                                       "Detail",
