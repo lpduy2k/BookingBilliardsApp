@@ -79,7 +79,6 @@ class _BodyState extends State<Body> {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       width: double.infinity,
-      height: MediaQuery.of(context).size.height,
       child: Column(
         children: [
           Padding(

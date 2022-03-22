@@ -182,7 +182,7 @@ class Body extends StatelessWidget {
                               const Padding(
                                 padding: EdgeInsets.only(right: 5),
                               ),
-                              const Text('Time Booking'),
+                              const Text('Time Open'),
                             ],
                           ),
                           Row(

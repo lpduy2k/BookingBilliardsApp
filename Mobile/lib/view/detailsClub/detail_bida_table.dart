@@ -58,7 +58,6 @@ class _BodyState extends State<Body> {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       width: double.infinity,
-      height: MediaQuery.of(context).size.height,
       child: Column(
         children: [
           Padding(
@@ -96,7 +95,7 @@ class _BodyState extends State<Body> {
                   ),
                   Text(
                       widget.bidaTableDetail.status! == "active"
-                          ? "Empty Table"
+                          ? "Free Table"
                           : "Full Table",
                       style: TextStyle(
                           fontSize: 18,
@@ -222,6 +221,7 @@ class _BodyState extends State<Body> {
                                     return ConfirmBooking(
                                       bidaClubDetail: bidaClubDetail,
                                       timeBooking: dateTime,
+                                      nameTable: widget.bidaTableDetail.name!,
                                     );
                                   }));
                                 },
