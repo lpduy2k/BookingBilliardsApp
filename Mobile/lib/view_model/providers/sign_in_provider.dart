@@ -133,43 +133,46 @@ class SignInProvider with ChangeNotifier {
                   payload = Jwt.parseJwt(value.token.toString()),
                   if (payload['Role'].toString() == "USER")
                     {
-                  await secureStorage.writeSecureData(
-                    "userId",
-                    payload['Id'].toString(),
-                  ),
-                  await secureStorage.writeSecureData(
-                    "userName",
-                    payload['UserName'].toString(),
-                  ),
-                  BidaClubRepImpl().getBidaClub(UrlApi.bidaClubPath).then(
-                    (value) async {
-                      await UserRepImpl()
-                          .getUser(UrlApi.userPath +
-                              "/${payload['UserName'].toString()}")
-                          .then((value) async {
-                        user = value;
-                      });
-                      await BookingRepImpl().getListHistoryBooking(UrlApi.bookingPath + "?userId=${payload['Id'].toString()}").then((value) async {
-                        listHistory = value;
-                      });
-                      await Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) {
-                            return BottomNavBar(
-                                currentIndex: 0,
-                                listBidaClub: value,
-                                user: user,
-                                listHistory: listHistory!);
-                          },
-                        ),
-                      );
-                    },
-                  ),
-                  clearPhoneController(),
-                  clearPasswordController(),
-                  showToastSuccess("Login successfully"),
-                }
+                      await secureStorage.writeSecureData(
+                        "userId",
+                        payload['Id'].toString(),
+                      ),
+                      await secureStorage.writeSecureData(
+                        "userName",
+                        payload['UserName'].toString(),
+                      ),
+                      BidaClubRepImpl().getBidaClub(UrlApi.bidaClubPath).then(
+                        (value) async {
+                          await UserRepImpl()
+                              .getUser(UrlApi.userPath +
+                                  "/${payload['UserName'].toString()}")
+                              .then((value) async {
+                            user = value;
+                          });
+                          await BookingRepImpl()
+                              .getListHistoryBooking(UrlApi.bookingPath +
+                                  "?userId=${payload['Id'].toString()}")
+                              .then((value) async {
+                            listHistory = value;
+                          });
+                          await Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) {
+                                return BottomNavBar(
+                                    currentIndex: 0,
+                                    listBidaClub: value,
+                                    user: user,
+                                    listHistory: listHistory!);
+                              },
+                            ),
+                          );
+                        },
+                      ),
+                      clearPhoneController(),
+                      clearPasswordController(),
+                      showToastSuccess("Login successfully"),
+                    }
                   else
                     {
                       Fluttertoast.showToast(
@@ -179,13 +182,10 @@ class SignInProvider with ChangeNotifier {
                           timeInSecForIosWeb: 1,
                           backgroundColor: Colors.red,
                           textColor: Colors.white,
-                          fontSize: 16.0)
+                          fontSize: 16.0),
+                      Navigator.pop(context),
+                      notifyListeners(),
                     }
-                }
-              else
-                {
-                  Navigator.pop(context),
-                  notifyListeners(),
                 }
             },
           );
