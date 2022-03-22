@@ -137,7 +137,7 @@ class OrderDetailsPage extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          "Time booking",
+                          "Time book:",
                           style: TextStyle(fontSize: 16, color: AppColor.black),
                         ),
                         Text(
@@ -183,7 +183,7 @@ class OrderDetailsPage extends StatelessWidget {
                           style: TextStyle(fontSize: 16, color: AppColor.black),
                         ),
                         Text(
-                          priceFormat.format(orderDetails!.priceTable),
+                          priceFormat.format(orderDetails!.priceTable) + 'VND',
                           style: TextStyle(
                               fontSize: 16,
                               color: AppColor.red,
