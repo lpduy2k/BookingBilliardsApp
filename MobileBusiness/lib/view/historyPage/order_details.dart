@@ -89,13 +89,13 @@ class OrderDetailsPage extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          "Billiard Club's name:",
+                          "Club's name:",
                           style: TextStyle(fontSize: 16, color: AppColor.black),
                         ),
                         Text(
                           orderDetails!.bidaClubName!,
                           style: TextStyle(
-                              fontSize: 16,
+                              fontSize: 14,
                               color: AppColor.lightBlack,
                               fontWeight: FontWeight.bold),
                         )
@@ -111,7 +111,7 @@ class OrderDetailsPage extends StatelessWidget {
                         Text(
                           orderDetails!.addressClub!,
                           style: TextStyle(
-                              fontSize: 16,
+                              fontSize: 14,
                               color: AppColor.green,
                               fontWeight: FontWeight.bold),
                         )
@@ -121,13 +121,13 @@ class OrderDetailsPage extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          "Table Number",
+                          "Table Number:",
                           style: TextStyle(fontSize: 16, color: AppColor.black),
                         ),
                         Text(
                           orderDetails!.bidaTableName!,
                           style: TextStyle(
-                              fontSize: 16,
+                              fontSize: 14,
                               color: AppColor.lightBlack,
                               fontWeight: FontWeight.bold),
                         )
@@ -143,7 +143,7 @@ class OrderDetailsPage extends StatelessWidget {
                         Text(
                           dateFormat.format(orderDetails!.timeBooking!),
                           style: TextStyle(
-                              fontSize: 16,
+                              fontSize: 14,
                               color: AppColor.lightBlack,
                               fontWeight: FontWeight.bold),
                         )
@@ -183,7 +183,8 @@ class OrderDetailsPage extends StatelessWidget {
                           style: TextStyle(fontSize: 16, color: AppColor.black),
                         ),
                         Text(
-                          priceFormat.format(orderDetails!.priceTable) + 'VND',
+                          priceFormat.format(orderDetails!.priceTable) +
+                              ' VND/h',
                           style: TextStyle(
                               fontSize: 16,
                               color: AppColor.red,
@@ -192,11 +193,11 @@ class OrderDetailsPage extends StatelessWidget {
                       ],
                     ),
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Text(
-                          "Booking ID:",
-                          style: TextStyle(fontSize: 16, color: AppColor.black),
+                          "Book ID:",
+                          style: TextStyle(fontSize: 13, color: AppColor.black),
                         ),
                         Text(
                           orderDetails!.idBooking!,

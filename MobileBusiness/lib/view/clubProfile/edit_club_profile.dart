@@ -190,20 +190,20 @@ class _EditClubProfileState extends State<EditClubProfile> {
               ],
             ),
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Row(
                   children: [
                     const Text(
-                      'Opening time: ',
+                      'Open time:',
                       style: TextStyle(
-                        fontSize: 14,
+                        fontSize: 12,
                       ),
                     ),
                     SizedBox(
                       child: Text(
                         '${time1.hour.toString().padLeft(2, '0')}:${time1.minute.toString().padLeft(2, '0')}',
-                        style: const TextStyle(fontSize: 13),
+                        style: const TextStyle(fontSize: 14),
                       ),
                     ),
                     IconButton(
@@ -227,15 +227,15 @@ class _EditClubProfileState extends State<EditClubProfile> {
                 Row(
                   children: [
                     const Text(
-                      'Closing time: ',
+                      'Close time:',
                       style: TextStyle(
-                        fontSize: 14,
+                        fontSize: 12,
                       ),
                     ),
                     SizedBox(
                       child: Text(
                         '${time2.hour.toString().padLeft(2, '0')}:${time2.minute.toString().padLeft(2, '0')}',
-                        style: const TextStyle(fontSize: 13),
+                        style: const TextStyle(fontSize: 14),
                       ),
                     ),
                     IconButton(
