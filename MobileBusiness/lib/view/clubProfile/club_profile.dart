@@ -39,19 +39,12 @@ class Body extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ClubPageProvider clubPageProvider = Provider.of<ClubPageProvider>(context);
-    double windowWidth = MediaQuery.of(context).size.width;
     double windowHeight = MediaQuery.of(context).size.height;
-
     return Container(
-      // padding: EdgeInsets.only(
-      //   top: windowHeight * windowSizeHeight(70),
-      //   bottom: windowHeight * windowSizeHeight(35),
-      // ),
       padding: const EdgeInsets.symmetric(horizontal: 20),
       width: double.infinity,
       height: MediaQuery.of(context).size.height,
       child: Column(
-        // mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Padding(
             padding: EdgeInsets.only(
@@ -61,7 +54,7 @@ class Body extends StatelessWidget {
           ),
           ListTile(
             leading: IconButton(
-              icon: Icon(Icons.arrow_back),
+              icon: const Icon(Icons.arrow_back),
               onPressed: () {
                 BidaClubRepImpl()
                     .getBidaClub(UrlApi.bidaClubPath + "/${bidaClub!.id}")
@@ -83,7 +76,7 @@ class Body extends StatelessWidget {
             ),
             textAlign: TextAlign.center,
           ),
-          Padding(
+          const Padding(
             padding: EdgeInsets.only(top: 10),
           ),
           Column(
@@ -97,7 +90,7 @@ class Body extends StatelessWidget {
                       Row(
                         children: [
                           Text(bidaClub!.name!,
-                              style: TextStyle(
+                              style: const TextStyle(
                                   fontSize: 18, fontWeight: FontWeight.bold),
                               textAlign: TextAlign.right),
                         ],
@@ -136,7 +129,7 @@ class Body extends StatelessWidget {
               ),
             ],
           ),
-          Padding(
+          const Padding(
             padding: EdgeInsets.only(top: 10),
           ),
           ClipRRect(
@@ -145,7 +138,7 @@ class Body extends StatelessWidget {
               bidaClub!.image!,
             ),
           ),
-          Padding(
+          const Padding(
             padding: EdgeInsets.only(top: 10),
           ),
           Column(
@@ -211,7 +204,7 @@ class Body extends StatelessWidget {
               ),
             ],
           ),
-          Padding(
+          const Padding(
             padding: EdgeInsets.only(top: 10),
           ),
           Column(
@@ -252,21 +245,29 @@ class Body extends StatelessWidget {
           ),
           Row(
             children: [
-              const Text('Status : ',
+              const Text('Status :',
                   style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
                   ),
                   textAlign: TextAlign.right),
-              Text(bidaClub!.status!,
-                  style: const TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  textAlign: TextAlign.right),
+              const Padding(
+                padding: EdgeInsets.only(left: 20),
+              ),
+              bidaClub!.status! == "active"
+                  ? const Text('Open',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ))
+                  : const Text('Close',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      )),
             ],
           ),
-          Padding(
+          const Padding(
             padding: EdgeInsets.only(top: 20),
           ),
           ButtonDefault(

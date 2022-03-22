@@ -74,7 +74,6 @@ class Body extends StatelessWidget {
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    double windowWidth = MediaQuery.of(context).size.width;
     double windowHeight = MediaQuery.of(context).size.height;
     CreateTableProvider createTableProvider =
         Provider.of<CreateTableProvider>(context);
@@ -92,7 +91,7 @@ class Body extends StatelessWidget {
           ),
           ListTile(
             leading: IconButton(
-              icon: Icon(Icons.arrow_back),
+              icon: const Icon(Icons.arrow_back),
               onPressed: () {
                 BidaClubRepImpl()
                     .getBidaClub(UrlApi.bidaClubPath + "/${bidaClubDetail.id}")

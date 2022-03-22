@@ -32,7 +32,7 @@ class _HomeState extends State<Home> {
             height: 80,
           ),
           Padding(
-            padding: EdgeInsets.only(left: 16, right: 16),
+            padding: const EdgeInsets.only(left: 16, right: 16),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
@@ -41,15 +41,15 @@ class _HomeState extends State<Home> {
                   children: <Widget>[
                     Text(
                       widget.bidaClub!.name!,
-                      style: TextStyle(
+                      style: const TextStyle(
                           color: Color.fromARGB(255, 102, 85, 85),
                           fontSize: 18,
                           fontWeight: FontWeight.bold),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 4,
                     ),
-                    Text(
+                    const Text(
                       "Home",
                       style: TextStyle(
                           color: Color(0xffa29aac),
@@ -82,7 +82,7 @@ class GridDashboard extends StatelessWidget {
     return Flexible(
       child: GridView.count(
           childAspectRatio: 1.0,
-          padding: EdgeInsets.only(left: 16, right: 16),
+          padding: const EdgeInsets.only(left: 16, right: 16),
           crossAxisCount: 2,
           crossAxisSpacing: 18,
           mainAxisSpacing: 18,
@@ -99,7 +99,7 @@ class GridDashboard extends StatelessWidget {
                       AssetPath.club,
                       width: 90,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 14,
                     ),
                     const Text(
@@ -109,7 +109,7 @@ class GridDashboard extends StatelessWidget {
                           fontSize: 16,
                           fontWeight: FontWeight.w600),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 8,
                     ),
                     const Text(
@@ -130,7 +130,6 @@ class GridDashboard extends StatelessWidget {
                             bidaClub: bidaClub,
                           )),
                 );
-                print("click");
               },
             ),
             InkWell(
@@ -191,7 +190,7 @@ class GridDashboard extends StatelessWidget {
                       AssetPath.table,
                       width: 120,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 14,
                     ),
                     const Text(
@@ -201,7 +200,7 @@ class GridDashboard extends StatelessWidget {
                           fontSize: 16,
                           fontWeight: FontWeight.w600),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 8,
                     ),
                     const Text(

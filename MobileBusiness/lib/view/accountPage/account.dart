@@ -62,10 +62,9 @@ class Body extends StatelessWidget {
               bottom: windowHeight * windowSizeHeight(35),
             ),
           ),
-
           ListTile(
             leading: IconButton(
-              icon: Icon(Icons.arrow_back),
+              icon: const Icon(Icons.arrow_back),
               onPressed: () {
                 BidaClubRepImpl()
                     .getBidaClub(UrlApi.bidaClubPath + "?userId=${user.id}")
@@ -79,7 +78,7 @@ class Body extends StatelessWidget {
               },
             ),
             trailing: IconButton(
-              icon: Icon(Icons.edit),
+              icon: const Icon(Icons.edit),
               onPressed: () {
                 profilePageProvider.addDataUser(
                     user.id!,
@@ -119,11 +118,9 @@ class Body extends StatelessWidget {
                     fit: BoxFit.cover,
                   ),
           ),
-
           const Padding(
             padding: EdgeInsets.only(top: 15, bottom: 15),
           ),
-
           Text(
             'Full Name: ' + user.fullName!,
             style: const TextStyle(
@@ -133,16 +130,13 @@ class Body extends StatelessWidget {
           const Padding(
             padding: EdgeInsets.only(top: 15, bottom: 15),
           ),
-
           Text(
             "User Name : " + user.username!,
             style: const TextStyle(fontSize: 16),
           ),
-
           const Padding(
             padding: EdgeInsets.only(top: 15, bottom: 15),
           ),
-
           Text(
             "Phone Number : " + user.phoneNumber!,
             style: const TextStyle(fontSize: 16),
@@ -150,22 +144,10 @@ class Body extends StatelessWidget {
           const Padding(
             padding: EdgeInsets.only(top: 15, bottom: 15),
           ),
-
           Text(
             "Email : " + user.email!,
             style: const TextStyle(fontSize: 16),
           ),
-          // Row(
-          //   children: [
-          //     const Padding(
-          //       padding: EdgeInsets.only(right: 3),
-          //     ),
-          //     Text(
-          //       "Email : " + user.email!,
-          //       style: const TextStyle(fontSize: 16),
-          //     ),
-          //   ],
-          // ),
           const Padding(
             padding: EdgeInsets.only(top: 15),
           ),

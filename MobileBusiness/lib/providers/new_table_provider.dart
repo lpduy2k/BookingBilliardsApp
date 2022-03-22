@@ -104,7 +104,6 @@ class CreateTableProvider with ChangeNotifier {
 
     if (!submitValid && isValid) {
       if (image != null) {
-        print("object");
         await ImageRepImpl()
             .uploadImage(UrlApi.imagePath, image!)
             .then((value) async {
@@ -139,7 +138,7 @@ class CreateTableProvider with ChangeNotifier {
           log(error.toString());
         });
       } else {
-        showToastFail("fail ");
+        showToastFail("Fail! you need to pick picture");
       }
     }
   }

@@ -63,7 +63,6 @@ class HistoryPage extends StatelessWidget {
                 ),
                 for (var list in listOrder!)
                   Card(
-                    // color: AppColor.lightGreen,
                     shape: OutlineInputBorder(
                       borderSide: BorderSide(color: AppColor.grey, width: 1),
                       borderRadius: BorderRadius.circular(20),
@@ -71,9 +70,7 @@ class HistoryPage extends StatelessWidget {
                     child: Column(children: [
                       ListTile(
                         title: Container(
-                          // padding: EdgeInsets.fromLTRB(
-                          //     0, size.height * 0.01, 0, size.height * 0.0001),
-                          padding: EdgeInsets.only(top: 5, bottom: 5),
+                          padding: const EdgeInsets.only(top: 5, bottom: 5),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -105,16 +102,14 @@ class HistoryPage extends StatelessWidget {
                           ),
                         ),
                         subtitle: Container(
-                          padding: EdgeInsets.only(top: 5, bottom: 5),
+                          padding: const EdgeInsets.only(top: 5, bottom: 5),
                           child: Column(children: [
-                            Container(
-                              child: const Divider(
-                                height: 2,
-                                thickness: 1,
-                                indent: 0,
-                                endIndent: 0,
-                                color: Colors.grey,
-                              ),
+                            const Divider(
+                              height: 2,
+                              thickness: 1,
+                              indent: 0,
+                              endIndent: 0,
+                              color: Colors.grey,
                             ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
