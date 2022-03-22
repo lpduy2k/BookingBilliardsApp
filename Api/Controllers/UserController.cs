@@ -107,5 +107,16 @@ namespace Api.Controllers
             }
             return NoContent();
         }
+        [HttpPut("updatePassword/{id}")]
+        [SwaggerOperation(Summary = "Update user")]
+        public async Task<ActionResult> UpdatePassword(Guid id, ResponseUpdatePasswordModal updatePassword)
+        {
+            bool check = await _service.UpdatePassword(id, updatePassword);
+            if (!check)
+            {
+                return BadRequest();
+            }
+            return NoContent();
+        }
     }
 }

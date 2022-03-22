@@ -70,5 +70,22 @@ namespace Api.Repositories
             await _context.SaveChangesAsync();
             return true;
         }
+
+        public async Task<bool> UpdatePassword(Guid id, ResponseUpdatePasswordModal updatePasswordModal)
+        {
+            User user = _context.Users.FirstOrDefault(u => u.Id == id);
+            if (user == null)
+            {
+                return false;
+            }
+            bool isValidPassword = BCrypt.Net.BCrypt.Verify(updatePasswordModal.OldPassword, user.Password);
+            if (!isValidPassword)
+            {
+                return false;
+            }
+            user.Password = BCrypt.Net.BCrypt.HashPassword(updatePasswordModal.NewPassword);
+            await _context.SaveChangesAsync();
+            return true;
+        }
     }
 }

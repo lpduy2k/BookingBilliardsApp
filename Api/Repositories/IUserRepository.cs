@@ -14,5 +14,6 @@ namespace Api.Repositories
         User GetByUserName(string username);
         Task<bool> Delete(Guid id);
         Task<bool> Update(User newUser);
+        Task<bool> UpdatePassword(Guid id, ResponseUpdatePasswordModal updatePasswordModal);
     }
 }

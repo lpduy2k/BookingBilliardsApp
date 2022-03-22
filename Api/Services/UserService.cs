@@ -35,6 +35,10 @@ namespace Api.Services
         {
             return await _repo.Update(newUser);
         }
+        public async Task<bool> UpdatePassword(Guid id, ResponseUpdatePasswordModal updatePasswordModal)
+        {
+            return await _repo.UpdatePassword(id, updatePasswordModal);
+        }
     }
 
 }
