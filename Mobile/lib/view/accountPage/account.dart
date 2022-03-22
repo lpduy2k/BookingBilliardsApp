@@ -1,4 +1,5 @@
 import 'package:booking_billiards_app/constants/assets_path.dart';
+import 'package:booking_billiards_app/view_model/providers/google_signin_provider.dart';
 import 'package:booking_billiards_app/view_model/service/service_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -40,6 +41,8 @@ class Body extends StatelessWidget {
   Widget build(BuildContext context) {
     ProfilePageProvider profilePageProvider =
         Provider.of<ProfilePageProvider>(context);
+    GoogleSignInProvider googleSignInProvider =
+        Provider.of<GoogleSignInProvider>(context);
     double windowHeight = MediaQuery.of(context).size.height;
 
     return Container(
@@ -183,6 +186,7 @@ class Body extends StatelessWidget {
             color: AppColor.white,
             backgroundBtn: AppColor.red,
             voidCallBack: () {
+              googleSignInProvider.logout();
               final SecureStorage secureStorage = SecureStorage();
               secureStorage.deleteAll();
               Navigator.of(context).pushNamed(

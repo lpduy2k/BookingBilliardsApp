@@ -8,6 +8,7 @@ import 'package:booking_billiards_app/view/search/search_bida_club.dart';
 import 'package:booking_billiards_app/view/success/success.dart';
 import 'package:booking_billiards_app/view/onboarding/onboarding.dart';
 import 'package:booking_billiards_app/view/welcome/welcome.dart';
+import 'package:booking_billiards_app/view/welcome/welcome_screen.dart';
 import 'package:flutter/material.dart';
 
 class RouteGenerator {
@@ -19,7 +20,7 @@ class RouteGenerator {
         );
       case '/welcome':
         return MaterialPageRoute(
-          builder: (_) => const WelcomePage(),
+          builder: (_) => const WelcomeScreen(),
         );
       case '/forgetPassword':
         return MaterialPageRoute(
