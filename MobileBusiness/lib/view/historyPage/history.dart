@@ -76,7 +76,7 @@ class HistoryPage extends StatelessWidget {
                             children: [
                               Image.network(
                                 list.imageTable!,
-                                width: 200,
+                                width: 170,
                                 height: 100,
                               ),
                               Column(
