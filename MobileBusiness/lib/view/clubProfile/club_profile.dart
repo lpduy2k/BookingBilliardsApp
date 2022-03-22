@@ -248,7 +248,6 @@ class Body extends StatelessWidget {
               const Text('Status :',
                   style: TextStyle(
                     fontSize: 20,
-                    fontWeight: FontWeight.bold,
                   ),
                   textAlign: TextAlign.right),
               const Padding(
