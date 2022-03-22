@@ -10,6 +10,7 @@ import 'package:booking_billiards_app/repository/impl/booking_rep_impl.dart';
 import 'package:booking_billiards_app/utils/window_size.dart';
 import 'package:booking_billiards_app/view/confirmBooking/confirm_booking.dart';
 import 'package:booking_billiards_app/view_model/service/service_storage.dart';
+import 'package:booking_billiards_app/view_model/url_api/notification_api.dart';
 import 'package:booking_billiards_app/view_model/url_api/url_api.dart';
 import 'package:booking_billiards_app/widgets/input/datetime_picker_widget.dart';
 import 'package:booking_billiards_app/widgets/dialog/dialog_confirm.dart';
@@ -214,16 +215,28 @@ class _BodyState extends State<Body> {
                                             bookingId: "${value.id}",
                                             bidaTableId:
                                                 "${widget.bidaTableDetail.id}"));
-                                  });
-
-                                  Navigator.push(context,
-                                      MaterialPageRoute(builder: (context) {
-                                    return ConfirmBooking(
-                                      bidaClubDetail: bidaClubDetail,
-                                      timeBooking: dateTime,
-                                      nameTable: widget.bidaTableDetail.name!,
+                                  }).then((value) async {
+                                    await NotificationApi
+                                        .showScheduleNotification(
+                                      title: "Welcome, you have a reservation",
+                                      body: "schedule for " +
+                                          DateFormat('dd/MM/yyyy HH:mm')
+                                              .format(DateTime.parse(dateTime)),
+                                      scheduledDate: DateTime.now().add(
+                                        const Duration(seconds: 3),
+                                      ),
                                     );
-                                  }));
+                                    await Navigator.push(context,
+                                        MaterialPageRoute(builder: (context) {
+                                      return ConfirmBooking(
+                                        bidaClubDetail: bidaClubDetail,
+                                        timeBooking: dateTime,
+                                        nameTable: widget.bidaTableDetail.name!,
+                                      );
+                                    }));
+                                  });
+                                  await secureStorage
+                                      .deleteSecureData("dateTime");
                                 },
                                 contentTitleDialog: 'Notification',
                                 contentDialog:
