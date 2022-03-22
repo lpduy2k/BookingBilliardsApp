@@ -55,7 +55,6 @@ class _EditTablePageState extends State<EditTablePage> {
     }
 
     Size size = MediaQuery.of(context).size;
-    double sizeHeightInput = size.height * 0.12;
 
     return Scaffold(
       backgroundColor: AppColor.lightGreen,

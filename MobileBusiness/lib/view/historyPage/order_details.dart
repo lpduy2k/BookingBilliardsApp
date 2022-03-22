@@ -38,12 +38,12 @@ class OrderDetailsPage extends StatelessWidget {
             Row(
               children: [
                 Expanded(flex: 2, child: Container()),
-                Expanded(
+                const Expanded(
                   flex: 6,
                   child: Text(
                     'Order Details',
                     textAlign: TextAlign.center,
-                    style: const TextStyle(
+                    style: TextStyle(
                         fontWeight: FontWeight.w700, fontSize: 18, height: 1.6),
                   ),
                 ),

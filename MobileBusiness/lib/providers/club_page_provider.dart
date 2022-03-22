@@ -183,7 +183,7 @@ class ClubPageProvider with ChangeNotifier {
                       timeOpen: timeOpen!,
                       timeClose: timeClose!,
                       quantity: quantity!,
-                      status: status!,
+                      status: selectedValue,
                       userId: Iduser!))
               .then((value) async {
             await secureStorage.deleteSecureData("urlImage");
@@ -207,7 +207,7 @@ class ClubPageProvider with ChangeNotifier {
                     timeOpen: timeOpen!,
                     timeClose: timeClose!,
                     quantity: quantity!,
-                    status: status!,
+                    status: selectedValue,
                     userId: Iduser!))
             .then((value) async {
           showToastSuccess(value);
@@ -229,7 +229,7 @@ class ClubPageProvider with ChangeNotifier {
                     timeOpen: timeOpen!,
                     timeClose: timeClose!,
                     quantity: quantity!,
-                    status: status!,
+                    status: selectedValue,
                     userId: Iduser!))
             .then((value) async {
           showToastSuccess(value);

@@ -43,7 +43,6 @@ class _AddTablePageState extends State<AddTablePage> {
     }
 
     Size size = MediaQuery.of(context).size;
-    double sizeHeightInput = size.height * 0.12;
 
     return Scaffold(
       backgroundColor: AppColor.lightGreen,
@@ -95,24 +94,6 @@ class _AddTablePageState extends State<AddTablePage> {
                     createTableProvider.image = null;
                   });
                 }),
-            // SizedBox(
-            //   height: sizeHeightInput,
-            //   child: TextField(
-            //     decoration: InputDecoration(
-            //       labelText: "Table name",
-            //       errorText: createTableProvider.name.error,
-            //     ),
-            //     controller: createTableProvider.nameController,
-            //     textInputAction: TextInputAction.next,
-            //     onEditingComplete: () {
-            //       createTableProvider.changeFocus(context, 'Name');
-            //     },
-            //     focusNode: createTableProvider.nameFocus,
-            //     onChanged: (String value) {
-            //       createTableProvider.checkName(value);
-            //     },
-            //   ),
-            // ),
             InputDefault(
               title: 'Table name',
               suffixIcon: createTableProvider.textName.isNotEmpty
@@ -138,22 +119,6 @@ class _AddTablePageState extends State<AddTablePage> {
                 createTableProvider.changeFocus(context, 'Name');
               },
             ),
-            // SizedBox(
-            //   height: sizeHeightInput,
-            //   child: TextField(
-            //     decoration: InputDecoration(
-            //       labelText: "Price",
-            //       errorText: createTableProvider.price.error,
-            //     ),
-            //     controller: createTableProvider.priceController,
-            //     onEditingComplete: () {
-            //       createTableProvider.changeFocus(context, 'Price');
-            //     },
-            //     onChanged: (String value) {
-            //       createTableProvider.checkPrice(value);
-            //     },
-            //   ),
-            // ),
             InputDefault(
               title: 'Price',
               suffixIcon: createTableProvider.textPrice.isNotEmpty

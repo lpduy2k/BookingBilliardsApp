@@ -44,10 +44,17 @@ class _CardBidaState extends State<CardBida> {
               "Status:",
               style: TextStyle(fontSize: 10),
             ),
-            Text(
-              widget.bidaTable!.status!,
-              style: const TextStyle(fontSize: 10),
-            ),
+            widget.bidaTable!.status! == "active"
+                ? const Text('Ready',
+                    style: TextStyle(
+                      fontSize: 10,
+                      fontWeight: FontWeight.bold,
+                    ))
+                : const Text('Booked',
+                    style: TextStyle(
+                      fontSize: 10,
+                      fontWeight: FontWeight.bold,
+                    )),
           ],
         ),
         trailing: ButtonDefault(
