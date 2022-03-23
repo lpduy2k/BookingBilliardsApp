@@ -1,6 +1,7 @@
 import 'package:booking_billiards_app/view/accountPage/profilePage.dart';
+import 'package:booking_billiards_app/view/changePassword/change_new_password.dart';
 import 'package:booking_billiards_app/view/clubProfile/edit_club_profile.dart';
-import 'package:booking_billiards_app/view/forgetPassword/change_new_password.dart';
+
 import 'package:booking_billiards_app/view/forgetPassword/forget_password.dart';
 import 'package:booking_billiards_app/view/forgetPassword/input_pin_code.dart';
 import 'package:booking_billiards_app/view/historyPage/history.dart';
@@ -21,17 +22,13 @@ class RouteGenerator {
         return MaterialPageRoute(
           builder: (_) => const WelcomePage(),
         );
-      case '/forgetPassword':
+      case '/changeNewPassword':
         return MaterialPageRoute(
-          builder: (_) => const ForgetPassword(),
+          builder: (_) => const ChangeNewPassword(),
         );
       case '/inputPinCode':
         return MaterialPageRoute(
           builder: (_) => const InputPinCode(),
-        );
-      case '/changeNewPassword':
-        return MaterialPageRoute(
-          builder: (_) => const ChangeNewPassword(),
         );
       case '/success':
         return MaterialPageRoute(
@@ -41,7 +38,6 @@ class RouteGenerator {
         return MaterialPageRoute(
           builder: (_) => const EditClubProfile(),
         );
-
       case '/profilePage':
         return MaterialPageRoute(
           builder: (_) => const ProfilePage(),
