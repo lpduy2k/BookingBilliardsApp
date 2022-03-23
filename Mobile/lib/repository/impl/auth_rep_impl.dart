@@ -25,9 +25,8 @@ class AuthRepImpl implements AuthRepo {
   Future<SignUpRes> postSignUp(String url, SignUpReq req) async {
     var result = SignUpRes();
     try {
-      Response response =
-          await Dio().post(url + "/register", data: req.toJson());
-      result = SignUpRes.signUpResFromJson(jsonDecode(response.data));
+      Response response = await Dio().post(url + "/register", data: req);
+      result = SignUpRes.signUpResFromJson(jsonEncode(response.data));
     } on DioError catch (e) {
       showToastFail(e.response?.data["message"]);
     }

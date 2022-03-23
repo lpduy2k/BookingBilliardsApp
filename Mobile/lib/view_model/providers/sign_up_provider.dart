@@ -147,7 +147,8 @@ class SignUpProvider with ChangeNotifier {
       checkConfirm(_confirm.value ?? "");
       notifyListeners();
     } else if (!submitValid && isValid) {
-      String phoneHaveAreaCode = _phone.value.toString().replaceFirst('0', '+84');
+      String phoneHaveAreaCode =
+          _phone.value.toString().replaceFirst('0', '+84');
       String code = (Random().nextInt(8999) + 1000).toString();
       await secureStorage.writeSecureData("code", code);
       await twilioFlutter.sendSMS(
@@ -169,14 +170,13 @@ class SignUpProvider with ChangeNotifier {
                 roleId: '292CA636-D1C7-400E-8665-08D9DB6C000C',
               ))
           .then((response) => {
-                showToastSuccess("Register successfully"),
                 // Navigator.of(context).pushReplacementNamed("/welcome")
-                Navigator.of(context).pushReplacementNamed('/inputPinCode')
+                Navigator.of(context).pushReplacementNamed('/inputPinCode'),
+                clearPhoneController(),
+                clearPasswordController(),
+                clearConfirmController(),
               })
           .catchError((e) => print(e));
-      clearPhoneController();
-      clearPasswordController();
-      clearConfirmController();
     }
   }
 }
