@@ -187,6 +187,11 @@ class SignInProvider with ChangeNotifier {
                       notifyListeners(),
                     }
                 }
+              else
+                {
+                  Navigator.pop(context),
+                  notifyListeners(),
+                }
             },
           );
     }

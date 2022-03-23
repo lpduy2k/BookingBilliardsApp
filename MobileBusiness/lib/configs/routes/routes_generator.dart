@@ -22,6 +22,10 @@ class RouteGenerator {
         return MaterialPageRoute(
           builder: (_) => const WelcomePage(),
         );
+      case '/forgetPassword':
+        return MaterialPageRoute(
+          builder: (_) => const ForgetPassword(),
+        );
       case '/changeNewPassword':
         return MaterialPageRoute(
           builder: (_) => const ChangeNewPassword(),
