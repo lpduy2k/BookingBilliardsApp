@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:booking_billiards_app/configs/toast/toast.dart';
+import 'package:booking_billiards_app/model/request/change_password_req.dart';
 import 'package:booking_billiards_app/model/request/upload_user_req.dart';
 import 'package:booking_billiards_app/model/response/get_user_res.dart';
 import 'package:booking_billiards_app/repository/user_rep.dart';
@@ -27,6 +28,18 @@ class UserRepImpl implements UserRepo {
       result = 'Upload success';
     } on DioError catch (e) {
       showToastFail(e.response?.data["message"]);
+    }
+    return result;
+  }
+
+  @override
+  Future<String> putChangePass(String url, ChangePasswordReq req) async {
+    var result = '';
+    try {
+      await Dio().put(url, data: req.toJson());
+      result = 'Change password success';
+    } on DioError catch (e) {
+      result = 'Change password failed';
     }
     return result;
   }
