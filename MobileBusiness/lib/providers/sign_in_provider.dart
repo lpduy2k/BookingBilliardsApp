@@ -175,11 +175,14 @@ class SignInProvider with ChangeNotifier {
                           timeInSecForIosWeb: 1,
                           backgroundColor: Colors.red,
                           textColor: Colors.white,
-                          fontSize: 16.0)
+                          fontSize: 16.0),
+                      Navigator.pop(context),
+                      notifyListeners(),
                     }
                 }
               else
                 {
+                  Navigator.pop(context),
                   notifyListeners(),
                 }
             },
