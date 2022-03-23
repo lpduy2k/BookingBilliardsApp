@@ -1,4 +1,6 @@
 import 'package:booking_billiards_app/view/changePassword/change_new_password.dart';
+import 'package:booking_billiards_app/view/forgetPassword/forget_password.dart';
+import 'package:booking_billiards_app/view/forgetPassword/input_pin_code.dart';
 import 'package:booking_billiards_app/view/profilePage/profilePage.dart';
 import 'package:booking_billiards_app/view/search/search_bida_club.dart';
 import 'package:booking_billiards_app/view/success/success.dart';
@@ -20,6 +22,14 @@ class RouteGenerator {
       case '/changeNewPassword':
         return MaterialPageRoute(
           builder: (_) => const ChangeNewPassword(),
+        );
+      case '/inputPinCode':
+        return MaterialPageRoute(
+          builder: (_) => const InputPinCode(),
+        );
+      case '/forgetPassword':
+        return MaterialPageRoute(
+          builder: (_) => const ForgetPassword(),
         );
       case '/success':
         return MaterialPageRoute(

@@ -154,7 +154,14 @@ class ChangePassProvider with ChangeNotifier {
                   oldPassword: _passwordOld.value!,
                   newPassword: _passwordNew.value!))
           .then((value) async {
-        value == "Change password success" ? showToastSuccess(value) : showToastFail(value);
+        if (value == "Change password success") {
+          showToastSuccess(value);
+          final SecureStorage secureStorage = SecureStorage();
+          secureStorage.deleteAll();
+          Navigator.of(context).pushReplacementNamed('/success');
+        } else {
+          showToastFail(value);
+        }
       }).onError((error, stackTrace) {
         log(error.toString());
       });
