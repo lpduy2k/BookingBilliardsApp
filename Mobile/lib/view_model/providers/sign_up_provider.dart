@@ -131,7 +131,7 @@ class SignUpProvider with ChangeNotifier {
   void submitData(BuildContext context) async {
     TwilioFlutter twilioFlutter = TwilioFlutter(
       accountSid: 'ACcbd4489fd2ed4ddf5b0be69083e3c3b1',
-      authToken: '54f396cd2afed44cc77013c20729bb30',
+      authToken: 'b35672d25befe81115968c6997bc33d0',
       twilioNumber: '+14025341898',
     );
     submitValid = _phone.error != null ||
