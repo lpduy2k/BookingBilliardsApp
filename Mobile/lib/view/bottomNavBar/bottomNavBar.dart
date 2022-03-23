@@ -7,7 +7,6 @@ import 'package:booking_billiards_app/model/response/get_user_res.dart';
 import 'package:booking_billiards_app/view/accountPage/account.dart';
 import 'package:booking_billiards_app/view/bookingHistory/booking_history.dart';
 import 'package:booking_billiards_app/view/detailsClub/detailsClub.dart';
-import 'package:booking_billiards_app/view/forgetPassword/input_pin_code.dart';
 import 'package:booking_billiards_app/view/home/home.dart';
 import 'package:booking_billiards_app/view/success/success.dart';
 
